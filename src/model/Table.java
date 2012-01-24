@@ -26,4 +26,9 @@ public class Table<indexO, columns> extends HashMap<Integer, Column> {
 			this.put(index, buffCol);
 		}
 	}
+	
+	public void add(Object abstractType)
+	{
+		
+	}
 }
