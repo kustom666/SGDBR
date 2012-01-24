@@ -2,18 +2,28 @@ package model;
 
 import java.util.HashMap;
 import java.lang.Integer;
-public class Table<Integer, Column> extends HashMap<Integer, Column> {
+public class Table<indexO, columns> extends HashMap<Integer, Column> {
 	
-	private int index;
+	private Integer index;
 	
 	public Table()
 	{
-		index = 0;
+		this.index = new Integer(0);
 	}
 	
 	public Table(String[] columnNames)
 	{
-		index = 0;
-		Integer indexO = new Integer(index);
+		this.index = new Integer(0);
+		this.create(columnNames);
+	}
+	
+	private void create(String[] columnNames)
+	{
+		for (String s : columnNames)
+		{
+			System.out.println("Création d'une colonne avec un label : "+s);
+			Column buffCol = new Column(s);
+			this.put(index, buffCol);
+		}
 	}
 }
