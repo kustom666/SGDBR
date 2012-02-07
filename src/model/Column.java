@@ -1,10 +1,11 @@
 package model;
-import java.util.HashMap;
+import java.util.ArrayList;
 
-public class Column extends HashMap<Integer, Object>{
+
+public class Column extends ArrayList<Types>{
 	
 	private String label;
-	private Object type;
+	private Types type;
 	private Integer index;
 	
 	public Column(String label)
@@ -13,7 +14,7 @@ public class Column extends HashMap<Integer, Object>{
 		this.index = new Integer(0);
 	}
 	
-	public Column(String label, Object dataType)
+	public Column(String label, Types dataType)
 	{
 		this.label = label;
 		this.type = dataType;

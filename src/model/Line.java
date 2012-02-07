@@ -1,5 +1,7 @@
 package model;
 
-public class Line {
+import java.util.ArrayList;
 
+public class Line extends ArrayList<Types>{
+	
 }
