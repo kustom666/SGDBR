@@ -17,4 +17,5 @@ public class Char extends Types{
 		this.val = val;
 	}
 	
+	
 }
