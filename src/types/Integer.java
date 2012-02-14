@@ -7,6 +7,9 @@ public class Integer extends Types {
 	public Integer(int valInc){
 		this.val = valInc;
 	}
+	public Integer(){
+
+	}
 
 	public int getVal() {
 		return val;

@@ -10,12 +10,7 @@ public class Column extends ArrayList<Types>{
 	private String label;
 	private Types type;
 	private boolean isMandatory;
-	
-	public Column(String label)
-	{
-		this.label = label;
-	}
-	
+	private boolean isPrimary;
 	public Column(String label, Types dataType)
 	{
 		this.label = label;
