@@ -1,6 +1,8 @@
 package model;
 import java.util.ArrayList;
 
+import types.Types;
+
 
 public class Column extends ArrayList<Types>{
 	
