@@ -1,6 +1,6 @@
 package types;
 
 public abstract class Types {
-	boolean isPrimary;
-	boolean isCandidate;
+	private boolean isPrimary;
+	private boolean isCandidate;
 }
