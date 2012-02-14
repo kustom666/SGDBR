@@ -11,8 +11,12 @@ public class Date extends Types{
 		this.day = dI;
 	}
 	
-	public toString(){
+	public String toString(){
+		String y = String.valueOf(year);
+		String m = String.valueOf(month);
+		String d = String.valueOf(day);
 		
+		return y+m+d;
 	}
 
 	public int getYear() {
