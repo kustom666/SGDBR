@@ -17,4 +17,7 @@ public class Table extends ArrayList<Line> {
 			System.out.println("Ajout d'une colonne ayant pour label : " + s);
 		}
 	}
+	public void insert(Line li)
+	{
+	}
 }
