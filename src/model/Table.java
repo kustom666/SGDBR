@@ -19,5 +19,10 @@ public class Table extends ArrayList<Line> {
 	}
 	public void insert(Line li)
 	{
+		this.add(li);
+	}
+	public void supress(Line li)
+	{
+		this.remove(li);
 	}
 }
