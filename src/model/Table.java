@@ -26,4 +26,13 @@ public class Table extends ArrayList<Line> {
 		this.arrLines.add(addLine);
 		System.out.println("Ajout d'une nouvelle line");
 	}
+	
+	public void insert(Line li)
+	{
+		this.add(li);
+	}
+	public void supress(Line li)
+	{
+		this.remove(li);
+	}
 }
