@@ -47,4 +47,14 @@ public class Table extends ArrayList<Line> {
 		System.out.println("Suppression d'une line");
 
 	}
+	
+	//Accesseurs
+	public String getTableName() {
+		return tableName;
+	}
+
+	public void setTableName(String tableName) {
+		this.tableName = tableName;
+	}
+		
 }
