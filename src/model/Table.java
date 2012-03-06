@@ -8,9 +8,16 @@ public class Table extends ArrayList<Line> {
 	private ArrayList<Line> arrLines = new ArrayList<Line>();
 	private ArrayList<Column> arrCol = new ArrayList<Column>();
 	private String tableName;
-
-	public Table(ArrayList<String> colNames, ArrayList<Types> colTypes )
+	
+	/**
+	 * Le constructeur de la table nécessite une liste de noms de colonnes et de types de colonnes, ainsi que le nom de la table
+	 * @args tName le nom de la table
+	 * @args colNames les noms de colomnes 
+	 * @args colTypes les types de colomnes
+	 * */
+	public Table(String tName,ArrayList<String> colNames, ArrayList<Types> colTypes)
 	{
+		this.tableName = tName;
 		int i = 0;
 		for(i=0; i<colNames.size();i++){
 			Column buffCol = new Column(colNames.get(i), colTypes.get(i)); 
@@ -18,6 +25,7 @@ public class Table extends ArrayList<Line> {
 			System.out.println("Ajout d'une colonne de nom" + colNames.get(i));
 		}
 	}
+	
 	public Table(String tName){
 		this.tableName = tName;
 	}
@@ -30,9 +38,13 @@ public class Table extends ArrayList<Line> {
 	public void insert(Line li)
 	{
 		this.add(li);
+		System.out.println("Ajout d'une nouvelle line");
+
 	}
 	public void supress(Line li)
 	{
 		this.remove(li);
+		System.out.println("Suppression d'une line");
+
 	}
 }
