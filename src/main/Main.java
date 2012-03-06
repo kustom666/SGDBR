@@ -15,7 +15,7 @@ public class Main {
 		al.add(new Sinteger(18));
 		ArrayList<String> alS = new ArrayList<String>();
 		alS.add("numero");
-		Table buffTable = new Table(alS, al);
+		Table buffTable = new Table("tableOrigin",alS, al);
 		
 		
 		
