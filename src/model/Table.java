@@ -5,8 +5,8 @@ import types.Types;
 public class Table extends ArrayList<Line> {
 
 	private static final long serialVersionUID = 5771048924784085348L;
-	private ArrayList<Line> arrLines;
-	private ArrayList<Column> arrCol;
+	private ArrayList<Line> arrLines = new ArrayList<Line>();
+	private ArrayList<Column> arrCol = new ArrayList<Column>();
 	private String tableName;
 
 	public Table(ArrayList<String> colNames, ArrayList<Types> colTypes )
