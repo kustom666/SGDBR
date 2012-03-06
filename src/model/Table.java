@@ -47,6 +47,11 @@ public class Table extends ArrayList<Line> {
 		System.out.println("Suppression d'une line");
 
 	}
+	public void update(int index, Line li)
+	{
+		this.set(index, li);
+		System.out.println("Remplacement d'une line");
+	}
 	
 	//Accesseurs
 	public String getTableName() {
