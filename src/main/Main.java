@@ -12,7 +12,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		ArrayList<Types> al = new ArrayList<Types>();
-		al.add(new Sinteger());
+		al.add(new Sinteger(18));
 		Table buffTable = new Table(args, al);
 
 	}
