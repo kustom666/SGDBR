@@ -5,7 +5,6 @@ import types.Types;
 public class Table extends ArrayList<Line> {
 
 	private static final long serialVersionUID = 5771048924784085348L;
-	private ArrayList<Line> arrLines = new ArrayList<Line>();
 	private ArrayList<Column> arrCol = new ArrayList<Column>();
 	private String tableName;
 	
@@ -32,7 +31,7 @@ public class Table extends ArrayList<Line> {
 	
 	public Table(String tName, Line addLine){
 		this.tableName = tName;
-		this.arrLines.add(addLine);
+		this.add(addLine);
 		System.out.println("Ajout d'une nouvelle line");
 	}
 	

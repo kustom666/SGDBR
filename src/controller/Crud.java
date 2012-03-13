@@ -20,4 +20,9 @@ public class Crud {
 	{
 		this.usedTable = t;
 	}
+	
+	public void displayTable()
+	{
+		
+	}
 }

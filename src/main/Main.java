@@ -16,7 +16,7 @@ public class Main {
 		/*ArrayList<Types> al = new ArrayList<Types>();
 		al.add(new Sinteger(18));
 		ArrayList<String> alS = new ArrayList<String>();
-		alS.add("numero");
+		alS.add(" numero");
 		Table buffTable = new Table("tableOrigin",alS, al);*/
 		
 		System.out.println("Bienvenue sur le CLI SGDBR 0.1a, initialisation de la base");
