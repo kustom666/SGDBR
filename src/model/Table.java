@@ -29,6 +29,7 @@ public class Table extends ArrayList<Line> {
 	public Table(String tName){
 		this.tableName = tName;
 	}
+	
 	public Table(String tName, Line addLine){
 		this.tableName = tName;
 		this.arrLines.add(addLine);
@@ -41,20 +42,28 @@ public class Table extends ArrayList<Line> {
 		System.out.println("Ajout d'une nouvelle line");
 
 	}
+	
 	public void supress(Line li)
 	{
 		this.remove(li);
 		System.out.println("Suppression d'une line");
 
 	}
+	
 	public void update(int index, Line li)
 	{
 		this.set(index, li);
 		System.out.println("Remplacement d'une line");
 	}
-	public void addCol(String lab, Types dtype)
+	
+	public void addCol(Column col)
 	{
-		this.arrCol.add(new Column(lab, dtype));
+		this.arrCol.add(col);
+	}
+	
+	public void supCol(Column col)
+	{
+		this.remove(col);
 	}
 	
 	//Accesseurs
