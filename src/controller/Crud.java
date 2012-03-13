@@ -23,6 +23,10 @@ public class Crud {
 	
 	public void displayTable()
 	{
-		
+		System.out.println("|          "+usedTable.getTableName()+"          |");
+		System.out.println("--------------------");
+		System.out.println("||");
+		System.out.println("--------------------");
+
 	}
 }
