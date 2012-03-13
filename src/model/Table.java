@@ -11,9 +11,9 @@ public class Table extends ArrayList<Line> {
 	
 	/**
 	 * Le constructeur de la table nécessite une liste de noms de colonnes et de types de colonnes, ainsi que le nom de la table
-	 * @args tName le nom de la table
-	 * @args colNames les noms de colomnes 
-	 * @args colTypes les types de colomnes
+	 * @param tName le nom de la table
+	 * @param colNames les noms de colomnes 
+	 * @param colTypes les types de colomnes
 	 * */
 	public Table(String tName,ArrayList<String> colNames, ArrayList<Types> colTypes)
 	{
@@ -51,6 +51,10 @@ public class Table extends ArrayList<Line> {
 	{
 		this.set(index, li);
 		System.out.println("Remplacement d'une line");
+	}
+	public void addCol(String lab, Types dtype)
+	{
+		this.arrCol.add(new Column(lab, dtype));
 	}
 	
 	//Accesseurs
