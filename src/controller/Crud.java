@@ -1,4 +1,9 @@
 package controller;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 import model.*;
 import types.*;
 
@@ -21,15 +26,16 @@ public class Crud {
 		this.usedTable = t;
 	}
 	
-	public void appendCol(Column c){
-		this.usedTable.addCol(c);
-	}
-	
 	public Column createCol(String n, Types t){
 		 Column c = new Column(n, t);
 		 return c;
 	}
 	
+	public void ajouterLignes(ArrayList<Line> l){
+		for(int i=0; i< l.size();i++){
+			this.usedTable.insert(l.get(i));
+		}
+	}
 	public void displayTable()
 	{
 		System.out.println("--------------------");
@@ -49,6 +55,17 @@ public class Crud {
 		System.out.println("|");
 		System.out.println("--------------------");
 
+	}
+	
+	public void setUpTable(HashMap<String, ArrayList<Types>> hm){
+		int i=0;
+		Iterator it = hm.entrySet().iterator();
+		while(it.hasNext()){
+			Map.Entry<String,ArrayList<Types>> buff = (Map.Entry<String,ArrayList<Types>>)it.next();
+			Column c = this.createCol(buff.getKey(), buff.getValue().get(i));
+			this.usedTable.addCol(c);
+			i++;
+		}
 	}
 
 }
