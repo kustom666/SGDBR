@@ -10,10 +10,7 @@ public class Crud {
 	{
 		
 	}
-	
-<<<<<<< HEAD
-	
-=======
+
 	public Crud(Table t)
 	{
 		this.usedTable = t;
@@ -22,6 +19,15 @@ public class Crud {
 	public void setUsedTable(Table t)
 	{
 		this.usedTable = t;
+	}
+	
+	public void appendCol(Column c){
+		this.usedTable.addCol(c);
+	}
+	
+	public Column createCol(String n, Types t){
+		 Column c = new Column(n, t);
+		 return c;
 	}
 	
 	public void displayTable()
@@ -44,5 +50,5 @@ public class Crud {
 		System.out.println("--------------------");
 
 	}
->>>>>>> d060e210458ba59dbd05b5e03e182ba537f382f8
+
 }
