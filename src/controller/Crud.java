@@ -68,8 +68,19 @@ public class Crud {
 		}
 	}
 	
-	public void construireHMsetUp(ArrayList<String> a, ArrayList<Types> l){
-		
+	public HashMap<String,Types> construireHMsetUp(ArrayList<String> a, ArrayList<Types> l){
+		if(a.size()!=l.size()){
+			System.out.println("Erreur : Trop de noms de colonne ou trop de types différents, défault d'intégrité");
+			return null;
+		}
+		else
+		{
+			HashMap<String,Types> hm = new HashMap<String,Types>();
+			for(int i=0;i<a.size();i++){
+				hm.put(a.get(i), l.get(i));
+			}
+			return hm;
+		}
 	}
 	
 
