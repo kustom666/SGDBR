@@ -57,15 +57,20 @@ public class Crud {
 
 	}
 	
-	public void setUpTable(HashMap<String, ArrayList<Types>> hm){
+	public void setUpTable(HashMap<String, Types> hm){
 		int i=0;
 		Iterator it = hm.entrySet().iterator();
 		while(it.hasNext()){
-			Map.Entry<String,ArrayList<Types>> buff = (Map.Entry<String,ArrayList<Types>>)it.next();
-			Column c = this.createCol(buff.getKey(), buff.getValue().get(i));
+			Map.Entry<String,Types> buff = (Map.Entry<String,Types>)it.next();
+			Column c = this.createCol(buff.getKey(), buff.getValue());
 			this.usedTable.addCol(c);
 			i++;
 		}
 	}
+	
+	public void construireHMsetUp(ArrayList<String> a, ArrayList<Types> l){
+		
+	}
+	
 
 }
