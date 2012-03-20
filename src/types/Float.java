@@ -15,5 +15,8 @@ public class Float extends Types{
 		this.val = val;
 	}
 	
-	
+	public String toString(){
+		Float buff = new Float(this.val);
+		return buff.toString();
+	}
 }

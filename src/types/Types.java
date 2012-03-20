@@ -24,5 +24,7 @@ public abstract class Types {
 	public void setForeign(Types foreign) {
 		this.foreign = foreign;
 	}
-	
+	public String toString(){
+		return "Type";
+	}
 }

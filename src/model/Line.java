@@ -8,11 +8,9 @@ public class Line extends ArrayList<Types>{
 
 	private static final long serialVersionUID = 1395631029655406828L;
 	
-	public void exportTypes(){
-		int i = 0;
-		for (i = 0; i<this.size(); i++){
-			System.out.println(this.get(i).toString());
+	public void outputLine(){
+		for(int i=0; i<this.size(); i++){
+			System.out.print("| "+this.get(i).toString()+ " ");
 		}
 	}
-	
 }
