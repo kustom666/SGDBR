@@ -16,5 +16,17 @@ public class Column extends ArrayList<Types>{
 		this.label = label;
 		this.type = dataType;
 	}
+	public String getLabel() {
+		return label;
+	}
+	public void setLabel(String label) {
+		this.label = label;
+	}
+	public Types getType() {
+		return type;
+	}
+	public void setType(Types type) {
+		this.type = type;
+	}
 	
 }
