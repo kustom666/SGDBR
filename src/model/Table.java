@@ -14,7 +14,7 @@ public class Table extends ArrayList<Line> {
 	 * @param colNames les noms de colomnes 
 	 * @param colTypes les types de colomnes
 	 * */
-	public Table(String tName,ArrayList<String> colNames, ArrayList<Types> colTypes)
+	public Table(String tName,ArrayList<String> colNames, ArrayList<Types> colTypes, ArrayList<Line> l)
 	{
 		this.tableName = tName;
 		int i = 0;
@@ -22,6 +22,11 @@ public class Table extends ArrayList<Line> {
 			Column buffCol = new Column(colNames.get(i), colTypes.get(i)); 
 			this.arrCol.add(buffCol);
 			System.out.println("Ajout d'une colonne de nom" + colNames.get(i));
+			
+		}
+		
+		for(i=0; i<l.size(); i++){
+			this.add(l.get(i));
 		}
 	}
 	
@@ -72,6 +77,14 @@ public class Table extends ArrayList<Line> {
 
 	public void setTableName(String tableName) {
 		this.tableName = tableName;
+	}
+
+	public ArrayList<Column> getArrCol() {
+		return arrCol;
+	}
+
+	public void setArrCol(ArrayList<Column> arrCol) {
+		this.arrCol = arrCol;
 	}
 	
 

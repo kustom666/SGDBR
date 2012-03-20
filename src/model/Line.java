@@ -10,7 +10,7 @@ public class Line extends ArrayList<Types>{
 	
 	public void outputLine(){
 		for(int i=0; i<this.size(); i++){
-			System.out.println(this.get(i));
+			System.out.print(this.get(i).toString()+" | ");
 		}
 	}
 }
