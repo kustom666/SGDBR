@@ -11,6 +11,10 @@ public class Column extends ArrayList<Types>{
 	private Types type;
 	private boolean isMandatory;
 	private boolean isPrimary;
+	private boolean isCandidate;
+	private boolean isForeign;
+	private Types foreign = null;
+	
 	public Column(String label, Types dataType)
 	{
 		this.label = label;
