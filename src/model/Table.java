@@ -73,5 +73,7 @@ public class Table extends ArrayList<Line> {
 	public void setTableName(String tableName) {
 		this.tableName = tableName;
 	}
+	
+
 		
 }
