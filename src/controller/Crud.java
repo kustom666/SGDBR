@@ -84,6 +84,10 @@ public class Crud {
 		}
 	}
 	
+	public void read(ArrayList<Column> selected){
+		
+	}
+	
 
 
 }

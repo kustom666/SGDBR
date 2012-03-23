@@ -13,6 +13,7 @@ public class Table extends ArrayList<Line> {
 	 * @param tName le nom de la table
 	 * @param colNames les noms de colomnes 
 	 * @param colTypes les types de colomnes
+	 * @deprecated
 	 * */
 	public Table(String tName,ArrayList<String> colNames, ArrayList<Types> colTypes, ArrayList<Line> l)
 	{
