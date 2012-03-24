@@ -9,11 +9,20 @@ public class Column extends ArrayList<Types>{
 	private static final long serialVersionUID = 1437340961489074002L;
 	private String label;
 	private Types type;
+	
+	//Propriétés
 	private boolean isMandatory;
-	private boolean isPrimary;
 	private boolean isCandidate;
 	private boolean isForeign;
-	private Types foreign = null;
+	
+	//Contraintes
+	private boolean notNull;
+	private boolean check;
+	private boolean unique;
+	
+	private Types foreignKey = null;
+	private boolean isPrimaryKey;
+	
 	
 	public Column(String label, Types dataType)
 	{
