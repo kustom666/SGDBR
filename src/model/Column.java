@@ -29,6 +29,56 @@ public class Column extends ArrayList<Types>{
 		this.label = label;
 		this.type = dataType;
 	}
+	
+	//Accesseurs
+	public boolean isMandatory() {
+		return isMandatory;
+	}
+	public void setMandatory(boolean isMandatory) {
+		this.isMandatory = isMandatory;
+	}
+	public boolean isCandidate() {
+		return isCandidate;
+	}
+	public void setCandidate(boolean isCandidate) {
+		this.isCandidate = isCandidate;
+	}
+	public boolean isForeign() {
+		return isForeign;
+	}
+	public void setForeign(boolean isForeign) {
+		this.isForeign = isForeign;
+	}
+	public boolean isNotNull() {
+		return notNull;
+	}
+	public void setNotNull(boolean notNull) {
+		this.notNull = notNull;
+	}
+	public boolean isCheck() {
+		return check;
+	}
+	public void setCheck(boolean check) {
+		this.check = check;
+	}
+	public boolean isUnique() {
+		return unique;
+	}
+	public void setUnique(boolean unique) {
+		this.unique = unique;
+	}
+	public Types getForeignKey() {
+		return foreignKey;
+	}
+	public void setForeignKey(Types foreignKey) {
+		this.foreignKey = foreignKey;
+	}
+	public boolean isPrimaryKey() {
+		return isPrimaryKey;
+	}
+	public void setPrimaryKey(boolean isPrimaryKey) {
+		this.isPrimaryKey = isPrimaryKey;
+	}
 	public String getLabel() {
 		return label;
 	}
