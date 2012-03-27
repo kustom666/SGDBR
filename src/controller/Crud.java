@@ -101,7 +101,10 @@ public class Crud {
 	public void addColumn(Column c){
 		this.usedTable.addCol(c);
 	}
-	
+	public void removeColumn(Column c){
+		this.usedTable.supCol(c);
+	}
+
 	public void read(ArrayList<Column> selected){
 		
 	}
