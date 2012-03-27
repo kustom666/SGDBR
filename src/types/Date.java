@@ -5,6 +5,10 @@ public class Date extends Types{
 	private int month;
 	private int day;
 	
+	public Date(){
+		
+	}
+	
 	public Date(int yI, int mI, int dI){
 		this.year = yI;
 		this.month = mI;

@@ -7,4 +7,13 @@ public class Bit extends Types{
 	public Bit(){
 		
 	}
+
+	public byte[] getVal() {
+		return val;
+	}
+
+	public void setVal(byte[] val) {
+		this.val = val;
+	}
+	
 }

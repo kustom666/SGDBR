@@ -1,6 +1,6 @@
 package types;
 
-public class Text {
+public class Text extends Types{
 	String val = new String();
 	
 	public Text(String s){
