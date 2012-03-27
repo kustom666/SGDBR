@@ -34,22 +34,52 @@ public class Crud {
 	}
 	public void displayTable()
 	{
-		System.out.println("--------------------");
-		System.out.println("| "+usedTable.getTableName()+" |");
-		System.out.println("--------------------");
+		String buffMax = new String();
 		
 		for(int i=0; i<usedTable.getArrCol().size(); i++){
-			System.out.print("| "+this.usedTable.getArrCol().get(i).getLabel()+" ");
+			buffMax+=("| "+this.usedTable.getArrCol().get(i).getLabel()+" ");
 		}
 		
+		for(int i=0; i< buffMax.length()+1; i++){
+			System.out.print("-");
+		}
+		System.out.println();
+		
+		System.out.print("|");
+		for(int i=0; i< (buffMax.length()-(usedTable.getTableName().length()+2))/2; i++){
+			System.out.print(" ");
+		}
+		
+		System.out.print(usedTable.getTableName());
+		
+		for(int i=0; i< (buffMax.length()-(usedTable.getTableName().length()+2))/2+1; i++){
+			System.out.print(" ");
+		}
 		System.out.println("|");
-		System.out.println("--------------------");
+		
+		for(int i=0; i< buffMax.length()+1; i++){
+			System.out.print("-");
+		}
+		System.out.println();
+		
+		System.out.println(buffMax+"|");
+		
+		
+		for(int i=0; i< buffMax.length()+1; i++){
+			System.out.print("-");
+		}
+		System.out.println();
+		
 		for(int i=0; i< usedTable.size(); i++){
 			
 			usedTable.get(i).outputLine();
 			
 		}
-		System.out.println("--------------------");
+		
+		for(int i=0; i< buffMax.length()+1; i++){
+			System.out.print("-");
+		}
+		System.out.println();
 
 	}
 
