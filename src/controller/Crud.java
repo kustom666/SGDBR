@@ -84,6 +84,19 @@ public class Crud {
 		}
 	}
 	
+	public void initialise(String tName){
+		Table initTable = new Table(tName);
+		this.usedTable = initTable;
+	}
+	
+	public void fullCreate(String tName, ArrayList<String> colNames, ArrayList<Types> types, ArrayList<Line> l){
+		initialise(tName);
+		HashMap<String,Types> buffHM = construireHMsetUp(colNames, types);
+		setUpTable(buffHM);
+		ajouterLignes(l);
+		
+	}
+	
 	public void read(ArrayList<Column> selected){
 		
 	}
