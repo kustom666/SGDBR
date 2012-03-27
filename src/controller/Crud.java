@@ -56,13 +56,12 @@ public class Crud {
 
 	
 	public void setUpTable(HashMap<String, Types> hm){
-		int i=0;
+		
 		Iterator it = hm.entrySet().iterator();
 		while(it.hasNext()){
 			Map.Entry<String,Types> buff = (Map.Entry<String,Types>)it.next();
 			Column c = this.createCol(buff.getKey(), buff.getValue());
 			this.usedTable.addCol(c);
-			i++;
 		}
 	}
 	
