@@ -12,5 +12,7 @@ public class Line extends ArrayList<Types>{
 		for(int i=0; i<this.size(); i++){
 			System.out.print("| "+this.get(i).toString()+ " ");
 		}
+		System.out.print("|");
+		System.out.println("");
 	}
 }
