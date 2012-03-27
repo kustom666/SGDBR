@@ -8,28 +8,6 @@ public class Table extends ArrayList<Line> {
 	private ArrayList<Column> arrCol = new ArrayList<Column>();
 	private String tableName;
 	
-	/**
-	 * Le constructeur de la table nécessite une liste de noms de colonnes et de types de colonnes, ainsi que le nom de la table
-	 * @param tName le nom de la table
-	 * @param colNames les noms de colomnes 
-	 * @param colTypes les types de colomnes
-	 * @deprecated
-	 * */
-	public Table(String tName,ArrayList<String> colNames, ArrayList<Types> colTypes, ArrayList<Line> l)
-	{
-		this.tableName = tName;
-		int i = 0;
-		for(i=0; i<colNames.size();i++){
-			Column buffCol = new Column(colNames.get(i), colTypes.get(i)); 
-			this.arrCol.add(buffCol);
-			System.out.println("Ajout d'une colonne de nom" + colNames.get(i));
-			
-		}
-		
-		for(i=0; i<l.size(); i++){
-			this.add(l.get(i));
-		}
-	}
 	
 	public Table(String tName){
 		this.tableName = tName;

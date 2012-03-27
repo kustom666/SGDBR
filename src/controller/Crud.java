@@ -25,7 +25,9 @@ public class Crud {
 	{
 		this.usedTable = t;
 	}
-	
+	public Table getUsedTable(){
+		return this.usedTable;
+	}
 	public Column createCol(String n, Types t){
 		 Column c = new Column(n, t);
 		 return c;
