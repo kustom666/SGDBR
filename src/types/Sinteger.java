@@ -22,6 +22,8 @@ public class Sinteger extends Types {
 	public void setValeur(int valeur) {
 		this.valeur = valeur;
 	}
-	
+	public String typeToString(){
+		return "Integer";
+	}
 	
 }

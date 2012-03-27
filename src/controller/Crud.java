@@ -103,6 +103,7 @@ public class Crud {
 		{
 			HashMap<String,Types> hm = new HashMap<String,Types>();
 			for(int i=0;i<a.size();i++){
+				System.out.println("Ajout d'une colonne de nom : "+a.get(i)+" de type : " +l.get(i).typeToString());
 				hm.put(a.get(i), l.get(i));
 			}
 			return hm;
@@ -122,6 +123,7 @@ public class Crud {
 	
 	public void fullCreate(String tName, ArrayList<String> colNames, ArrayList<Types> types, ArrayList<Line> l){
 		initialise(tName);
+		System.out.println("Création d'une table de nom : " +tName);
 		HashMap<String,Types> buffHM = construireHMsetUp(colNames, types);
 		setUpTable(buffHM);
 		ajouterLignes(l);

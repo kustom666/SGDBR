@@ -37,7 +37,7 @@ public class Main {
 		alT.add(new Sinteger());
 		alT.add(new Sinteger());
 		
-		alS.add("age");
+		alS.add("Age");
 		alS.add("Age max");
 		alS.add("Taille");
 
