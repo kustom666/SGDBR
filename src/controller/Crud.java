@@ -49,7 +49,6 @@ public class Crud {
 			usedTable.get(i).outputLine();
 			
 		}
-		System.out.println("|");
 		System.out.println("--------------------");
 
 	}
