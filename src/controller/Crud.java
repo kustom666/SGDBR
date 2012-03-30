@@ -80,7 +80,8 @@ public class Crud {
 		
 		//Impression des lignes
 		for(int i=0; i< usedTable.size(); i++){
-			usedTable.get(i).outputLine();
+			
+			usedTable.get(i).outputLine(usedTable.getArrCol());
 			
 		}
 		
