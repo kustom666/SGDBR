@@ -58,7 +58,7 @@ public class Crud {
 		System.out.print(usedTable.getTableName());
 		
 		//Impression des espaces après le nom de table pour le centrer dans la table
-		for(int i=0; i< (buffMax.length()-(usedTable.getTableName().length()+2))/2+1; i++){
+		for(int i=0; i< (buffMax.length()-(usedTable.getTableName().length()+2))/2+2; i++){
 			System.out.print(" ");
 		}
 		System.out.println("|");
