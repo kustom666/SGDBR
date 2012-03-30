@@ -11,18 +11,18 @@ public class Line extends ArrayList<Types>{
 	public void outputLine(ArrayList<Column> arrColCorres){
 		for(int i=0; i<this.size(); i++){
 
-			
-			for(int j=0; j<(arrColCorres.get(i).getLabel().length()+arrColCorres.get(i).getType().typeToString().length())/2-1;j++){
+			System.out.print("|");
+			for(int j=0; j<(arrColCorres.get(i).getLabel().length()+arrColCorres.get(i).getType().typeToString().length()-this.get(i).toString().length())/2;j++){
 				System.out.print(" ");
 			}
 			System.out.print(" "+this.get(i).toString()+ " ");
 			
-			for(int j=0; j<(arrColCorres.get(i).getLabel().length()+arrColCorres.get(i).getType().typeToString().length())/2;j++){
+			for(int j=0; j<(arrColCorres.get(i).getLabel().length()+arrColCorres.get(i).getType().typeToString().length()-this.get(i).toString().length())/2;j++){
 				System.out.print(" ");
 			}
-			System.out.print("|");
+			
 		}
-		
+		System.out.print("|");
 		System.out.println("");
 	}
 }
