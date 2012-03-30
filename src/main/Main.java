@@ -20,6 +20,8 @@ public class Main {
 		Line l = new Line();
 		Line lb = new Line();
 		Line lc = new Line();
+		Line ld = new Line();
+	
 		l.add(new Text("Paul"));
 		l.add(new Sinteger(19));
 		l.add(new Sinteger(100));
@@ -35,6 +37,10 @@ public class Main {
 		lc.add(new Sinteger(100));
 		lc.add(new Sinteger(180));
 		
+		ld.add(new Text("Agathe"));
+		ld.add(new Sinteger(20));
+		ld.add(new Sinteger(21));
+		ld.add(new Sinteger(145));
 		
 		ArrayList<String> alS = new ArrayList<String>();
 		ArrayList<Types> alT = new ArrayList<Types>();
@@ -43,6 +49,7 @@ public class Main {
 		al.add(l);
 		al.add(lb);
 		al.add(lc);
+		al.add(ld);
 		
 		alT.add(new Text());
 		alT.add(new Sinteger());
@@ -51,7 +58,7 @@ public class Main {
 		
 		alS.add("Nom");
 		alS.add("Age");
-		alS.add("Age max");
+		alS.add("AgeMax");
 		alS.add("Taille");
 
 		
