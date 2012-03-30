@@ -7,7 +7,9 @@ public class Bit extends Types{
 	public Bit(){
 		
 	}
-
+	public String typeToString(){
+		return "Byte";
+	}
 	public byte[] getVal() {
 		return val;
 	}

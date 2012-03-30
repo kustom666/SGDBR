@@ -22,6 +22,10 @@ public class Date extends Types{
 		
 		return y+m+d;
 	}
+	
+	public String typeToString(){
+		return "Date";
+	}
 
 	public int getYear() {
 		return year;

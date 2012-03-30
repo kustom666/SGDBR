@@ -12,6 +12,9 @@ public class Char extends Types{
 		this.val = valI;
 		this.maxLength = length;
 	}
+	public String typeToString(){
+		return "Char";
+	}
 	
 	public char[] getVal() {
 		return val;

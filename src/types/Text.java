@@ -14,5 +14,8 @@ public class Text extends Types{
 	public void setVal(String val) {
 		this.val = val;
 	}
+	public String typeToString(){
+		return "Text";
+	}
 	
 }
