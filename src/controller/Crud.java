@@ -123,7 +123,7 @@ public class Crud {
 	
 	public void fullCreate(String tName, ArrayList<String> colNames, ArrayList<Types> types, ArrayList<Line> l){
 		initialise(tName);
-		System.out.println("CrŽation d'une table de nom : " +tName);
+		System.out.println("Création d'une table de nom : " +tName);
 		HashMap<String,Types> buffHM = construireHMsetUp(colNames, types);
 		setUpTable(buffHM);
 		ajouterLignes(l);
