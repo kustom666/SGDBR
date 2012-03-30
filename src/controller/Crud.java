@@ -36,46 +36,56 @@ public class Crud {
 	{
 		String buffMax = new String();
 		
-		for(int i=0; i<usedTable.getArrCol().size(); i++){
-			buffMax+=("| "+this.usedTable.getArrCol().get(i).getLabel()+" ");
-		}
+		//BuffMax contiens tous les caractres de la ligne contenant les descriptifs de colonne
+		Iterator<Column> it = usedTable.getArrCol().iterator();
 		
+		for(int i = 0; i< usedTable.getArrCol().size(); i++){
+			buffMax+= "| "+usedTable.getArrCol().get(i).getLabel() + ":" +usedTable.getArrCol().get(i).getType().typeToString()+" ";
+		}
+		//Impression de la premire ligne
 		for(int i=0; i< buffMax.length()+1; i++){
 			System.out.print("-");
 		}
 		System.out.println();
 		
+		//Impression des espaces avant le nom de table pour le centrer dans la table
 		System.out.print("|");
 		for(int i=0; i< (buffMax.length()-(usedTable.getTableName().length()+2))/2; i++){
 			System.out.print(" ");
 		}
 		
+		//Impression du nom de table
 		System.out.print(usedTable.getTableName());
 		
-		for(int i=0; i< (buffMax.length()-(usedTable.getTableName().length()+2))/2+1; i++){
+		//Impression des espaces aprs le nom de table pour le centrer dans la table
+		for(int i=0; i< (buffMax.length()-(usedTable.getTableName().length()+2))/2+2; i++){
 			System.out.print(" ");
 		}
 		System.out.println("|");
 		
+		//Deuxime dŽlimiteur
 		for(int i=0; i< buffMax.length()+1; i++){
 			System.out.print("-");
 		}
 		System.out.println();
 		
+		//Impression de la ligne de descriptif colonne
 		System.out.println(buffMax+"|");
 		
-		
+		//Troisime dŽlimiteur
 		for(int i=0; i< buffMax.length()+1; i++){
 			System.out.print("-");
 		}
 		System.out.println();
 		
+		//Impression des lignes
 		for(int i=0; i< usedTable.size(); i++){
 			
-			usedTable.get(i).outputLine();
+			usedTable.get(i).outputLine(usedTable.getArrCol());
 			
 		}
 		
+		//Dernier dŽlimiteur
 		for(int i=0; i< buffMax.length()+1; i++){
 			System.out.print("-");
 		}

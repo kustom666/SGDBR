@@ -52,10 +52,12 @@ public class Instruction {
 		else{
 			System.out.println("Requete inconnue\n Usage: CREATE TABLE nomTable (nomCol type,...,nomCol type);");
 		}
-		return temp=new Table(nomTable,colNames,colTypes);
+		Crud buffC = new Crud();
+		buffC.fullCreate(nomTable,colNames,colTypes);
+		return buffC.getUsedTable();
 	}
 
-	public Table SelectFrom(String requete){
+	public Table SelectFrom(String requete){
 		if(reponse==true){
 
 		}
