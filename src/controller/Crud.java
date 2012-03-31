@@ -36,13 +36,13 @@ public class Crud {
 	{
 		String buffMax = new String();
 		
-		//BuffMax contiens tous les caractères de la ligne contenant les descriptifs de colonne
+		//BuffMax contiens tous les caract√®res de la ligne contenant les descriptifs de colonne
 		Iterator<Column> it = usedTable.getArrCol().iterator();
 		
 		for(int i = 0; i< usedTable.getArrCol().size(); i++){
 			buffMax+= "| "+usedTable.getArrCol().get(i).getLabel() + ":" +usedTable.getArrCol().get(i).getType().typeToString()+" ";
 		}
-		//Impression de la première ligne
+		//Impression de la premi√®re ligne
 		for(int i=0; i< buffMax.length()+1; i++){
 			System.out.print("-");
 		}
@@ -57,13 +57,13 @@ public class Crud {
 		//Impression du nom de table
 		System.out.print(usedTable.getTableName());
 		
-		//Impression des espaces après le nom de table pour le centrer dans la table
+		//Impression des espaces apr√®s le nom de table pour le centrer dans la table
 		for(int i=0; i< (buffMax.length()-(usedTable.getTableName().length()+2))/2+2; i++){
 			System.out.print(" ");
 		}
 		System.out.println("|");
 		
-		//Deuxième délimiteur
+		//Deuxi√®me d√©limiteur
 		for(int i=0; i< buffMax.length()+1; i++){
 			System.out.print("-");
 		}
@@ -72,7 +72,7 @@ public class Crud {
 		//Impression de la ligne de descriptif colonne
 		System.out.println(buffMax+"|");
 		
-		//Troisième délimiteur
+		//Troisi√®me d√©limiteur
 		for(int i=0; i< buffMax.length()+1; i++){
 			System.out.print("-");
 		}
@@ -85,7 +85,7 @@ public class Crud {
 			
 		}
 		
-		//Dernier délimiteur
+		//Dernier d≈Ωlimiteur
 		for(int i=0; i< buffMax.length()+1; i++){
 			System.out.print("-");
 		}
@@ -133,7 +133,7 @@ public class Crud {
 	
 	public void fullCreate(String tName, ArrayList<String> colNames, ArrayList<Types> types, ArrayList<Line> l){
 		initialise(tName);
-		System.out.println("CrÈation d'une table de nom : " +tName);
+		System.out.println("Cr√©ation d'une table de nom : " +tName);
 		HashMap<String,Types> buffHM = construireHMsetUp(colNames, types);
 		setUpTable(buffHM);
 		ajouterLignes(l);

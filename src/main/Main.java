@@ -21,6 +21,7 @@ public class Main {
 		Line lb = new Line();
 		Line lc = new Line();
 		Line ld = new Line();
+		Line le = new Line();
 	
 		l.add(new Text("Paul"));
 		l.add(new Sinteger(19));
@@ -42,6 +43,11 @@ public class Main {
 		ld.add(new Sinteger(21));
 		ld.add(new Sinteger(145));
 		
+		le.add(new Text("Rémi"));
+		le.add(new Sinteger(20));
+		le.add(new Sinteger(30));
+		le.add(new Sinteger(172));
+		
 		ArrayList<String> alS = new ArrayList<String>();
 		ArrayList<Types> alT = new ArrayList<Types>();
 		ArrayList<Line> al = new ArrayList<Line>();
@@ -50,6 +56,7 @@ public class Main {
 		al.add(lb);
 		al.add(lc);
 		al.add(ld);
+		al.add(le);
 		
 		alT.add(new Text());
 		alT.add(new Sinteger());

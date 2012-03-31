@@ -12,13 +12,30 @@ public class Line extends ArrayList<Types>{
 		for(int i=0; i<this.size(); i++){
 
 			System.out.print("|");
-			for(int j=0; j<(arrColCorres.get(i).getLabel().length()+arrColCorres.get(i).getType().typeToString().length()-this.get(i).toString().length())/2;j++){
-				System.out.print(" ");
+			if((arrColCorres.get(i).getLabel().length()+arrColCorres.get(i).getType().typeToString().length()-this.get(i).toString().length())/2+1%2 != 0){
+				for(int j=0; j<(arrColCorres.get(i).getLabel().length()+arrColCorres.get(i).getType().typeToString().length()-this.get(i).toString().length())/2+1;j++){
+					System.out.print(" ");
+				}
+			}
+			else
+			{
+				for(int j=0; j<(arrColCorres.get(i).getLabel().length()+arrColCorres.get(i).getType().typeToString().length()-this.get(i).toString().length())/2;j++){
+					System.out.print(" ");
+				}
 			}
 			System.out.print(" "+this.get(i).toString()+ " ");
 			
-			for(int j=0; j<(arrColCorres.get(i).getLabel().length()+arrColCorres.get(i).getType().typeToString().length()-this.get(i).toString().length())/2;j++){
-				System.out.print(" ");
+			
+			if((arrColCorres.get(i).getLabel().length()+arrColCorres.get(i).getType().typeToString().length()-this.get(i).toString().length())/2+1%2 != 0){
+				for(int j=0; j<(arrColCorres.get(i).getLabel().length()+arrColCorres.get(i).getType().typeToString().length()-this.get(i).toString().length())/2+1;j++){
+					System.out.print(" ");
+				}
+			}
+			else
+			{
+				for(int j=0; j<(arrColCorres.get(i).getLabel().length()+arrColCorres.get(i).getType().typeToString().length()-this.get(i).toString().length())/2;j++){
+					System.out.print(" ");
+				}
 			}
 			
 		}
