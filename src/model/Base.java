@@ -1,5 +1,9 @@
 package model;
 
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Base extends ArrayList<Table> {
@@ -24,10 +28,17 @@ public class Base extends ArrayList<Table> {
 	}
 	
 	/**
-	 * saveBase enregistre la base de données dans un fichier CSV pour une réutilisation future
+	 * saveBase enregistre la base de données dans un fichier pour une réutilisation future
 	 * @author Paul Forti
 	 * */
 	public void saveBase(){
-		
+		FileOutputStream output;
+		try{
+			output = new FileOutputStream(new File(nom));
+			DataOutputStream dout = new DataOutputStream(output);
+			
+		}catch (IOException e){
+			e.printStackTrace();
+		}
 	}
 }

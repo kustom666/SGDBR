@@ -1,4 +1,9 @@
 package controller;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -13,11 +18,12 @@ public class Crud {
 	
 	public Crud()
 	{
-		
+
 	}
 
 	public Crud(Table t)
 	{
+
 		this.usedTable = t;
 	}
 	
@@ -35,9 +41,7 @@ public class Crud {
 	public void displayTable()
 	{
 		String buffMax = new String();
-		
 		//BuffMax contiens tous les caractères de la ligne contenant les descriptifs de colonne
-		Iterator<Column> it = usedTable.getArrCol().iterator();
 		
 		for(int i = 0; i< usedTable.getArrCol().size(); i++){
 			buffMax+= "| "+usedTable.getArrCol().get(i).getLabel() + ":" +usedTable.getArrCol().get(i).getType().typeToString()+" ";
@@ -82,17 +86,20 @@ public class Crud {
 		for(int i=0; i< usedTable.size(); i++){
 			
 			usedTable.get(i).outputLine(usedTable.getArrCol());
+			for(int j=0; j< buffMax.length()+1; j++){
+				System.out.print("-");
+			}
+			System.out.println();
 			
 		}
 		
-		//Dernier délimiteur
-		for(int i=0; i< buffMax.length()+1; i++){
-			System.out.print("-");
-		}
-		System.out.println();
-
 	}
 
+	public String exportTable(){
+		String buffSortie = new String();
+
+		return "";
+	}
 	
 	public void setUpTable(HashMap<String, Types> hm){
 		
