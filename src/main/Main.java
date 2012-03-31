@@ -65,7 +65,7 @@ public class Main {
 		
 		alS.add("Nom");
 		alS.add("Age");
-		alS.add("Age Max");
+		alS.add(new String("Age Max"));
 		alS.add("Taille");
 
 		
