@@ -85,7 +85,7 @@ public class Crud {
 			
 		}
 		
-		//Dernier dŽlimiteur
+		//Dernier délimiteur
 		for(int i=0; i< buffMax.length()+1; i++){
 			System.out.print("-");
 		}
@@ -120,6 +120,8 @@ public class Crud {
 		}
 	}
 	
+	
+	//Méthodes de base
 	public void initialise(String tName){
 		Table initTable = new Table(tName);
 		this.usedTable = initTable;
