@@ -5,7 +5,6 @@ import types.Types;
 public class Table extends ArrayList<Line> {
 
 	private static final long serialVersionUID = 5771048924784085348L;
-	private ArrayList<Line> arrLines = new ArrayList<Line>();
 	private ArrayList<Column> arrCol = new ArrayList<Column>();
 	private String tableName;
 	
@@ -14,8 +13,9 @@ public class Table extends ArrayList<Line> {
 	 * @param tName le nom de la table
 	 * @param colNames les noms de colomnes 
 	 * @param colTypes les types de colomnes
+	 * @deprecated
 	 * */
-	public Table(String tName,ArrayList<String> colNames, ArrayList<Types> colTypes)
+	public Table(String tName,ArrayList<String> colNames, ArrayList<Types> colTypes, ArrayList<Line> l)
 	{
 		this.tableName = tName;
 		int i = 0;
@@ -23,6 +23,11 @@ public class Table extends ArrayList<Line> {
 			Column buffCol = new Column(colNames.get(i), colTypes.get(i)); 
 			this.arrCol.add(buffCol);
 			System.out.println("Ajout d'une colonne de nom" + colNames.get(i));
+			
+		}
+		
+		for(i=0; i<l.size(); i++){
+			this.add(l.get(i));
 		}
 	}
 	
@@ -32,7 +37,7 @@ public class Table extends ArrayList<Line> {
 	
 	public Table(String tName, Line addLine){
 		this.tableName = tName;
-		this.arrLines.add(addLine);
+		this.add(addLine);
 		System.out.println("Ajout d'une nouvelle line");
 	}
 	
@@ -63,7 +68,7 @@ public class Table extends ArrayList<Line> {
 	
 	public void supCol(Column col)
 	{
-		this.remove(col);
+		this.arrCol.remove(col);
 	}
 	
 	//Accesseurs
@@ -73,6 +78,23 @@ public class Table extends ArrayList<Line> {
 
 	public void setTableName(String tableName) {
 		this.tableName = tableName;
+	}
+
+	public ArrayList<Column> getArrCol() {
+		return arrCol;
+	}
+
+	public void setArrCol(ArrayList<Column> arrCol) {
+		this.arrCol = arrCol;
+	}
+	public Column getCol(String name){
+		Column c =null;
+		for(int i=0;i<this.arrCol.size();i++){
+			if(this.arrCol.get(i).getLabel().equals(name)){
+				c=this.arrCol.get(i);
+			}
+		}
+		return c;
 	}
 		
 }
