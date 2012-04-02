@@ -2,19 +2,23 @@ package types;
 
 public class Float extends Types{
 	private float val;
-	
+
 	public Float(){
-		
+
 	}
 	public Float(float valInc){
 		this.val = valInc;
 	}
-	
+
 	public String toString(){
 		Float buff = new Float(this.val);
 		return buff.toString();
 	}
-	
+
+	public String typeToString(){
+		return "Float";
+	}
+
 	public float getVal() {
 		return val;
 	}

@@ -4,23 +4,27 @@ public class Date extends Types{
 	private int year;
 	private int month;
 	private int day;
-	
+
 	public Date(){
-		
+
 	}
-	
+
 	public Date(int yI, int mI, int dI){
 		this.year = yI;
 		this.month = mI;
 		this.day = dI;
 	}
-	
+
 	public String toString(){
 		String y = String.valueOf(year);
 		String m = String.valueOf(month);
 		String d = String.valueOf(day);
-		
+
 		return y+m+d;
+	}
+
+	public String typeToString(){
+		return "Date";
 	}
 
 	public int getYear() {
@@ -46,5 +50,5 @@ public class Date extends Types{
 	public void setDay(int day) {
 		this.day = day;
 	}
-	
+
 }

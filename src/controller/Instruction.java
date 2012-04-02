@@ -15,11 +15,11 @@ import types.Char;
 
 public class Instruction {
 	private Crud temp=new Crud();
-	
+
 	public Instruction() {
-		// TODO Auto-generated constructor stub
+
 	}
-	
+
 	public Table CreateTable(String requete){
 		 String[] tab= null;
 		 String nomTable = null;
@@ -31,7 +31,7 @@ public class Instruction {
 				for (int i=0;i<tab.length;i++){
 						tp=tab[i];
 				}
-				
+
 				tp=tp.replace("(","");
 				tp=tp.replace(", ",",");
 				tp=tp.replace(" ,",",");
@@ -49,21 +49,21 @@ public class Instruction {
 				temp.fullCreate(nomTable,colNames,colTypes);
 				return temp.getUsedTable();
 			}
-					
+
 	public Table SelectFrom(String requete){
-		
+
 		return temp.getUsedTable();
 			}
 	public Table AlterTable(String requete){
 		String tp=null;
 		String[] tab= null;
 		Column col;
-				
+
 		tp=requete.replace("ALTER TABLE ","");
 		tab=tp.split("[^a-zA-Z0-9]");
 		temp.initialise(tab[0]);
 		temp.getUsedTable();
-		
+
 		if(tab[1].equalsIgnoreCase("ADD")){
 			col=new Column(tab[2],toType(tab[3]));
 			temp.addColumn(col);
@@ -82,7 +82,7 @@ public class Instruction {
 		}
 		return temp.getUsedTable();
 		}
-	
+
 	public Table InsertInto(String requete){
 		String[] tab=null;
 		String nomTable;
@@ -90,12 +90,12 @@ public class Instruction {
 		ArrayList<Line> values = new ArrayList<Line>();
 		ArrayList<Column> colName = new ArrayList<Column>();
 		ArrayList<String> val=new ArrayList<String>();
-				
+
 		requete=requete.replace("INSERT INTO ","");
 		requete=requete.replace("(","");
 		tab=requete.split("[^a-zA-Z0-9]");
 		nomTable=tab[0];
-		
+
 		if(nomTable.equals(temp.getUsedTable().getTableName())){
 		temp.initialise(nomTable);
 		temp.getUsedTable();
@@ -112,7 +112,7 @@ public class Instruction {
 		for (int i=0;i<colName.size();i++){
 			for (int j=i;j<val.size();j++){
 				if(temp.getUsedTable().getArrCol().contains(colName.get(i))){
-					
+
 					Line l=new Line();
 					Types type=initLine(val.get(j));
 					l.add(type);
@@ -131,7 +131,7 @@ public class Instruction {
 			return null;
 		}
 	}
-	
+
 	public Table Update(String requete){
 		return temp.getUsedTable();
 	}
@@ -166,15 +166,15 @@ public class Instruction {
 		Pattern Float=Pattern.compile("^[0-9]*\\.[0-9]*$");
 		Pattern Sinteger=Pattern.compile("^[0-9]$*");
 		Pattern Text=Pattern.compile("^[a-zA-Z]$");
-		
+
 		boolean reponseBit =bit.matcher(val).matches();
 		boolean reponseChar =Char.matcher(val).matches();
 		boolean reponseDate =Date.matcher(val).matches();
 		boolean reponseFloat =Float.matcher(val).matches();
 		boolean reponseSinteger =Sinteger.matcher(val).matches();
 		boolean reponseText= Text.matcher(val).matches();
-		
-		
+
+
 		if(reponseSinteger){
 			type=new Sinteger(Integer.parseInt(val));
 		}
@@ -191,8 +191,8 @@ public class Instruction {
 		else if(reponseText){
 			type= new Text(val);
 		}
-		
+
 		return type;
-	}	
+	}
 }
 
