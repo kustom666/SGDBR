@@ -13,7 +13,7 @@ public class Crud {
 	private Column usedColumn;
 	public Crud()
 	{
-
+		
 	}
 
 	public Crud(Table t)
@@ -34,16 +34,46 @@ public class Crud {
 	}
 	public void displayTable()
 	{
+<<<<<<< HEAD
 		System.out.println("--------------------");
 
 		System.out.println("| "+usedTable.getTableName()+" |");
 		System.out.println("--------------------");
 		for(int i=0; i<usedTable.getArrCol().size(); i++){
 			System.out.print("| "+this.usedTable.getArrCol().get(i).getLabel()+" ");
+=======
+		String buffMax = new String();
+		
+		//BuffMax contiens tous les caractères de la ligne contenant les descriptifs de colonne
+		Iterator<Column> it = usedTable.getArrCol().iterator();
+		
+		for(int i = 0; i< usedTable.getArrCol().size(); i++){
+			buffMax+= "| "+usedTable.getArrCol().get(i).getLabel() + ":" +usedTable.getArrCol().get(i).getType().typeToString()+" ";
+		}
+		//Impression de la première ligne
+		for(int i=0; i< buffMax.length()+1; i++){
+			System.out.print("-");
+		}
+		System.out.println();
+		
+		//Impression des espaces avant le nom de table pour le centrer dans la table
+		System.out.print("|");
+		for(int i=0; i< (buffMax.length()-(usedTable.getTableName().length()+2))/2; i++){
+			System.out.print(" ");
+		}
+		
+		//Impression du nom de table
+		System.out.print(usedTable.getTableName());
+		
+		//Impression des espaces après le nom de table pour le centrer dans la table
+		for(int i=0; i< (buffMax.length()-(usedTable.getTableName().length()+2))/2+2; i++){
+			System.out.print(" ");
+>>>>>>> 3857169... Changements mineurs
 		}
 		System.out.println("|");
 		System.out.println("--------------------");
 		for(int i=0; i< usedTable.size(); i++){
+<<<<<<< HEAD
 
 			usedTable.get(i).outputLine();
 
@@ -54,6 +84,22 @@ public class Crud {
 	}
 
 
+=======
+			
+			usedTable.get(i).outputLine(usedTable.getArrCol());
+			
+		}
+		
+		//Dernier délimiteur
+		for(int i=0; i< buffMax.length()+1; i++){
+			System.out.print("-");
+		}
+		System.out.println();
+
+	}
+
+	
+>>>>>>> 3857169... Changements mineurs
 	public void setUpTable(HashMap<String, Types> hm){
 		int i=0;
 		Iterator it = hm.entrySet().iterator();
