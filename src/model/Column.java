@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import types.Types;
 
 
-public class Column extends ArrayList<Types>{
+public class Column extends Types{
 
 	private static final long serialVersionUID = 1437340961489074002L;
 	private String label;

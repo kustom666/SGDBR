@@ -3,12 +3,13 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
 import model.Column;
 import model.Line;
 import model.Table;
 import types.Date;
 import types.Sinteger;
-import types.Float;
+import types.SFloat;
 import types.Text;
 import types.Types;
 import types.Char;
@@ -22,7 +23,7 @@ public class Instruction {
 
 	public Table CreateTable(String requete){
 		 String[] tab= null;
-		 String nomTable = null;
+		 String nomTable = new String();
 		 String tp=new String();
 		 ArrayList<Types> colTypes=new ArrayList<Types>();
 		 ArrayList<String> colNames=new ArrayList<String>();
@@ -145,7 +146,7 @@ public class Instruction {
 			type=new Sinteger();
 		}
 		else if(requete.equalsIgnoreCase("float")){
-			type= new Float();
+			type= new SFloat();
 		}
 		else if(requete.equalsIgnoreCase("date")){
 			type= new Date();
@@ -179,7 +180,7 @@ public class Instruction {
 			type=new Sinteger(Integer.parseInt(val));
 		}
 		else if(reponseFloat){
-			type= new Float(Float.parseFloat(val));
+			type= new SFloat(java.lang.Float.parseFloat(val));
 		}
 		else if(reponseDate){
 			String[] tab=val.split(" ");

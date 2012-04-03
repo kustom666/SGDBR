@@ -34,19 +34,9 @@ public class Crud {
 	}
 	public void displayTable()
 	{
-
-		System.out.println("--------------------");
-
-		System.out.println("| "+usedTable.getTableName()+" |");
-		System.out.println("--------------------");
-		for(int i=0; i<usedTable.getArrCol().size(); i++){
-			System.out.print("| "+this.usedTable.getArrCol().get(i).getLabel()+" ");
-		}
 		String buffMax = new String();
 		
 		//BuffMax contiens tous les caractères de la ligne contenant les descriptifs de colonne
-		Iterator<Column> it = usedTable.getArrCol().iterator();
-		
 		for(int i = 0; i< usedTable.getArrCol().size(); i++){
 			buffMax+= "| "+usedTable.getArrCol().get(i).getLabel() + ":" +usedTable.getArrCol().get(i).getType().typeToString()+" ";
 		}
@@ -70,14 +60,22 @@ public class Crud {
 			System.out.print(" ");
 		}
 		System.out.println("|");
-		System.out.println("--------------------");
-		for(int i=0; i< usedTable.size(); i++){			
-			usedTable.get(i).outputLine(usedTable.getArrCol());		
-		}
 		
-		//Dernier délimiteur
 		for(int i=0; i< buffMax.length()+1; i++){
 			System.out.print("-");
+		}
+		System.out.println();
+		
+		//Impression de la ligne de descriptif colonne
+		System.out.println(buffMax+"|");
+		
+		for(int i=0; i< buffMax.length()+1; i++){
+			System.out.print("-");
+		}
+		System.out.println();
+		
+		for(int i=0; i< usedTable.size(); i++){			
+			usedTable.get(i).outputLine(usedTable.getArrCol());		
 		}
 		System.out.println();
 
@@ -85,29 +83,27 @@ public class Crud {
 
 	
 
-	public void setUpTable(HashMap<String, Types> hm){
+	public void setUpTable(ArrayList<Couple> alc){
 		int i=0;
-		Iterator it = hm.entrySet().iterator();
-		while(it.hasNext()){
-			Map.Entry<String,Types> buff = (Map.Entry<String,Types>)it.next();
-			Column c = this.createCol(buff.getKey(), buff.getValue());
+		for(i = 0; i<alc.size();i++ ){
+			Column c = this.createCol(alc.get(i).getNom(), alc.get(i).getTypeC());
 			this.usedTable.addCol(c);
-			i++;
 		}
 	}
+	
 
-	public HashMap<String,Types> construireHMsetUp(ArrayList<String> a, ArrayList<Types> l){
+	public ArrayList<Couple> construireALSetUp(ArrayList<String> a, ArrayList<Types> l){
 		if(a.size()!=l.size()){
 			System.out.println("Erreur : Trop de noms de colonne ou trop de types différents, défault d'intégrité");
 			return null;
 		}
 		else
 		{
-			HashMap<String,Types> hm = new HashMap<String,Types>();
+			ArrayList<Couple> alc = new ArrayList<Couple>();
 			for(int i=0;i<a.size();i++){
-				hm.put(a.get(i), l.get(i));
+				alc.add(new Couple(a.get(i), l.get(i)));
 			}
-			return hm;
+			return alc;
 		}
 	}
 
@@ -118,13 +114,13 @@ public class Crud {
 
 	public void fullCreate(String tName, ArrayList<String> colNames, ArrayList<Types> types){
 		initialise(tName);
-		HashMap<String,Types> buffHM = construireHMsetUp(colNames, types);
+		ArrayList<Couple> buffHM = construireALSetUp(colNames, types);
 		setUpTable(buffHM);
 	}
 
 	public void fullCreate(String tName, ArrayList<String> colNames, ArrayList<Types> types, ArrayList<Line> l){
 		initialise(tName);
-		HashMap<String,Types> buffHM = construireHMsetUp(colNames, types);
+		ArrayList<Couple> buffHM = construireALSetUp(colNames, types);
 		setUpTable(buffHM);
 		ajouterLignes(l);
 
