@@ -1,0 +1,10 @@
+#Readme
+
+SGDBR est un projet de système de gestion de base de données relationnelle avec syntaxe SQL en java.
+Le projet est actuellement dans sa phase de conception
+
+##Changelog
+
+* 0.2.0 : Prototype fonctionnel, code plus clair
+* 0.1.0 : Prototype à peu près fonctionnel, ajout, modification et suppression de tables sur une seule base en place.
+* 0.0.0 : création du projet
