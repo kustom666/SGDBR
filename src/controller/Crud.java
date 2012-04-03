@@ -34,14 +34,14 @@ public class Crud {
 	}
 	public void displayTable()
 	{
-<<<<<<< HEAD
+
 		System.out.println("--------------------");
 
 		System.out.println("| "+usedTable.getTableName()+" |");
 		System.out.println("--------------------");
 		for(int i=0; i<usedTable.getArrCol().size(); i++){
 			System.out.print("| "+this.usedTable.getArrCol().get(i).getLabel()+" ");
-=======
+		}
 		String buffMax = new String();
 		
 		//BuffMax contiens tous les caractères de la ligne contenant les descriptifs de colonne
@@ -68,26 +68,11 @@ public class Crud {
 		//Impression des espaces après le nom de table pour le centrer dans la table
 		for(int i=0; i< (buffMax.length()-(usedTable.getTableName().length()+2))/2+2; i++){
 			System.out.print(" ");
->>>>>>> 3857169... Changements mineurs
 		}
 		System.out.println("|");
 		System.out.println("--------------------");
-		for(int i=0; i< usedTable.size(); i++){
-<<<<<<< HEAD
-
-			usedTable.get(i).outputLine();
-
-		}
-		System.out.println("|");
-		System.out.println("--------------------");
-
-	}
-
-
-=======
-			
-			usedTable.get(i).outputLine(usedTable.getArrCol());
-			
+		for(int i=0; i< usedTable.size(); i++){			
+			usedTable.get(i).outputLine(usedTable.getArrCol());		
 		}
 		
 		//Dernier délimiteur
@@ -99,7 +84,7 @@ public class Crud {
 	}
 
 	
->>>>>>> 3857169... Changements mineurs
+
 	public void setUpTable(HashMap<String, Types> hm){
 		int i=0;
 		Iterator it = hm.entrySet().iterator();

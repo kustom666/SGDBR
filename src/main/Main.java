@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 import controller.Crud;
 import controller.Instruction;
-import controller.TestPattern;
+//import controller.TestPattern;
 
 import types.Sinteger;
 import types.Types;
@@ -41,15 +41,15 @@ public class Main {
 		alS.add("Age max");
 		alS.add("Taille");*/
 
-		Crud controlleur = new Crud();
+		Crud controller = new Crud();
 		Table table;
-		TestPattern t=new TestPattern();
+		//TestPattern t=new TestPattern();
 		//controlleur.fullCreate("Table dummy", alS, alT, al);
 		//System.out.println(controlleur);
 
 		System.out.println("Bienvenue sur le CLI SGDBR 0.1a, initialisation de la base");
 		Base workingBase = new Base("default");
-		System.out.println("Base default initialisée, en attente de commandes");
+		System.out.println("Base default initialisï¿½e, en attente de commandes");
 		String buffIn = new String();
 		while(!buffIn.endsWith(";"))
 		{
@@ -57,9 +57,7 @@ public class Main {
 			buffIn += sc.nextLine();
 		}
 
-		table=t.test(buffIn);
-		controlleur.setUsedTable(table);
-		controlleur.displayTable();
+		//table=t.test(buffIn);
 
 	}
 }
