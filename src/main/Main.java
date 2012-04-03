@@ -62,7 +62,7 @@ public class Main {
 		}
 
 		table=t.test(buffIn);
-
+		controlleur.setUsedTable(table);
 		controlleur.displayTable();
 
 	}

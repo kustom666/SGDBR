@@ -48,6 +48,7 @@ public class Instruction {
 					}
 				}
 				temp.fullCreate(nomTable,colNames,colTypes);
+				Table te = temp.getUsedTable();
 				return temp.getUsedTable();
 			}
 
