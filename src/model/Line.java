@@ -11,20 +11,21 @@ public class Line extends ArrayList<Types>{
 	public void outputLine(){
 		for(int i=0; i<this.size(); i++){
 			System.out.print("| "+this.get(i).toString()+ " ");
-
+		}
+	}
 	/**
-	 * outputLine est une méthode permettant de représenter les lignes de la table en texte sur la sortie système
+	 * outputLine est une mï¿½thode permettant de reprï¿½senter les lignes de la table en texte sur la sortie systï¿½me
 	 * @param arrColCorres : l'array list des descriptifs de colonne correspondant aux lignes, pour effectuer les calculs
 	 * @author Paul Forti
 	 * */
 	public void outputLine(ArrayList<Column> arrColCorres){
 		for(int i=0; i<this.size(); i++){
 
-			//On initialise une variable valeurDeLigne pour plus de clareté dans les if et les for
+			//On initialise une variable valeurDeLigne pour plus de claretï¿½ dans les if et les for
 			int valeurDeLigne = (arrColCorres.get(i).getLabel().length()+arrColCorres.get(i).getType().typeToString().length()-this.get(i).toString().length())/2;
 			//Et une variable tailleDuDesc qui contiens la taille exacte du descriptif
 			int tailleDuDesc = arrColCorres.get(i).getType().typeToString().length();
-			//Et enfin une qui contiens la taille de la valeur dans la variable stockée
+			//Et enfin une qui contiens la taille de la valeur dans la variable stockï¿½e
 			int tailleVar = this.get(i).toString().length();
 
 			System.out.print("|");
