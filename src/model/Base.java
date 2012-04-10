@@ -13,8 +13,8 @@ public class Base extends ArrayList<Table> {
 	}
 	
 	/**
-	 * addTable ajoute des tables à la base.
-	 * @params aTables les tables à ajouter
+	 * addTable ajoute des tables ï¿½ la base.
+	 * @params aTables les tables ï¿½ ajouter
 	 * @author Paul Forti
 	 * */
 	public void addTables(ArrayList<Table> aTables){
@@ -22,12 +22,13 @@ public class Base extends ArrayList<Table> {
 			this.add(aTables.get(i));
 		}
 	}
-	
-	/**
-	 * saveBase enregistre la base de données dans un fichier CSV pour une réutilisation future
-	 * @author Paul Forti
-	 * */
-	public void saveBase(){
-		
+
+	public String getNom() {
+		return nom;
 	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+	
 }
