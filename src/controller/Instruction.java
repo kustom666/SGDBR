@@ -63,24 +63,24 @@ public class Instruction {
 
 		tp=requete.replace("ALTER TABLE ","");
 		tab=tp.split("[^a-zA-Z0-9]");
-		temp.initialise(tab[0]);
-		temp.getUsedTable();
+		/*for(int i=0;i<tab.length;i++){
+			tab[i].trim();
+		}*/
 
 		if(tab[1].equalsIgnoreCase("ADD")){
 			col=new Column(tab[2],toType(tab[3]));
-			temp.addColumn(col);
+			temp.getUsedTable().addCol(col);
 		}
 		else if(tab[1].equalsIgnoreCase("DROP")){
-			col=new Column(tab[2]);
-			temp.removeColumn(col);
+			col=temp.getUsedTable().getCol(tab[2]);
+			temp.getUsedTable().supCol(col);
 		}
 		else if(tab[1].equalsIgnoreCase("CHANGE")){
-			col=new Column(tab[3],toType(tab[4]));
-			temp.getUsedColumn(tab[2]);
-			temp.setUsedColumn(col);
+			temp.getUsedTable().getCol(tab[2]).setType(toType(tab[4]));
+			temp.getUsedTable().getCol(tab[2]).setLabel(tab[3]);
 		}
 		else if(tab[1].equalsIgnoreCase("MODIFY")){
-			temp.getUsedColumn(tab[2]).setType(toType(tab[3]));
+			temp.getUsedTable().getCol(tab[2]).setType(toType(tab[3]));
 		}
 		return temp.getUsedTable();
 		}
@@ -97,42 +97,31 @@ public class Instruction {
 		requete=requete.replace("(","");
 		tab=requete.split("[^a-zA-Z0-9]");
 		nomTable=tab[0];
-
-		if(nomTable.equals(temp.getUsedTable().getTableName())){
-		//temp.initialise(nomTable);
-		//temp.getUsedTable();
-		for(int i=1;i<tab.length;i++){
-			if(!tab[i].equalsIgnoreCase("VALUES")){
-			colName.add(temp.getUsedTable().getCol(tab[i]));
-			}
-			else{
-				for(int j=i+1;j<tab.length;j++){
-					val.add(tab[j]);
-				}
-			}
+		for(int i=0;i<tab.length;i++){
+			tab[i].trim();
 		}
-		for (int i=0;i<colName.size();i++){
-			for (int j=i;j<val.size();j++){
-				if(temp.getUsedTable().getArrCol().contains(colName.get(i))){
-
-					Line l=new Line();
-					Types type=initLine(val.get(j));
+int i=1;
+Line l=new Line();
+		if(nomTable.equals(temp.getUsedTable().getTableName())){
+			while(!tab[i].equalsIgnoreCase("VALUES")){
+				if(tab[i].equalsIgnoreCase("VALUES")){
+				i++;
+					Types type=initLine(tab[i]);
 					l.add(type);
-					values.add(l);
+					temp.getUsedTable().insert(l);
 				}
 				else{
 					System.out.println("La colonne "+colName.get(i)+" n'existe pas\n");
 				}
 			}
 		}
-		temp.ajouterLignes(values);
-		return temp.getUsedTable();
+			return temp.getUsedTable();
 	}
-		else{
-			System.out.println("La table "+nomTable+" n'existe pas \n");
-			return null;
-		}
-	}
+		//else{
+			//System.out.println("La table "+nomTable+" n'existe pas \n");
+			//return null;
+		//}
+	//}
 
 	public Table Update(String requete){
 		return temp.getUsedTable();
@@ -197,4 +186,5 @@ public class Instruction {
 		return type;
 	}
 }
+
 
