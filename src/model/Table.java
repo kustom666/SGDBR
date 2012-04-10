@@ -12,6 +12,9 @@ public class Table extends ArrayList<Line> {
 		this.tableName = tName;
 	}
 
+	/**
+	 * @deprecated
+	 * */
 	public Table(String tName, Line addLine){
 		this.tableName = tName;
 		this.add(addLine);

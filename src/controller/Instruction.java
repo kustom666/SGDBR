@@ -99,11 +99,11 @@ public class Instruction {
 		nomTable=tab[0];
 
 		if(nomTable.equals(temp.getUsedTable().getTableName())){
-		temp.initialise(nomTable);
-		temp.getUsedTable();
+		//temp.initialise(nomTable);
+		//temp.getUsedTable();
 		for(int i=1;i<tab.length;i++){
 			if(!tab[i].equalsIgnoreCase("VALUES")){
-			colName.add(temp.getUsedColumn(tab[i]));
+			colName.add(temp.getUsedTable().getCol(tab[i]));
 			}
 			else{
 				for(int j=i+1;j<tab.length;j++){
