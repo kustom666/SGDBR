@@ -1,10 +1,10 @@
 package types;
 
-public class Bit extends Types{
+public class SBit extends Types{
 
 	private byte[] val;
 
-	public Bit(){
+	public SBit(){
 
 	}
 
