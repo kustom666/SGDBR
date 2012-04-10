@@ -30,12 +30,14 @@ public class Table extends ArrayList<Line> {
 	{
 		this.add(li);
 		System.out.println("Ajout d'une nouvelle line");
+		li.outputLine();
 	}
 
 	public void supress(Line li)
 	{
 		this.remove(li);
 		System.out.println("Suppression d'une line");
+		li.outputLine();
 
 	}
 
@@ -43,6 +45,7 @@ public class Table extends ArrayList<Line> {
 	{
 		this.set(index, li);
 		System.out.println("Remplacement d'une line");
+		li.outputLine();
 	}
 
 	public void addCol(Column col)
