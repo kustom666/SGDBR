@@ -1,14 +1,14 @@
 package types;
 
-public class Char extends Types{
+public class SChar extends Types{
 	private char val[];
 	private int maxLength;
 
-	public Char(){
+	public SChar(){
 
 	}
 
-	public Char(char valI[], int length){
+	public SChar(char valI[], int length){
 		this.val = valI;
 		this.maxLength = length;
 	}

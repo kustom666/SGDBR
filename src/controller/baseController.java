@@ -1,9 +1,16 @@
 package controller;
 
+import java.util.ArrayList;
+
 import model.Base;
 import model.Table;
 
-public class baseController {
+public class baseController{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7375778026458326716L;
+	
 	private Base baseTravail;
 	
 	public baseController(){
@@ -31,6 +38,10 @@ public class baseController {
 		this.baseTravail = baseTravail;
 	}
 	
-	
+	public void saveBaseCSV(){
+		for(int i=0;i<this.baseTravail.size(); i++){
+			baseTravail.get(i).saveTable(baseTravail.getNom()+baseTravail.get(i).getTableName());
+		}
+	}
 }
 

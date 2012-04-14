@@ -1,5 +1,10 @@
 package model;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import types.Types;
 public class Table extends ArrayList<Line> {
@@ -12,6 +17,9 @@ public class Table extends ArrayList<Line> {
 		this.tableName = tName;
 	}
 
+	/**
+	 * @deprecated
+	 * */
 	public Table(String tName, Line addLine){
 		this.tableName = tName;
 		this.add(addLine);
@@ -22,13 +30,14 @@ public class Table extends ArrayList<Line> {
 	{
 		this.add(li);
 		System.out.println("Ajout d'une nouvelle line");
-
+		li.outputLine();
 	}
 
 	public void supress(Line li)
 	{
 		this.remove(li);
 		System.out.println("Suppression d'une line");
+		li.outputLine();
 
 	}
 
@@ -36,6 +45,7 @@ public class Table extends ArrayList<Line> {
 	{
 		this.set(index, li);
 		System.out.println("Remplacement d'une line");
+		li.outputLine();
 	}
 
 	public void addCol(Column col)
@@ -73,5 +83,31 @@ public class Table extends ArrayList<Line> {
 			}
 		}
 		return c;
+	}
+	
+	public void saveTable(String filename){
+		try {
+			File fout = new File(filename);
+			FileWriter fw = new FileWriter(fout);
+			
+			fw.write(this.tableName+"\n");
+			
+			for(int i = 0; i< this.arrCol.size(); i++){
+				fw.write(this.arrCol.get(i).getLabel()+":"+this.arrCol.get(i).getType().typeToString()+";");
+			}
+			
+			fw.write("\n");
+			
+			for(int i=0;i<this.size();i++){
+				fw.write(this.get(i).outputLineToString());
+				fw.write("\n");
+			}
+			
+		} catch (FileNotFoundException e) {
+			System.out.println("Erreur : impossible d'accéder au fichier " +  filename +" en écriture. Sauvegarde de la table annulée");
+		} catch (IOException e) {
+			System.out.println("Erreur : le fichier "+filename+" est accessible, mais un bug à empéché l'écriture dans ce fichier. Sauvegarde de la table annulée");
+		}
+		
 	}
 }

@@ -50,20 +50,27 @@ public class Main {
 		controlleur.setUsedTable(table);
 		//controlleur.fullCreate("Table dummy", alS, alT, al);
 		//System.out.println(controlleur);
-
+		String test = "y";
 		System.out.println("Bienvenue sur le CLI SGDBR 0.1a, initialisation de la base");
 		Base workingBase = new Base("default");
 		System.out.println("Base default initialis�e, en attente de commandes");
-		String buffIn = new String();
-		while(!buffIn.endsWith(";"))
-		{
-			Scanner sc = new Scanner(System.in);
-			buffIn += sc.nextLine();
-		}
+		while(!test.equals("n"))
+		{	
+			String buffIn = new String();
+			while(!buffIn.endsWith(";"))
+			{
+				Scanner sc = new Scanner(System.in);
+				buffIn += sc.nextLine();
+			}
 
-		table=t.test(buffIn);
-		controlleur.setUsedTable(table);
-		controlleur.displayTable();
+			table=t.test(buffIn);
+			controlleur.setUsedTable(table);
+			controlleur.displayTable();
+			
+			System.out.println("y-Continuer, n-Arrèter");
+			Scanner sc = new Scanner(System.in);
+			test += sc.nextLine().trim();
+		}
 
 	}
 }

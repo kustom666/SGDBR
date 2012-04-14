@@ -6,12 +6,12 @@ import java.util.regex.Pattern;
 import model.Column;
 import model.Line;
 import model.Table;
-import types.Date;
+import types.SChar;
+import types.SDate;
 import types.Sinteger;
 import types.SFloat;
 import types.Text;
 import types.Types;
-import types.Char;
 
 public class Instruction {
 	private Crud temp=new Crud();
@@ -174,10 +174,10 @@ public class Instruction {
 			type= new SFloat();
 		}
 		else if(requete.equalsIgnoreCase("date")){
-			type= new Date();
+			type= new SDate();
 		}
 		else if(requete.equalsIgnoreCase("char")){
-			type= new Char();
+			type= new SChar();
 		}
 		else if(requete.equalsIgnoreCase("text")){
 			type= new Text();
@@ -211,10 +211,10 @@ public class Instruction {
 		}
 		else if(reponseDate){
 			String[] tab=val.split(" ");
-			type= new Date(Integer.parseInt(tab[0]),Integer.parseInt(tab[1]),Integer.parseInt(tab[2]));
+			type= new SDate(Integer.parseInt(tab[0]),Integer.parseInt(tab[1]),Integer.parseInt(tab[2]));
 		}
 		else if(reponseChar){
-			type= new Char(val.toCharArray(),val.charAt(0));
+			type= new SChar(val.toCharArray(),val.charAt(0));
 		}
 		else if(reponseText){
 			type= new Text(val);
@@ -225,4 +225,5 @@ public class Instruction {
 		return type;
 	}
 }
+
 

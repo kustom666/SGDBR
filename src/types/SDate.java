@@ -1,15 +1,15 @@
 package types;
 
-public class Date extends Types{
+public class SDate extends Types{
 	private int year;
 	private int month;
 	private int day;
 
-	public Date(){
+	public SDate(){
 
 	}
 
-	public Date(int yI, int mI, int dI){
+	public SDate(int yI, int mI, int dI){
 		this.year = yI;
 		this.month = mI;
 		this.day = dI;

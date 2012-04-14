@@ -78,4 +78,15 @@ public class Line extends ArrayList<Types>{
 		System.out.print("|");
 		System.out.println("");
 	}
+	
+	public String outputLineToString(){
+		//Nouvelle méthode, il nous faut un string à renvoyer 
+		String buffout = new String("");
+		
+		for(int i=0; i<this.size(); i++){
+			buffout+=";"+this.get(i).toString();
+		}
+		buffout+="|\n";
+		return buffout;
+	}
 }
