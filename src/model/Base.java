@@ -22,6 +22,16 @@ public class Base extends ArrayList<Table> {
 			this.add(aTables.get(i));
 		}
 	}
+	public Table getTable(String name){
+		Table table =new Table(null);
+		for(int i=0;i<this.size();i++){
+			if(this.get(i).getTableName().equals(name)){
+				table=this.get(i);
+				break;
+			}
+		}
+		return table;
+	}
 
 	public String getNom() {
 		return nom;
