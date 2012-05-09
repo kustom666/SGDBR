@@ -2,61 +2,63 @@ package controller;
 
 import java.util.regex.Pattern;
 
-import model.Table;
+import model.Base;
 
 public class TestPattern {
-	private Table temp;
+	private Base temp;
 	private Instruction instruction=new Instruction();
 
-	public Table test(String i) throws TestPatternException{
-		Pattern create=Pattern.compile("^CREATE TABLE [a-zA-Z0-9]*\\s*\\([[_a-zA-Z0-9]* [A-Za-z]*\\s*,]*\\);$",Pattern.MULTILINE);
-		Pattern alterAdd=Pattern.compile("^ALTER TABLE [a-zA-Z0-9]* ADD [a-zA-Z0-9]* [a-zA-Z]*;$",Pattern.MULTILINE);
-		Pattern alterDrop=Pattern.compile("^ALTER TABLE [a-zA-Z0-9]* DROP [a-zA-Z0-9]*;$",Pattern.MULTILINE);
-		Pattern alterChange=Pattern.compile("^ALTER TABLE [a-zA-Z0-9]* CHANGE [a-zA-Z0-9]* [a-zA-Z0-9]* [a-zA-Z]*;$",Pattern.MULTILINE);
-		Pattern alterModify=Pattern.compile("^ALTER TABLE [a-zA-Z0-9]* MODIFY [a-zA-Z0-9]* [a-zA-Z]*;$",Pattern.MULTILINE);
-		Pattern insertInto=Pattern.compile("^INSERT INTO [a-zA-Z0-9]*\\s*\\([[a-zA-Z0-9]*\\s*,]*\\) VALUES\\s\\([[a-zA-Z0-9./\"]*\\s*,]*\\);$",Pattern.MULTILINE);
+	public Base test(String i) throws TestPatternException{
+		Pattern create=Pattern.compile("^CREATE TABLE [a-zA-Z0-9]*\\s*\\([[_a-zA-Z0-9]* [A-Za-z]*\\s*,]*\\)\\s*;$",Pattern.MULTILINE);
+		Pattern alterAdd=Pattern.compile("^ALTER TABLE [a-zA-Z0-9]* ADD [a-zA-Z0-9]* [a-zA-Z]*\\s*;$",Pattern.MULTILINE);
+		Pattern alterDrop=Pattern.compile("^ALTER TABLE [a-zA-Z0-9]* DROP [a-zA-Z0-9]*\\s*;$",Pattern.MULTILINE);
+		Pattern alterChange=Pattern.compile("^ALTER TABLE [a-zA-Z0-9]* CHANGE [a-zA-Z0-9]* [a-zA-Z0-9]* [a-zA-Z]*\\s*;$",Pattern.MULTILINE);
+		Pattern alterModify=Pattern.compile("^ALTER TABLE [a-zA-Z0-9]* MODIFY [a-zA-Z0-9]* [a-zA-Z]*\\s*;$",Pattern.MULTILINE);
+		Pattern insertInto=Pattern.compile("^INSERT INTO [[a-zA-Z0-9]*,]* \\([[a-zA-Z0-9]*\\s*,]*\\) VALUES\\s\\([[a-zA-Z0-9./\"]*\\s*,]*\\)\\s*;$",Pattern.MULTILINE);
 		
-		Pattern selectFrom=Pattern.compile("^SELECT [[a-zA-Z0-9_]*\\s*,]* FROM [a-zA-Z0-9]*\\s*;$"/*WHERE [a-zA-Z0-9.=<>!\\s*]*;$"*/,Pattern.MULTILINE);
-		Pattern deleteFrom=Pattern.compile("^DELETE FROM [a-zA-Z0-9]*\\s*;$"/*WHERE [a-zA-Z0-9!=<>\\s*]*;$"*/, Pattern.MULTILINE);
-		Pattern update=Pattern.compile("^UPDATE [a-zA-Z0-9]* SET [a-zA-Z0-9]* = [a-zA-Z0-9.\"/]*;$"/*WHERE [a-zA-Z0-9.=<>!\\s*]*;$"*/, Pattern.MULTILINE);
+		Pattern selectFrom=Pattern.compile("^SELECT [[a-zA-Z0-9_]*\\s*,]* FROM [[a-zA-Z0-9],*]+\\s*;$",Pattern.MULTILINE);
+		Pattern selectFromWhere=Pattern.compile("^SELECT [[a-zA-Z0-9_]*\\s*,]* FROM [a-zA-Z0-9]* WHERE [a-zA-Z0-9.=<>!\\s*]*\\s*;$",Pattern.MULTILINE);
+		
+		Pattern deleteFrom=Pattern.compile("^DELETE FROM [a-zA-Z0-9]*\\s*;$", Pattern.MULTILINE);
+		Pattern deleteFromWhere=Pattern.compile("^DELETE FROM [a-zA-Z0-9]* WHERE [a-zA-Z0-9!=<>\\s*]*\\s*;$", Pattern.MULTILINE);
+		
+		Pattern update=Pattern.compile("^UPDATE [a-zA-Z0-9]* SET [a-zA-Z0-9]* = [a-zA-Z0-9.\"/]*\\s*;$", Pattern.MULTILINE);
+		Pattern updateWhere=Pattern.compile("^UPDATE [a-zA-Z0-9]* SET [a-zA-Z0-9]* = [a-zA-Z0-9.\"/]* WHERE [a-zA-Z0-9.=<>!\\s*]*\\s*;$", Pattern.MULTILINE);
 
 		boolean reponseCreate =create.matcher(i).matches();
 		boolean reponseAlterAdd =alterAdd.matcher(i).matches();
 		boolean reponseAlterDrop =alterDrop.matcher(i).matches();
 		boolean reponseAlterChange =alterChange.matcher(i).matches();
 		boolean reponseAlterModify =alterModify.matcher(i).matches();
+		
 		boolean reponseInsert =insertInto.matcher(i).matches();
 		boolean reponseUpdate =update.matcher(i).matches();
+		boolean reponseUpdateWhere =updateWhere.matcher(i).matches();
+		
 		boolean reponseSelect= selectFrom.matcher(i).matches();
+		boolean reponseSelectWhere= selectFromWhere.matcher(i).matches();
+		
 		boolean reponseDelete=deleteFrom.matcher(i).matches();
+		boolean reponseDeleteWhere=deleteFromWhere.matcher(i).matches();
 
 
 		if (reponseCreate){
 
 			temp=instruction.CreateTable(i);
 		}
-		else if(reponseAlterAdd){
-			temp=instruction.AlterTable(i);
-		}
-		else if(reponseAlterDrop){
-			temp=instruction.AlterTable(i);
-		}
-		else if(reponseAlterChange){
-			temp=instruction.AlterTable(i);
-		}
-		else if(reponseAlterModify){
+		else if(reponseAlterAdd^reponseAlterDrop^reponseAlterChange^reponseAlterModify){
 			temp=instruction.AlterTable(i);
 		}
 		else if(reponseInsert){
 			temp=instruction.InsertInto(i);
 		}
-		else if(reponseUpdate){
+		else if(reponseUpdate^reponseUpdateWhere){
 			temp=instruction.Update(i);
 		}
-		else if(reponseSelect){
+		else if(reponseSelect^reponseSelectWhere){
 			temp=instruction.SelectFrom(i);
 		}
-		else if(reponseDelete){
+		else if(reponseDelete^reponseDeleteWhere){
 			temp=instruction.DeleteFrom(i);
 		}
 		else {
