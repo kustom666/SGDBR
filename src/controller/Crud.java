@@ -32,6 +32,10 @@ public class Crud {
 			this.usedTable.insert(l.get(i));
 		}
 	}
+	
+	public void importFromCSV(String contenucsv){
+		
+	}
 	public void displayTable()
 	{
 		String buffMax = new String();

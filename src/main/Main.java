@@ -53,7 +53,7 @@ public class Main {
 		String test = "y";
 		System.out.println("Bienvenue sur le CLI SGDBR 0.1a, initialisation de la base");
 		Base workingBase = new Base("default");
-		System.out.println("Base default initialisï¿½e, en attente de commandes");
+		System.out.println("Base default initialisée, en attente de commandes");
 		while(!test.equals("n"))
 		{	
 			String buffIn = new String();
@@ -67,7 +67,7 @@ public class Main {
 			controlleur.setUsedTable(table);
 			controlleur.displayTable();
 			
-			System.out.println("y-Continuer, n-ArrÃ¨ter");
+			System.out.println("y-Continuer, n-Arrèter");
 			Scanner sc = new Scanner(System.in);
 			test += sc.nextLine().trim();
 		}

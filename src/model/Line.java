@@ -89,4 +89,5 @@ public class Line extends ArrayList<Types>{
 		buffout+="|\n";
 		return buffout;
 	}
+	
 }
