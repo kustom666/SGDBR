@@ -93,7 +93,8 @@ public class Table extends ArrayList<Line> {
 			fw.write(this.tableName+"\n");
 			
 			for(int i = 0; i< this.arrCol.size(); i++){
-				fw.write(this.arrCol.get(i).getLabel()+":"+this.arrCol.get(i).getType().typeToString()+";");
+				
+				fw.write(this.arrCol.get(i).getLabel()+":"+this.arrCol.get(i).getType().typeToString()+this.arrCol.get(i).colProp()+";");
 			}
 			
 			fw.write("\n");

@@ -5,6 +5,9 @@ Le projet est actuellement dans sa phase de conception
 
 ##Changelog
 
+* 0.5.0 : Language SQL totalement terminé
+* 0.4.0 : Améliorations dans les fonctionnalités accessibles via commande SQL
+* 0.3.0 : Prototype Terminé, rendu à l'heure
 * 0.2.0 : Prototype fonctionnel, code plus clair
 * 0.1.0 : Prototype à peu près fonctionnel, ajout, modification et suppression de tables sur une seule base en place.
 * 0.0.0 : création du projet
