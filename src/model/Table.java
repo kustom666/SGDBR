@@ -1,10 +1,13 @@
 package model;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import types.Types;
 public class Table extends ArrayList<Line> {
@@ -86,29 +89,44 @@ public class Table extends ArrayList<Line> {
 	}
 	
 	public void saveTable(String filename){
+		ObjectOutputStream output;
 		try {
-			File fout = new File(filename);
-			FileWriter fw = new FileWriter(fout);
+			output = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(new File(filename))));
 			
-			fw.write(this.tableName+"\n");
+			output.writeBytes(this.tableName+"\n");
 			
 			for(int i = 0; i< this.arrCol.size(); i++){
-				
-				fw.write(this.arrCol.get(i).getLabel()+":"+this.arrCol.get(i).getType().typeToString()+this.arrCol.get(i).colProp()+";");
+				output.writeBytes(this.arrCol.get(i).getLabel()+":"+this.arrCol.get(i).getType().typeToString()+this.arrCol.get(i).colProp()+";");
 			}
 			
-			fw.write("\n");
-			
+			output.writeBytes("\n");
+
 			for(int i=0;i<this.size();i++){
-				fw.write(this.get(i).outputLineToString());
-				fw.write("\n");
+				output.writeBytes(this.get(i).outputLineToString());
+				output.writeBytes("\n");
 			}
 			
+			output.close();
 		} catch (FileNotFoundException e) {
 			System.out.println("Erreur : impossible d'accéder au fichier " +  filename +" en écriture. Sauvegarde de la table annulée");
 		} catch (IOException e) {
 			System.out.println("Erreur : le fichier "+filename+" est accessible, mais un bug à empéché l'écriture dans ce fichier. Sauvegarde de la table annulée");
 		}
+		
+	}
+	
+	public Table loadTable(String filename){
+		Table buffTable = new Table(filename);
+		
+		try{
+			File fin = new File(filename);
+			FileReader fr = new FileReader(fin);
+			
+		}catch(FileNotFoundException e){
+			
+		}
+		
+		return buffTable;	
 		
 	}
 }
