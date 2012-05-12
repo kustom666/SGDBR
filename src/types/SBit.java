@@ -7,6 +7,10 @@ public class SBit extends Types{
 	public SBit(){
 
 	}
+	
+	public SBit(byte[] in){
+		this.val = in;
+	}
 
 	public String typeToString(){
 		return "Byte";

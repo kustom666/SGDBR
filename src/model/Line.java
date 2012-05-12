@@ -86,7 +86,7 @@ public class Line extends ArrayList<Types>{
 		for(int i=0; i<this.size(); i++){
 			buffout+=";"+this.get(i).toString();
 		}
-		buffout+="|\n";
+		buffout+="\n";
 		return buffout;
 	}
 	
