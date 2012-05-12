@@ -1,4 +1,9 @@
 package controller;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -33,7 +38,72 @@ public class Crud {
 		}
 	}
 	
-	public void importFromCSV(String contenucsv){
+	public Types parseTypeFromString(String aparse){
+		Types t = null;
+		if(aparse == "Integer")
+		{
+			t = new Sinteger();
+		}
+		else if(aparse == "Text")
+		{
+			t = new Text();
+		}
+		else if(aparse == "Float")
+		{
+			t = new SFloat();
+		}
+		else if(aparse == "Date")
+		{
+			t = new SDate();
+		}
+		else if(aparse == "Char")
+		{
+			t = new SChar();
+		}
+		else if(aparse == "Byte")
+		{
+			t = new SBit();
+		}
+		
+		return t;
+	}
+	
+	public String importFile(String Filename){
+		String output = new String("");
+		
+		try {
+			FileInputStream fis = new FileInputStream(Filename);
+			DataInputStream das = new DataInputStream(fis);
+			output = das.readUTF();
+		} catch (FileNotFoundException e) {
+			System.out.println("Le fichier "+Filename+" n'a pas été trouvé, arrêt de l'importation");
+		} catch (IOException e) {
+			System.out.println("Erreur d'entrée sortie sur le fichier "+Filename+", arrêt de l'importation");
+		}
+		
+		return output;
+	}
+	
+	public void importFromCSV(String Filename){
+
+		String contenucsv = importFile(Filename);
+		
+		String splitted[];
+		
+		splitted = contenucsv.split("\n");
+		
+		Table buffT = new Table(splitted[0]);
+		
+		this.usedTable = buffT;
+		
+		String columns[] = splitted[1].split(";");
+		
+		for(String s : columns){
+			String colcreate[] = s.split(":");
+			Column buffc = new Column(colcreate[0],);
+			this.usedTable.addCol(buffc);
+		}
+		
 		
 	}
 	public void displayTable()

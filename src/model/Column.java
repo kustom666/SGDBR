@@ -39,52 +39,67 @@ public class Column extends Types{
 		String buff = new String();
 		if(this.isMandatory())
 		{
-			buff+=" : Mandatory : True";
-		}
-		if(this.isCandidate())
-		{
-			buff+=" : Candidate : True";
-		}
-		if(this.isForeign())
-		{
-			buff+=" : Foreign : True";
-		}
-		if(!this.isNotNull())
-		{
-			buff+=" : Can Null : True";
-		}
-		if(this.isUnique())
-		{
-			buff+=" : Unique : True";
-		}
-		if(this.isPrimaryKey())
-		{
-			buff+=" : Primary : True";
+			buff+=":True";
 		}
 		
 		if(!this.isMandatory())
 		{
-			buff+=" : Mandatory : False";
+			buff+=":False";
 		}
+		
+		
+		if(this.isCandidate())
+		{
+			buff+=":True";
+		}
+		
 		if(!this.isCandidate())
 		{
-			buff+=" : Candidate : False";
+			buff+=":False";
 		}
+		
+		
+		if(this.isForeign())
+		{
+			buff+=":True";
+		}
+		
 		if(!this.isForeign())
 		{
-			buff+=" : Foreign : False";
+			buff+=":False";
 		}
+		
+		
+		if(!this.isNotNull())
+		{
+			buff+=":True";
+		}
+		
 		if(this.isNotNull())
 		{
-			buff+=" : Can Null : False";
+			buff+=":False";
 		}
+		
+		
+		if(this.isUnique())
+		{
+			buff+=":True";
+		}
+		
 		if(!this.isUnique())
 		{
-			buff+=" : Unique : False";
+			buff+=":False";
 		}
+		
+		
+		if(this.isPrimaryKey())
+		{
+			buff+=":True";
+		}
+		
 		if(!this.isPrimaryKey())
 		{
-			buff+=" : Primary : False";
+			buff+=":False";
 		}
 		
 		return buff;
