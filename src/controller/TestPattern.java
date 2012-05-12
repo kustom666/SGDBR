@@ -20,11 +20,14 @@ public class TestPattern {
 		Pattern selectFromWhere=Pattern.compile("^SELECT [[a-zA-Z0-9_]*\\s*,]* FROM [a-zA-Z0-9]* WHERE [a-zA-Z0-9.=<>!\\s*]*\\s*;$",Pattern.MULTILINE);
 		
 		Pattern deleteFrom=Pattern.compile("^DELETE FROM [a-zA-Z0-9]*\\s*;$", Pattern.MULTILINE);
-		Pattern deleteFromWhere=Pattern.compile("^DELETE FROM [a-zA-Z0-9]* WHERE [a-zA-Z0-9!=<>\\s*]*\\s*;$", Pattern.MULTILINE);
+		Pattern deleteFromWhere=Pattern.compile("^DELETE FROM [a-zA-Z0-9]* WHERE [a-zA-Z0-9!=<>.\\s*]*\\s*;$", Pattern.MULTILINE);
 		
 		Pattern update=Pattern.compile("^UPDATE [a-zA-Z0-9]* SET [a-zA-Z0-9]* = [a-zA-Z0-9.\"/]*\\s*;$", Pattern.MULTILINE);
 		Pattern updateWhere=Pattern.compile("^UPDATE [a-zA-Z0-9]* SET [a-zA-Z0-9]* = [a-zA-Z0-9.\"/]* WHERE [a-zA-Z0-9.=<>!\\s*]*\\s*;$", Pattern.MULTILINE);
 
+		Pattern sauvBase=Pattern.compile("^BACKUP DATABASE [a-zA-Z]*\\s;$");
+		//Pattern chargeBase=Pattern.compile("^RESTORE DATABASE [a-zA-Z]*\\s;$");
+		
 		boolean reponseCreate =create.matcher(i).matches();
 		boolean reponseAlterAdd =alterAdd.matcher(i).matches();
 		boolean reponseAlterDrop =alterDrop.matcher(i).matches();
@@ -41,29 +44,37 @@ public class TestPattern {
 		boolean reponseDelete=deleteFrom.matcher(i).matches();
 		boolean reponseDeleteWhere=deleteFromWhere.matcher(i).matches();
 
-
+		boolean reponseSauv=sauvBase.matcher(i).matches();
+		//boolean reponseCharge=chargeBase.matcher(i).matches();
 		if (reponseCreate){
 
-			temp=instruction.CreateTable(i);
+			temp=instruction.createTable(i);
 		}
 		else if(reponseAlterAdd^reponseAlterDrop^reponseAlterChange^reponseAlterModify){
-			temp=instruction.AlterTable(i);
+			temp=instruction.alterTable(i);
 		}
 		else if(reponseInsert){
-			temp=instruction.InsertInto(i);
+			temp=instruction.insertInto(i);
 		}
 		else if(reponseUpdate^reponseUpdateWhere){
-			temp=instruction.Update(i);
+			temp=instruction.update(i);
 		}
 		else if(reponseSelect^reponseSelectWhere){
-			temp=instruction.SelectFrom(i);
+			temp=instruction.selectFrom(i);
 		}
 		else if(reponseDelete^reponseDeleteWhere){
-			temp=instruction.DeleteFrom(i);
+			temp=instruction.deleteFrom(i);
 		}
+		else if(reponseSauv){
+			instruction.sauvBase(i);
+		}
+		/*else if(reponseCharge){
+			instruction.ChargeBase(i);
+		}*/
 		else {
 			throw new TestPatternException();
 		}
+		
 		return temp;
 
 	}
