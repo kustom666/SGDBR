@@ -33,7 +33,36 @@ public class Column extends Types{
 	public Column(String label) {
 		this.label=label;
 	}
-
+	
+	public String colProp()
+	{
+		String buff = new String();
+		if(this.isMandatory())
+		{
+			buff+=" : Mandatory";
+		}
+		if(this.isCandidate())
+		{
+			buff+=" : Candidate";
+		}
+		if(this.isForeign())
+		{
+			buff+=" : Foreign";
+		}
+		if(!this.isNotNull())
+		{
+			buff+=" : Null";
+		}
+		if(this.isUnique())
+		{
+			buff+=" : Unique";
+		}
+		if(this.isPrimaryKey())
+		{
+			buff+=" : Primary";
+		}
+		return buff;
+	}
 	//Accesseurs
 	public boolean isMandatory() {
 		return isMandatory;

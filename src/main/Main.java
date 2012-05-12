@@ -6,6 +6,8 @@ import java.util.Scanner;
 import controller.Crud;
 import controller.Instruction;
 import controller.TestPattern;
+import controller.TestPatternException;
+import controller.baseController;
 
 import types.SFloat;
 import types.Sinteger;
@@ -47,13 +49,15 @@ public class Main {
 		Crud controlleur = new Crud();
 		Table table = null;
 		TestPattern t=new TestPattern();
-		controlleur.setUsedTable(table);
+//		controlleur.setUsedTable(table);
 		//controlleur.fullCreate("Table dummy", alS, alT, al);
 		//System.out.println(controlleur);
 		String test = "y";
 		System.out.println("Bienvenue sur le CLI SGDBR 0.1a, initialisation de la base");
-		Base workingBase = new Base("default");
-		System.out.println("Base default initialisée, en attente de commandes");
+
+		Base base=new Base("default");
+		System.out.println("Base default initialisÃ©e, en attente de commandes");
+
 		while(!test.equals("n"))
 		{	
 			String buffIn = new String();
@@ -63,9 +67,19 @@ public class Main {
 				buffIn += sc.nextLine();
 			}
 
-			table=t.test(buffIn);
-			controlleur.setUsedTable(table);
+			try {
+				base=(t.test(buffIn));
+				
+			} catch (TestPatternException e) {
+				e.printStackTrace();
+			}
+			for(int i=0;i<base.size();i++){
+			controlleur.setUsedTable(base.get(i));
 			controlleur.displayTable();
+			if(controlleur.getUsedTable().getTableName().equals("resultat")){
+				base.remove(controlleur.getUsedTable().getTableName());
+			}
+			}
 			
 			System.out.println("y-Continuer, n-Arrèter");
 			Scanner sc = new Scanner(System.in);
