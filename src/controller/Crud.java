@@ -1,4 +1,10 @@
 package controller;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -31,6 +37,157 @@ public class Crud {
 		for(int i=0; i< l.size();i++){
 			this.usedTable.insert(l.get(i));
 		}
+	}
+	
+	public Types parseTypeFromString(String aparse){
+		Types t = null;
+		if(aparse == "Integer")
+		{
+			t = new Sinteger();
+		}
+		else if(aparse == "Text")
+		{
+			t = new Text();
+		}
+		else if(aparse == "Float")
+		{
+			t = new SFloat();
+		}
+		else if(aparse == "Date")
+		{
+			t = new SDate();
+		}
+		else if(aparse == "Char")
+		{
+			t = new SChar();
+		}
+		else if(aparse == "Byte")
+		{
+			t = new SBit();
+		}
+		
+		return t;
+	}
+	
+	public String importFile(String Filename){
+		String output = new String("");
+		
+		try {
+			FileInputStream fis = new FileInputStream(Filename);
+			DataInputStream das = new DataInputStream(fis);
+			output = das.readUTF();
+		} catch (FileNotFoundException e) {
+			System.out.println("Le fichier "+Filename+" n'a pas été trouvé, arrêt de l'importation");
+		} catch (IOException e) {
+			System.out.println("Erreur d'entrée sortie sur le fichier "+Filename+", arrêt de l'importation");
+		}
+		
+		return output;
+	}
+	
+	public void importFromCSV(String Filename){
+
+		String contenucsv = importFile(Filename);
+		
+		String splitted[];
+		
+		splitted = contenucsv.split("\n");
+		
+		Table buffT = new Table(splitted[0]);
+		
+		this.usedTable = buffT;
+		
+		String columns[] = splitted[1].split(";");
+		
+		for(String s : columns){
+			String colcreate[] = s.split(":");
+			Column buffc = new Column(colcreate[0],this.parseTypeFromString(colcreate[1]));
+			if(colcreate[2] == "True")
+			{
+				buffc.setMandatory(true);
+			}
+			else if(colcreate[2] == "False")
+			{
+				buffc.setMandatory(false);
+			}
+			
+			if(colcreate[3] == "True")
+			{
+				buffc.setCandidate(true);
+			}
+			else if(colcreate[3] == "False")
+			{
+				buffc.setCandidate(false);
+			}
+			
+			if(colcreate[4] == "True")
+			{
+				buffc.setForeign(true);
+			}
+			else if(colcreate[4] == "False")
+			{
+				buffc.setForeign(false);
+			}
+			
+			if(colcreate[5] == "True")
+			{
+				buffc.setNotNull(true);
+			}
+			else if(colcreate[5] == "False")
+			{
+				buffc.setNotNull(false);
+			}
+			
+			if(colcreate[6] == "True")
+			{
+				buffc.setUnique(true);
+			}
+			else if(colcreate[6] == "False")
+			{
+				buffc.setUnique(false);
+			}
+			
+			if(colcreate[7] == "True")
+			{
+				buffc.setPrimaryKey(true);
+			}
+			else if(colcreate[7] == "False")
+			{
+				buffc.setPrimaryKey(false);
+			}
+			
+			this.usedTable.addCol(buffc);
+		}
+		
+		for(int j=2; j<splitted.length; j++){
+			String items[] = splitted[j].split(";");
+			Line buffl = new Line();
+			for(int f = 0; f<items.length; f++){
+				if(this.usedTable.getArrCol().get(f).typeToString()=="Integer"){
+					buffl.add(f, new Sinteger(Integer.parseInt(items[f])));
+				}
+				if(this.usedTable.getArrCol().get(f).typeToString()=="Float"){
+					buffl.add(f, new SFloat(Float.parseFloat(items[f])));
+				}
+				if(this.usedTable.getArrCol().get(f).typeToString()=="Date"){
+					String date[] = items[f].split("/");
+					buffl.add(f, new SDate(Integer.parseInt(date[0]),Integer.parseInt(date[1]),Integer.parseInt(date[2])));
+				}
+				if(this.usedTable.getArrCol().get(f).typeToString()=="Char"){
+					char buffchar[] = items[f].toCharArray();
+					buffl.add(f, new SChar(buffchar, items[f].length()));
+				}
+				if(this.usedTable.getArrCol().get(f).typeToString()=="Text"){
+					buffl.add(f, new Text(items[f]));
+				}
+				if(this.usedTable.getArrCol().get(f).typeToString()=="Byte"){
+					buffl.add(f, new SBit(items[f].getBytes()));
+				}
+			}
+			this.usedTable.add(buffl);
+		}
+		
+		
 	}
 	public void displayTable()
 	{
