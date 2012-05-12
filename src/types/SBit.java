@@ -9,7 +9,7 @@ public class SBit extends Types{
 	}
 
 	public String typeToString(){
-		return "Byte";
+		return "SByte";
 	}
 	public byte[] getVal() {
 		return val;
