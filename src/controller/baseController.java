@@ -11,7 +11,7 @@ public class baseController{
 	 */
 	private static final long serialVersionUID = 7375778026458326716L;
 	
-	private Base baseTravail;
+	private Base baseTravail=new Base("default");
 	
 	public baseController(){
 		
