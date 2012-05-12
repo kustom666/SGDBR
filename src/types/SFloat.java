@@ -16,7 +16,7 @@ public class SFloat extends Types{
 	}
 
 	public String typeToString(){
-		return "Float";
+		return "SFloat";
 	}
 
 	public float getVal() {
