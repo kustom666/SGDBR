@@ -39,28 +39,54 @@ public class Column extends Types{
 		String buff = new String();
 		if(this.isMandatory())
 		{
-			buff+=" : Mandatory";
+			buff+=" : Mandatory : True";
 		}
 		if(this.isCandidate())
 		{
-			buff+=" : Candidate";
+			buff+=" : Candidate : True";
 		}
 		if(this.isForeign())
 		{
-			buff+=" : Foreign";
+			buff+=" : Foreign : True";
 		}
 		if(!this.isNotNull())
 		{
-			buff+=" : Null";
+			buff+=" : Can Null : True";
 		}
 		if(this.isUnique())
 		{
-			buff+=" : Unique";
+			buff+=" : Unique : True";
 		}
 		if(this.isPrimaryKey())
 		{
-			buff+=" : Primary";
+			buff+=" : Primary : True";
 		}
+		
+		if(!this.isMandatory())
+		{
+			buff+=" : Mandatory : False";
+		}
+		if(!this.isCandidate())
+		{
+			buff+=" : Candidate : False";
+		}
+		if(!this.isForeign())
+		{
+			buff+=" : Foreign : False";
+		}
+		if(this.isNotNull())
+		{
+			buff+=" : Can Null : False";
+		}
+		if(!this.isUnique())
+		{
+			buff+=" : Unique : False";
+		}
+		if(!this.isPrimaryKey())
+		{
+			buff+=" : Primary : False";
+		}
+		
 		return buff;
 	}
 	//Accesseurs
