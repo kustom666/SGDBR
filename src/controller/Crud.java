@@ -91,7 +91,7 @@ public class Crud {
 		
 		String splitted[];
 		
-		splitted = contenucsv.split("\n");
+		splitted = contenucsv.split("[ \n]");
 		
 		Table buffT = new Table(splitted[0]);
 		
