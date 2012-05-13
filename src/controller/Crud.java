@@ -100,13 +100,17 @@ public class Crud {
 		Table buffT = new Table(splitted[0]);
 		System.out.println(splitted[0]);
 		
-		this.usedTable = buffT;
-		
 		String columns[] = splitted[1].split(";");
 		
 		for(String s : columns){
 			String colcreate[] = s.split(":");
-			Column buffc = new Column(colcreate[0],this.parseTypeFromString(colcreate[1]));
+			Instruction is = new Instruction();
+			Column buffc = null;
+			try {
+				buffc = new Column(colcreate[0],is.toType(colcreate[1]));
+			} catch (TypeException e) {
+				System.out.println("Problème de type dans l'import. Arrèt!");
+			}
 			if(colcreate[2] == "True")
 			{
 				buffc.setMandatory(true);
@@ -161,38 +165,41 @@ public class Crud {
 				buffc.setPrimaryKey(false);
 			}
 			
-			this.usedTable.addCol(buffc);
+			buffT.addCol(buffc);
 		}
 		
 		for(int j=2; j<splitted.length; j++){
 			String items[] = splitted[j].split(";");
 			Line buffl = new Line();
-			for(int f = 0; f<items.length-1; f++){
-				if(this.usedTable.getArrCol().get(f).typeToString()=="Integer"){
+	
+			for(int f = 0; f<items.length; f++){
+				Column buffarcol = buffT.getArrCol().get(f);
+				if(buffarcol.getType().typeToString() == "SInteger"){
 					buffl.add(f, new Sinteger(Integer.parseInt(items[f])));
 				}
-				if(this.usedTable.getArrCol().get(f).typeToString()=="Float"){
+				if(buffarcol.typeToString()=="SFloat"){
 					buffl.add(f, new SFloat(Float.parseFloat(items[f])));
 				}
-				if(this.usedTable.getArrCol().get(f).typeToString()=="Date"){
+				if(buffarcol.typeToString()=="SDate"){
 					String date[] = items[f].split("/");
 					buffl.add(f, new SDate(Integer.parseInt(date[0]),Integer.parseInt(date[1]),Integer.parseInt(date[2])));
 				}
-				if(this.usedTable.getArrCol().get(f).typeToString()=="Char"){
+				if(buffarcol.typeToString()=="SChar"){
 					char buffchar[] = items[f].toCharArray();
 					buffl.add(f, new SChar(buffchar, items[f].length()));
 				}
-				if(this.usedTable.getArrCol().get(f).typeToString()=="Text"){
+				if(buffarcol.typeToString()=="Text"){
 					buffl.add(f, new Text(items[f]));
 				}
-				if(this.usedTable.getArrCol().get(f).typeToString()=="Byte"){
+				if(buffarcol.typeToString()=="Byte"){
 					buffl.add(f, new SBit(items[f].getBytes()));
 				}
+				/*buffl.add(new Sinteger(Integer.parseInt(items[f])));*/
 			}
-			this.usedTable.add(buffl);
+			buffT.add(buffl);
 		}
-		
-		
+		this.usedTable = buffT;
+		this.displayTable();
 	}
 	public void displayTable()
 	{
@@ -200,7 +207,37 @@ public class Crud {
 		
 		//BuffMax contiens tous les caractères de la ligne contenant les descriptifs de colonne
 		for(int i = 0; i< usedTable.getArrCol().size(); i++){
-			buffMax+= "| "+usedTable.getArrCol().get(i).getLabel() + ":" +usedTable.getArrCol().get(i).getType().typeToString()+" ";
+			buffMax+= "| "+usedTable.getArrCol().get(i).getLabel() + ":" +usedTable.getArrCol().get(i).getType().typeToString()+"";
+			
+			if(usedTable.getArrCol().get(i).isMandatory() == true)
+			{
+				buffMax+=": Mandatory";
+			}
+			
+			if(usedTable.getArrCol().get(i).isCandidate() == true)
+			{
+				buffMax+=": Candidate";
+			}
+			if(usedTable.getArrCol().get(i).isCheck() == true)
+			{
+				buffMax+=": Check";
+			}
+			if(usedTable.getArrCol().get(i).isForeign() == true)
+			{
+				buffMax+=": Foreign";
+			}
+			if(usedTable.getArrCol().get(i).isNotNull() == true)
+			{
+				buffMax+=": Not Null";
+			}
+			if(usedTable.getArrCol().get(i).isPrimaryKey() == true)
+			{
+				buffMax+=": Primary";
+			}
+			if(usedTable.getArrCol().get(i).isUnique() == true)
+			{
+				buffMax+=": Unique";
+			}
 		}
 		//Impression de la première ligne
 		for(int i=0; i< buffMax.length()+1; i++){

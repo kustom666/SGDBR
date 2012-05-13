@@ -102,8 +102,8 @@ public class Table extends ArrayList<Line> {
 			output.writeBytes("\n");
 
 			for(int i=0;i<this.size();i++){
-				output.writeBytes(this.get(i).outputLineToString());
-				output.writeBytes("\n");
+				output.writeBytes(this.get(i).outputLineToString().replace("|", "").replaceFirst(";", ""));
+				
 			}
 			
 			output.close();
@@ -115,18 +115,4 @@ public class Table extends ArrayList<Line> {
 		
 	}
 	
-	public Table loadTable(String filename){
-		Table buffTable = new Table(filename);
-		
-		try{
-			File fin = new File(filename);
-			FileReader fr = new FileReader(fin);
-			
-		}catch(FileNotFoundException e){
-			
-		}
-		
-		return buffTable;	
-		
-	}
 }
