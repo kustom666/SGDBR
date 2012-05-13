@@ -1,6 +1,7 @@
 package model;
 
 import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -89,20 +90,20 @@ public class Table extends ArrayList<Line> {
 	}
 	
 	public void saveTable(String filename){
-		ObjectOutputStream output;
+		BufferedWriter output;
 		try {
-			output = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(new File(filename))));
+			output = new BufferedWriter(new FileWriter(filename));
 			
-			output.writeBytes(this.tableName+"\n");
+			output.write(this.tableName+"\n");
 			
 			for(int i = 0; i< this.arrCol.size(); i++){
-				output.writeBytes(this.arrCol.get(i).getLabel()+":"+this.arrCol.get(i).getType().typeToString()+this.arrCol.get(i).colProp()+";");
+				output.write(this.arrCol.get(i).getLabel()+":"+this.arrCol.get(i).getType().typeToString()+this.arrCol.get(i).colProp()+";");
 			}
 			
-			output.writeBytes("\n");
+			output.write("\n");
 
 			for(int i=0;i<this.size();i++){
-				output.writeBytes(this.get(i).outputLineToString().replace("|", "").replaceFirst(";", ""));
+				output.write(this.get(i).outputLineToString().replace("|", "").replaceFirst(";", ""));
 				
 			}
 			
