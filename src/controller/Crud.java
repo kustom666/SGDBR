@@ -1,7 +1,9 @@
 package controller;
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.sql.Date;
@@ -71,17 +73,19 @@ public class Crud {
 	
 	public String importFile(String Filename){
 		String output = new String("");
+		String buffer = new String("");;
 		
 		try {
-			FileInputStream fis = new FileInputStream(Filename);
-			DataInputStream das = new DataInputStream(fis);
-			output = das.readUTF();
+			FileReader fis = new FileReader(Filename);
+			BufferedReader das = new BufferedReader(fis);
+			while((buffer = das.readLine())!= null){
+				output+= buffer + "\n";
+			}
 		} catch (FileNotFoundException e) {
 			System.out.println("Le fichier "+Filename+" n'a pas été trouvé, arrêt de l'importation");
 		} catch (IOException e) {
 			System.out.println("Erreur d'entrée sortie sur le fichier "+Filename+", arrêt de l'importation");
 		}
-		
 		return output;
 	}
 	
@@ -94,6 +98,7 @@ public class Crud {
 		splitted = contenucsv.split("[ \n]");
 		
 		Table buffT = new Table(splitted[0]);
+		System.out.println(splitted[0]);
 		
 		this.usedTable = buffT;
 		
@@ -162,7 +167,7 @@ public class Crud {
 		for(int j=2; j<splitted.length; j++){
 			String items[] = splitted[j].split(";");
 			Line buffl = new Line();
-			for(int f = 0; f<items.length; f++){
+			for(int f = 0; f<items.length-1; f++){
 				if(this.usedTable.getArrCol().get(f).typeToString()=="Integer"){
 					buffl.add(f, new Sinteger(Integer.parseInt(items[f])));
 				}

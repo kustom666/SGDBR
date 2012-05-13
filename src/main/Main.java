@@ -33,6 +33,7 @@ public class Main {
 		String baseName=scan.nextLine();
 		Base base=new Base(baseName);
 		System.out.println("Base "+baseName+" initialisée, en attente de commandes");
+		controlleur.importFromCSV("defaultLOL");
 		while(!test.equals("n"))
 		{	
 			String buffIn = new String();
