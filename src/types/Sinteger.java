@@ -23,7 +23,7 @@ public class Sinteger extends Types {
 		this.valeur = valeur;
 	}
 	public String typeToString(){
-		return "Integer";
+		return "SInteger";
 	}
 	
 }
