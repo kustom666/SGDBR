@@ -14,63 +14,65 @@ import java.util.Map;
 
 import model.*;
 import types.*;
-
+/**
+ * La classe Crud est la classe la plus importante dans la gestion de la base de donnée.
+ * Elle permet d'effectuer toutes les actions accessibles par le language SQL sur la table actuellement contrôlée
+ * @author Paul Forti
+ * 
+ * */
 public class Crud {
 
 	private Table usedTable;
 	private Column usedColumn;
+	/**
+	 * Le constructeur de base Crud() se contente de créer le contrôleur.
+	 * @author Kustom
+	 * */
 	public Crud()
 	{
 		
 	}
 
+	/**
+	 * Le constructeur de crud le plus utilisé. Il permet de créer le contrôleur tout en lui alouant une table
+	 * @param t la table à allouer
+	 * @author Kustom
+	 * */
 	public Crud(Table t)
 	{
 		this.usedTable = t;
 	}
 
-
+	/**
+	 * La méthode createCol permet de créer une colonne et de la récupérer via le retour
+	 * @param n le label de la colonne
+	 * @param t le type de l'information stockée
+	 * @return c la colonne crée
+	 * @author Paul Forti
+	 * 
+	 * */
 	public Column createCol(String n, Types t){
 		 Column c = new Column(n, t);
 		 return c;
 	}
-
+	/**
+	 * La méthode ajouterLignes permet d'ajouter une séquence de lignes à la table actuellement contrôlée 
+	 * @param l Une liste de lignes à ajouter
+	 * @author Paul Forti
+	 * */
 	public void ajouterLignes(ArrayList<Line> l){
 		for(int i=0; i< l.size();i++){
 			this.usedTable.insert(l.get(i));
 		}
 	}
 	
-	public Types parseTypeFromString(String aparse){
-		Types t = null;
-		if(aparse == "Integer")
-		{
-			t = new Sinteger();
-		}
-		else if(aparse == "Text")
-		{
-			t = new Text();
-		}
-		else if(aparse == "Float")
-		{
-			t = new SFloat();
-		}
-		else if(aparse == "Date")
-		{
-			t = new SDate();
-		}
-		else if(aparse == "Char")
-		{
-			t = new SChar();
-		}
-		else if(aparse == "Byte")
-		{
-			t = new SBit();
-		}
-		
-		return t;
-	}
-	
+	/**
+	 * La méthode importFile permet d'importer le contenu d'un fichier texte (encodé en UTF-8) et de le stocker dans un string qui sera retourné.
+	 * Les caractères de saut de ligne sont corrigés par cette méthode
+	 * @param Filename le chemin d'accès du fichier à ouvrir
+	 * @return output le String contenant le contenu du fichier importé
+	 * @author Paul Forti
+	 * */
 	public String importFile(String Filename){
 		String output = new String("");
 		String buffer = new String("");;
@@ -88,7 +90,11 @@ public class Crud {
 		}
 		return output;
 	}
-	
+	/**
+	 * La méthode importFromCSV permet d'importer une table directement depuis un fichier de sauvegarde et de la placer en tant que table contrôlée
+	 * @param Filename le chemin d'accès du fichier à importer
+	 * @author Paul Forti
+	 * */
 	public void importFromCSV(String Filename){
 
 		String contenucsv = importFile(Filename);
@@ -201,6 +207,11 @@ public class Crud {
 		this.usedTable = buffT;
 		this.displayTable();
 	}
+	
+	/**
+	 * La méthode displayTable permet d'écrire une représentation textuelle de la table actuellement contrôlée sur la sortie système
+	 * @author Paul Forti
+	 * */
 	public void displayTable()
 	{
 		String buffMax = new String();
@@ -281,7 +292,13 @@ public class Crud {
 	}
 
 	
-
+	/**
+	 * La méthode setUpTable permet de mettre en place la table à créer grâce à un couple de nom et de type de colonne
+	 * @param alc l'array list de coulple nom/type
+	 * @see Couple
+	 * @see construireALSetUp
+	 * @author Paul Forti
+	 * */
 	public void setUpTable(ArrayList<Couple> alc){
 		int i=0;
 		for(i = 0; i<alc.size();i++ ){
@@ -290,7 +307,13 @@ public class Crud {
 		}
 	}
 	
-
+	/**
+	 * La méthode construireALSetUp construit un arrayList composé de couples de nom et de type de colonnes à partir de deux array list différents.
+	 * @param a l'ArrayList contenant les noms de toutes les colonnes à créer
+	 * @param l l'ArrayList contenant les types de toutes les colonnes à créer
+	 * @see Couple
+	 * @author Paul Forti
+	 * */
 	public ArrayList<Couple> construireALSetUp(ArrayList<String> a, ArrayList<Types> l){
 		if(a.size()!=l.size()){
 			System.out.println("Erreur : Trop de noms de colonne ou trop de types différents, défault d'intégrité");
@@ -306,17 +329,38 @@ public class Crud {
 		}
 	}
 
+	/**
+	 * La méthode initialise permet de créer une table et de l'allouer au contrôleur à l'aide de son seul nom
+	 * @param tName le nom de la table
+	 * @author Paul Forti
+	 * */
 	public void initialise(String tName){
 		Table initTable = new Table(tName);
 		this.usedTable = initTable;
 	}
 
+	/**
+	 * La méthode fullCreate permet de mettre en place une table de façon correcte et de l'allouer au contrôleur 
+	 * @param tName le nom de la table
+	 * @param colNames l'array list contenant le nom des colonnes
+	 * @param types l'array list contenant les types des colonnes
+	 * @author Paul Forti
+	 * */
 	public void fullCreate(String tName, ArrayList<String> colNames, ArrayList<Types> types){
 		initialise(tName);
 		ArrayList<Couple> buffHM = construireALSetUp(colNames, types);
 		setUpTable(buffHM);
 	}
 
+	/**
+	 * Méthode surchargée de fullCreate, ajoutant des lignes à insérer dans la table
+	 * @param tName le nom de la table
+	 * @param colNames l'array list contenant le nom des colonnes
+	 * @param types l'array list contenant les types des colonnes
+	 * @param l l'array list contenant toutes les lignes à ajouter
+	 * @see fullCreate
+	 * @author Paul Forti
+	 * */
 	public void fullCreate(String tName, ArrayList<String> colNames, ArrayList<Types> types, ArrayList<Line> l){
 		initialise(tName);
 		ArrayList<Couple> buffHM = construireALSetUp(colNames, types);
@@ -324,9 +368,20 @@ public class Crud {
 		ajouterLignes(l);
 
 	}
+	
+	/**
+	 * La méthode addColumn permet d'ajouter une colonne à la table actuellement contrôlée
+	 * @param c la colonne à ajouter
+	 * @author Paul Forti
+	 * */
 	public void addColumn(Column c){
 		this.usedTable.addCol(c);
 	}
+	/**
+	 * La méthode remove permet de supprimer une colonne de la table actuellement contrôlée
+	 * @param c la colonne à supprimer
+	 * @author Paul Forti
+	 * */
 	public void removeColumn(Column c){
 		this.usedTable.supCol(c);
 	}
@@ -335,9 +390,6 @@ public class Crud {
 	}
 	public void setUsedColumn(Column c){
 		this.usedColumn=c;
-	}
-	public void read(ArrayList<Column> selected){
-
 	}
 
 	public void setUsedTable(Table t)
