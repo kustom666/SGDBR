@@ -7,7 +7,8 @@ import model.Base;
 public class TestPattern {
 	private Base temp;
 	private Instruction instruction=new Instruction();
-
+	private EditBase edit =new EditBase();
+	
 	public Base test(String i) throws TestPatternException{
 		Pattern create=Pattern.compile("^CREATE TABLE [a-zA-Z0-9]*\\s*\\([[_a-zA-Z0-9]* [A-Za-z]*\\s*,]*\\)\\s*;$",Pattern.MULTILINE);
 		Pattern alterAdd=Pattern.compile("^ALTER TABLE [a-zA-Z0-9]* ADD [a-zA-Z0-9]* [a-zA-Z]*\\s*;$",Pattern.MULTILINE);
@@ -25,8 +26,9 @@ public class TestPattern {
 		Pattern update=Pattern.compile("^UPDATE [a-zA-Z0-9]* SET [a-zA-Z0-9]* = [a-zA-Z0-9.\"/]*\\s*;$", Pattern.MULTILINE);
 		Pattern updateWhere=Pattern.compile("^UPDATE [a-zA-Z0-9]* SET [a-zA-Z0-9]* = [a-zA-Z0-9.\"/]* WHERE [a-zA-Z0-9.=<>!\\s*]*\\s*;$", Pattern.MULTILINE);
 
-		Pattern sauvBase=Pattern.compile("^BACKUP DATABASE [a-zA-Z]*\\s;$");
-		//Pattern chargeBase=Pattern.compile("^RESTORE DATABASE [a-zA-Z]*\\s;$");
+		Pattern sauvBase=Pattern.compile("^BACKUP DATABASE\\s*;$");
+		Pattern chargeBase=Pattern.compile("^LOAD DATABASE [a-zA-Z]*\\s*;$");
+		Pattern chargeCommande=Pattern.compile("^LOAD [a-zA-Z./]*\\s*;$");
 		
 		boolean reponseCreate =create.matcher(i).matches();
 		boolean reponseAlterAdd =alterAdd.matcher(i).matches();
@@ -45,7 +47,9 @@ public class TestPattern {
 		boolean reponseDeleteWhere=deleteFromWhere.matcher(i).matches();
 
 		boolean reponseSauv=sauvBase.matcher(i).matches();
-		//boolean reponseCharge=chargeBase.matcher(i).matches();
+		boolean reponseCharge=chargeBase.matcher(i).matches();
+		boolean reponseCommande=chargeCommande.matcher(i).matches();
+		
 		if (reponseCreate){
 
 			temp=instruction.createTable(i);
@@ -66,11 +70,17 @@ public class TestPattern {
 			temp=instruction.deleteFrom(i);
 		}
 		else if(reponseSauv){
-			instruction.sauvBase(i);
+			instruction.sauvBase();
 		}
-		/*else if(reponseCharge){
-			instruction.ChargeBase(i);
-		}*/
+		else if(reponseCharge){
+			instruction.chargeBase(i);
+		}
+		else if(reponseCommande){
+			temp=edit.LancementSeqCommand(i);
+		}
+		else if(reponseCharge){
+			temp=instruction.chargeBase(i);
+		}
 		else {
 			throw new TestPatternException();
 		}
@@ -78,4 +88,5 @@ public class TestPattern {
 		return temp;
 
 	}
+	
 }

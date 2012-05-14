@@ -227,6 +227,7 @@ public class Instruction {
 				lines.add(line);
 			}
 			clu.ajouterLignes(lines);
+			clu.displayTable();
 			base.ajouterTable(clu.getUsedTable());
 		}
 		return base.getBaseTravail();
@@ -535,8 +536,20 @@ public class Instruction {
 		}
 		return starCommand.getBaseTravail();
 	}
-	public void sauvBase(String requete){
+	public void sauvBase(){
 		starCommand.saveBaseCSV();
+	}
+	public Base chargeBase(String requete){
+		String filename;
+		baseController b;
+		requete=requete.replace("LOAD DATABASE ", "");
+		requete=requete.replace(";", "");		
+		filename=requete;
+		temp.importFromCSV(filename);
+		starCommand.ajouterTable(temp.getUsedTable());
+		b=new baseController(starCommand.getBaseTravail());
+		return b.getBaseTravail();
+		
 	}
 	
 	/**
@@ -550,16 +563,16 @@ public class Instruction {
 	 */
 	public Types toType(String requete)throws TypeException{
 		Types type = null;
-		if(requete.equalsIgnoreCase("int")){
+		if(requete.equalsIgnoreCase("int")||requete.equalsIgnoreCase("Sinteger")){
 			type=new Sinteger();
 		}
-		else if(requete.equalsIgnoreCase("float")){
+		else if(requete.equalsIgnoreCase("float")||requete.equalsIgnoreCase("SFloat")){
 			type= new SFloat();
 		}
-		else if(requete.equalsIgnoreCase("date")){
+		else if(requete.equalsIgnoreCase("date")||requete.equalsIgnoreCase("SDate")){
 			type= new SDate();
 		}
-		else if(requete.equalsIgnoreCase("char")){
+		else if(requete.equalsIgnoreCase("char")||requete.equalsIgnoreCase("Schar")){
 			type= new SChar();
 		}
 		else if(requete.equalsIgnoreCase("text")){
