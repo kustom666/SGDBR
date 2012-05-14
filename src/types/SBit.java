@@ -17,7 +17,7 @@ public class SBit extends Types{
 	}
 
 	public String typeToString(){
-		return "SByte";
+		return "byte";
 	}
 	public byte[] getVal() {
 		return val;
