@@ -73,7 +73,7 @@ public class TestPattern {
 			instruction.sauvBase();
 		}
 		else if(reponseCharge){
-			instruction.chargeBase(i);
+			temp=instruction.chargeBase(i);
 		}
 		else if(reponseCommande){
 			//temp=edit.LancementSeqCommand(i);

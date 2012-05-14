@@ -541,7 +541,6 @@ public class Instruction {
 	}
 	public Base chargeBase(String requete){
 		String filename;
-		baseController b;
 		requete=requete.replace("LOAD DATABASE ", "");
 		requete=requete.replace(";", "");		
 		filename=requete;
