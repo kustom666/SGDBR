@@ -7,7 +7,7 @@ import model.Base;
 public class TestPattern {
 	private Base temp;
 	private Instruction instruction=new Instruction();
-	private EditBase edit =new EditBase();
+	//private EditBase edit =new EditBase();
 	
 	public Base test(String i) throws TestPatternException{
 		Pattern create=Pattern.compile("^CREATE TABLE [a-zA-Z0-9]*\\s*\\([[_a-zA-Z0-9]* [A-Za-z]*\\s*,]*\\)\\s*;$",Pattern.MULTILINE);
@@ -76,7 +76,7 @@ public class TestPattern {
 			instruction.chargeBase(i);
 		}
 		else if(reponseCommande){
-			temp=edit.LancementSeqCommand(i);
+			//temp=edit.LancementSeqCommand(i);
 		}
 		else if(reponseCharge){
 			temp=instruction.chargeBase(i);

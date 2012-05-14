@@ -547,8 +547,7 @@ public class Instruction {
 		filename=requete;
 		temp.importFromCSV(filename);
 		starCommand.ajouterTable(temp.getUsedTable());
-		b=new baseController(starCommand.getBaseTravail());
-		return b.getBaseTravail();
+		return starCommand.getBaseTravail();
 		
 	}
 	

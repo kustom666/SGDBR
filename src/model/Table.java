@@ -27,29 +27,22 @@ public class Table extends ArrayList<Line> {
 	public Table(String tName, Line addLine){
 		this.tableName = tName;
 		this.add(addLine);
-		System.out.println("Ajout d'une nouvelle line");
 	}
 
 	public void insert(Line li)
 	{
 		this.add(li);
-		System.out.println("Ajout d'une nouvelle line");
-		li.outputLine();
 	}
 
 	public void supress(Line li)
 	{
 		this.remove(li);
-		System.out.println("Suppression d'une line");
-		li.outputLine();
 
 	}
 
 	public void update(int index, Line li)
 	{
 		this.set(index, li);
-		System.out.println("Remplacement d'une line");
-		li.outputLine();
 	}
 
 	public void addCol(Column col)

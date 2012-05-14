@@ -3,8 +3,12 @@ import java.util.ArrayList;
 
 import types.Types;
 
-
-public class Column extends Types{
+/**
+ * La classe Column modélise une colonne, qui est en fait un point de repère permettant de contrôler et déterminer l'intégrité de la table.
+ * Aucune donnée pure n'est stockée grâce à cette classe
+ * @author Paul Forti
+ * */
+public class Column{
 
 	private static final long serialVersionUID = 1437340961489074002L;
 	private String label;
@@ -24,6 +28,9 @@ public class Column extends Types{
 	private boolean isPrimaryKey;
 
 
+	/**
+	 * Ce constructeur de colonne est surchargé à partir du constructeur de base. Il permet de créer la colonne tout en lui allouant un type
+	 * */
 	public Column(String label, Types dataType)
 	{
 		this.label = label;
