@@ -1,5 +1,9 @@
 package types;
 
+/**
+ * SBit, la classe héritant de Types permettant de stocker un float en mémoire
+ * @author Paul Forti
+ * */
 public class SFloat extends Types{
 	private float val;
 

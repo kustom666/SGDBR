@@ -14,7 +14,7 @@ public class Line extends ArrayList<Types>{
 		}
 	}
 	/**
-	 * outputLine est une m�thode permettant de repr�senter les lignes de la table en texte sur la sortie syst�me
+	 * outputLine est une méthode permettant de représenter les lignes de la table en texte sur la sortie système
 	 * @param arrColCorres : l'array list des descriptifs de colonne correspondant aux lignes, pour effectuer les calculs
 	 * @author Paul Forti
 	 * */

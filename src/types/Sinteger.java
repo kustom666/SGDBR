@@ -1,5 +1,9 @@
 package types;
 
+/**
+ * SBit, la classe héritant de Types permettant de stocker un int en mémoire
+ * @author Paul Forti
+ * */
 public class Sinteger extends Types {
 	private int valeur;
 	

@@ -1,5 +1,9 @@
 package types;
 
+/**
+ * SBit, la classe héritant de Types permettant de stocker un array de bit en mémoire
+ * @author Paul Forti
+ * */
 public class SBit extends Types{
 
 	private byte[] val;
