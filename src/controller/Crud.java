@@ -110,6 +110,7 @@ public class Crud {
 		
 		for(String s : columns){
 			String colcreate[] = s.split(":");
+			ArrayList<String> alprops = new ArrayList<String>();
 			Instruction is = new Instruction();
 			Column buffc = null;
 			try {
@@ -117,60 +118,58 @@ public class Crud {
 			} catch (TypeException e) {
 				System.out.println("Problème de type dans l'import. Arrèt!");
 			}
-			if(colcreate[2] == "True")
+			for(int cont = 2; cont<colcreate.length;cont++){
+				alprops.add(colcreate[cont]);
+			}
+			
+			if(alprops.contains("Mandatory"))
 			{
 				buffc.setMandatory(true);
 			}
-			else if(colcreate[2] == "False")
+			else if(!alprops.contains("Mandatory"))
 			{
 				buffc.setMandatory(false);
 			}
-			
-			if(colcreate[3] == "True")
+			if(alprops.contains("Candidate"))
 			{
 				buffc.setCandidate(true);
 			}
-			else if(colcreate[3] == "False")
+			else if(!alprops.contains("Candidate"))
 			{
 				buffc.setCandidate(false);
 			}
-			
-			if(colcreate[4] == "True")
+			if(alprops.contains("Foreign"))
 			{
 				buffc.setForeign(true);
 			}
-			else if(colcreate[4] == "False")
+			else if(!alprops.contains("Foreign"))
 			{
 				buffc.setForeign(false);
 			}
-			
-			if(colcreate[5] == "True")
-			{
-				buffc.setNotNull(true);
-			}
-			else if(colcreate[5] == "False")
-			{
-				buffc.setNotNull(false);
-			}
-			
-			if(colcreate[6] == "True")
-			{
-				buffc.setUnique(true);
-			}
-			else if(colcreate[6] == "False")
-			{
-				buffc.setUnique(false);
-			}
-			
-			if(colcreate[7] == "True")
+			if(alprops.contains("Primary"))
 			{
 				buffc.setPrimaryKey(true);
 			}
-			else if(colcreate[7] == "False")
+			else if(!alprops.contains("Primary"))
 			{
 				buffc.setPrimaryKey(false);
 			}
-			
+			if(alprops.contains("NotNull"))
+			{
+				buffc.setNotNull(true);
+			}
+			else if(!alprops.contains("NotNull"))
+			{
+				buffc.setNotNull(false);
+			}
+			if(alprops.contains("Unique"))
+			{
+				buffc.setUnique(true);
+			}
+			else if(!alprops.contains("Unique"))
+			{
+				buffc.setUnique(false);
+			}
 			buffT.addCol(buffc);
 		}
 		
@@ -180,24 +179,24 @@ public class Crud {
 	
 			for(int f = 0; f<items.length; f++){
 				Column buffarcol = buffT.getArrCol().get(f);
-				if(buffarcol.getType().typeToString() == "SInteger"){
+				if(buffarcol.getType().typeToString() == "int"){
 					buffl.add(f, new Sinteger(Integer.parseInt(items[f])));
 				}
-				if(buffarcol.getType().typeToString()=="SFloat"){
+				if(buffarcol.getType().typeToString()=="float"){
 					buffl.add(f, new SFloat(Float.parseFloat(items[f])));
 				}
-				if(buffarcol.getType().typeToString()=="SDate"){
+				if(buffarcol.getType().typeToString()=="date"){
 					String date[] = items[f].split("/");
 					buffl.add(f, new SDate(Integer.parseInt(date[0]),Integer.parseInt(date[1]),Integer.parseInt(date[2])));
 				}
-				if(buffarcol.getType().typeToString()=="SChar"){
+				if(buffarcol.getType().typeToString()=="char"){
 					char buffchar[] = items[f].toCharArray();
 					buffl.add(f, new SChar(buffchar, items[f].length()));
 				}
-				if(buffarcol.getType().typeToString()=="Text"){
+				if(buffarcol.getType().typeToString()=="text"){
 					buffl.add(f, new Text(items[f]));
 				}
-				if(buffarcol.getType().typeToString()=="Byte"){
+				if(buffarcol.getType().typeToString()=="byte"){
 					buffl.add(f, new SBit(items[f].getBytes()));
 				}
 				/*buffl.add(new Sinteger(Integer.parseInt(items[f])));*/
@@ -222,32 +221,32 @@ public class Crud {
 			
 			if(usedTable.getArrCol().get(i).isMandatory() == true)
 			{
-				buffMax+=": Mandatory";
+				buffMax+=":Mandatory";
 			}
 			
 			if(usedTable.getArrCol().get(i).isCandidate() == true)
 			{
-				buffMax+=": Candidate";
+				buffMax+=":Candidate";
 			}
 			if(usedTable.getArrCol().get(i).isCheck() == true)
 			{
-				buffMax+=": Check";
+				buffMax+=":Check";
 			}
 			if(usedTable.getArrCol().get(i).isForeign() == true)
 			{
-				buffMax+=": Foreign";
+				buffMax+=":Foreign";
 			}
 			if(usedTable.getArrCol().get(i).isNotNull() == true)
 			{
-				buffMax+=": Not Null";
+				buffMax+=":Not Null";
 			}
 			if(usedTable.getArrCol().get(i).isPrimaryKey() == true)
 			{
-				buffMax+=": Primary";
+				buffMax+=":Primary";
 			}
 			if(usedTable.getArrCol().get(i).isUnique() == true)
 			{
-				buffMax+=": Unique";
+				buffMax+=":Unique";
 			}
 		}
 		//Impression de la première ligne

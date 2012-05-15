@@ -1,10 +1,14 @@
 package types;
 
+/**
+ * SBit, la classe héritant de Types permettant de stocker un string en mémoire
+ * @author Paul Forti
+ * */
 public class Text extends Types{
 	String val = new String();
 	
 	public Text(){
-		
+
 	}
 	public Text(String s){
 		this.val = s;
@@ -18,7 +22,7 @@ public class Text extends Types{
 		this.val = val;
 	}
 	public String typeToString(){
-		return "Text";
+		return "text";
 	}
 	public String toString(){
 		return this.val;

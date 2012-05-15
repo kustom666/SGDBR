@@ -1,5 +1,9 @@
 package types;
 
+/**
+ * SDate, la classe héritant de Types permettant de stocker une date sous la forme aaaa/mm/jj en mémoire
+ * @author Paul Forti
+ * */
 public class SDate extends Types{
 	private int year;
 	private int month;
@@ -24,7 +28,7 @@ public class SDate extends Types{
 	}
 
 	public String typeToString(){
-		return "SDate";
+		return "date";
 	}
 
 	public int getYear() {

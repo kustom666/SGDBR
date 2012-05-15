@@ -11,45 +11,75 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import types.Types;
+
+/**
+ * La classe table représente une table en mémoire. Ensemble d'une collection de lignes pour le stockage de données, et de colonnes pour l'intégrité
+ * et le traitement des données.
+ * 
+ * @author Paul Forti
+ * */
 public class Table extends ArrayList<Line> {
 
 	private static final long serialVersionUID = 5771048924784085348L;
 	private ArrayList<Column> arrCol = new ArrayList<Column>();
 	private String tableName;
 
+	/**
+	 * Le constructeur de table se contente d'un string contenant le nom de la table pour la créer
+	 * @param tName le nom de la table
+	 * @author Paul Forti
+	 * */
 	public Table(String tName){
 		this.tableName = tName;
 	}
 
 	/**
-	 * @deprecated
+	 * La méthode insert ajoute une ligne à la table
+	 * @param li la ligne à ajouter
+	 * @author Paul Forti
 	 * */
-	public Table(String tName, Line addLine){
-		this.tableName = tName;
-		this.add(addLine);
-	}
-
 	public void insert(Line li)
 	{
 		this.add(li);
 	}
-
+	
+	/**
+	 * La méthode suppress retire une ligne à la table
+	 * @param li la ligne à supprimer
+	 * @author Paul Forti
+	 * */
 	public void supress(Line li)
 	{
 		this.remove(li);
 
 	}
 
+	/**
+	 * La méthode update remplace une ligne par une autre dans la table
+	 * @param index l'index de la ligne à modifier
+	 * @param li la ligne à insérer à la place de l'originale
+	 * @author Paul Forti
+	 * */
 	public void update(int index, Line li)
 	{
 		this.set(index, li);
 	}
 
+	/**
+	 * La méthode addCol ajoute une colonne à la table
+	 * @param col la ligne à ajouter
+	 * @author Paul Forti
+	 * */
 	public void addCol(Column col)
 	{
 		this.arrCol.add(col);
 	}
 
+	/**
+	 * La méthode supCol supprime une colonne de la table
+	 * @param col la colonne à supprimer
+	 * @author Paul Forti
+	 * */
 	public void supCol(Column col)
 	{
 		this.arrCol.remove(col);
@@ -72,6 +102,11 @@ public class Table extends ArrayList<Line> {
 		this.arrCol = arrCol;
 	}
 
+	/**
+	 * La méthode getCol récupère et retourne la colonne possédant le nom voulu
+	 * @param name le nom de colonne
+	 * @author Paul Forti
+	 * */
 	public Column getCol(String name){
 		Column c =null;
 		for(int i=0;i<this.arrCol.size();i++){
@@ -82,6 +117,11 @@ public class Table extends ArrayList<Line> {
 		return c;
 	}
 	
+	/**
+	 * La méthode saveTable permet de sauvegarder une table dans un fichier précis 
+	 * @param filename le chemin du fichier dans lequel sauvegarder
+	 * @author Paul Forti
+	 * */
 	public void saveTable(String filename){
 		BufferedWriter output;
 		try {

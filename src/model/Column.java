@@ -30,84 +30,61 @@ public class Column{
 
 	/**
 	 * Ce constructeur de colonne est surchargé à partir du constructeur de base. Il permet de créer la colonne tout en lui allouant un type
+	 * @param label le label de la colonne
+	 * @param dataType le type de colonne
+	 * @author Paul Forti
 	 * */
 	public Column(String label, Types dataType)
 	{
 		this.label = label;
 		this.type = dataType;
 	}
-
+	/**
+	 * Le constructeur de base de la colonne. Il suffit de fournir un label
+	 * @param label le label de la colonne
+	 * @author Paul Forti
+	 * */
 	public Column(String label) {
 		this.label=label;
 	}
 	
+	/**
+	 * La méthode colProp permet de retourner un string contenant toutes les propriétés de la colonne sous forme de True/False
+	 * @author Paul Forti
+	 * */
 	public String colProp()
 	{
 		String buff = new String();
 		if(this.isMandatory())
 		{
-			buff+=":True";
+			buff+=":Mandatory";
 		}
-		
-		if(!this.isMandatory())
-		{
-			buff+=":False";
-		}
-		
-		
 		if(this.isCandidate())
 		{
-			buff+=":True";
+			buff+=":Candidate";
 		}
-		
-		if(!this.isCandidate())
-		{
-			buff+=":False";
-		}
-		
-		
 		if(this.isForeign())
 		{
-			buff+=":True";
+			buff+=":Foreign";
 		}
-		
-		if(!this.isForeign())
-		{
-			buff+=":False";
-		}
-		
-		
-		if(!this.isNotNull())
-		{
-			buff+=":True";
-		}
-		
+
 		if(this.isNotNull())
 		{
-			buff+=":False";
+			buff+=":NotNull";
 		}
 		
 		
 		if(this.isUnique())
 		{
-			buff+=":True";
-		}
-		
-		if(!this.isUnique())
-		{
-			buff+=":False";
+			buff+=":Unique";
 		}
 		
 		
 		if(this.isPrimaryKey())
 		{
-			buff+=":True";
+			buff+=":Primary";
 		}
 		
-		if(!this.isPrimaryKey())
-		{
-			buff+=":False";
-		}
 		
 		return buff;
 	}

@@ -389,6 +389,7 @@ public class Instruction {
 								positionColonne=nbColTable;
 
 								while(positionColonne>l.size()){
+
 									l.add(new Text("NULL"));
 								}
 								try{
@@ -410,6 +411,11 @@ public class Instruction {
 					 * une declaration null dans la ligne de la Table ->
 					 */
 					while(l.size()<temp.getUsedTable().getArrCol().size()){
+						
+						if(temp.getUsedTable().getArrCol().get(l.size()).isNotNull())
+						{
+							System.out.println("Erreur, la colonne labelée "+temp.getUsedTable().getArrCol().get(l.size()).getLabel()+" est déclarée comme NON NULLE. Impossible de garantir la ");
+						}
 						l.add(l.size(), new Text("NULL"));
 
 					}

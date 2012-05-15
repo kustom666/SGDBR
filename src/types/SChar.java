@@ -1,11 +1,15 @@
 package types;
 
+/**
+ * SChar, la classe héritant de Types permettant de stocker un array de char en mémoire
+ * @author Paul Forti
+ * */
 public class SChar extends Types{
 	private char val[];
 	private int maxLength;
 
 	public SChar(){
-
+		
 	}
 
 	public SChar(char valI[], int length){
@@ -14,7 +18,7 @@ public class SChar extends Types{
 	}
 
 	public String typeToString(){
-		return "SChar";
+		return "char";
 	}
 
 	public char[] getVal() {
