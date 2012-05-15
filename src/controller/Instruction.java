@@ -1,4 +1,8 @@
 package controller;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
@@ -12,7 +16,15 @@ import types.Sinteger;
 import types.SFloat;
 import types.Text;
 import types.Types;
-
+/**
+ * <b> Classe permettant le parsage d'une Requete de afin de faire un traitement sur une Base </b>
+ * @see TestPattern
+ * @see TestComparateur
+ * @see Crud
+ * @see baseController
+ * @author tonycoriolle
+ * @version 1.0 
+ */
 public class Instruction {
 	private Crud temp=new Crud();
 	private baseController starCommand=new baseController();
@@ -21,7 +33,13 @@ public class Instruction {
 	public Instruction() {
 
 	}
-
+	
+	/**
+	 * Cette méthode permet de lancer la requete SQL <i> CREATE TABLE </i>
+	 *   
+	 * @param requete: est la requete envoyée dans la console
+	 * @return une nouvelle base 
+	 */
 	public Base createTable(String requete){
 		String[] tab= null;
 		String nomTable = new String();
@@ -52,7 +70,13 @@ public class Instruction {
 
 		return starCommand.getBaseTravail();
 	}
-
+	
+	/**
+	 * Cette méthode permet de lancer la requete SQL <i> SELECT FROM </i> avec ou sans clause where
+	 * 
+	 * @param requete
+	 * @return la base avec l'ajout d'une table <i> resultat </i>
+	 */
 	public Base selectFrom(String requete){
 		Crud clu=new Crud();
 		baseController base=new baseController();
@@ -69,12 +93,13 @@ public class Instruction {
 		TestComparateur signe=new TestComparateur();
 
 		requete=requete.replace("SELECT ","");
-		tab=requete.split("[^a-zA-Z0-9<>!=.]");
+		tab=requete.split("[^a-zA-Z0-9<>!=.*]");
 
 		if(requete.contains("WHERE")){
 
 			for(i=0;!tab[i].equals("FROM");++i){
 				colNames.add(tab[i]);
+
 			}
 			for(i=i+1;!tab[i].equals("WHERE");++i){
 				tableName.add(tab[i]);
@@ -84,10 +109,17 @@ public class Instruction {
 			}
 			subtab=signe.rechercheComparateur(condition);
 			mode=signe.getMode();
+
 			for(int j=0;j<tableName.size();j++){
 				for(int nbTable=0;nbTable<starCommand.getBaseTravail().size();nbTable++){
 					if(tableName.get(j).equals(starCommand.getBaseTravail().get(nbTable).getTableName())){
 						temp.setUsedTable(starCommand.getBaseTravail().getTable(tableName.get(j)));
+						if(colNames.get(0).equals("*")){
+							for(int n=0;n<temp.getUsedTable().getArrCol().size();n++){
+								colNames.add(temp.getUsedTable().getArrCol().get(n).getLabel());
+							}
+							colNames.remove(0);		
+						}
 						for(int iter=0;iter<colNames.size();iter++){
 							for(int n=0;n<temp.getUsedTable().getArrCol().size();n++){
 								if(colNames.get(iter).equals(temp.getUsedTable().getArrCol().get(n).getLabel())){
@@ -95,6 +127,7 @@ public class Instruction {
 									break;
 								}
 							}
+
 						}
 					}
 				}
@@ -113,7 +146,6 @@ public class Instruction {
 					nbLigne=starCommand.getBaseTravail().getTable(tableName.get(0)).size();
 				}
 			}
-			int lLigne=0;
 			for(int ligne=0;ligne<nbLigne;ligne++){
 				Line line=new Line();
 				for(int j=0;j<tableName.size();j++){
@@ -138,7 +170,6 @@ public class Instruction {
 																	line.add(temp.getUsedTable().get(ligne).get(nbColTable));
 																}
 															}catch(ArrayIndexOutOfBoundsException e){}
-															++lLigne;
 														}
 														break;
 													}
@@ -147,7 +178,9 @@ public class Instruction {
 											}
 										}
 										break;
+
 									}
+
 								}
 							}
 							break;
@@ -165,9 +198,9 @@ public class Instruction {
 
 		else{
 
-			for(i=1;!tab[i].equals("FROM");++i){
-				colNames.add(tab[i]);
+			for(i=0;!tab[i].equals("FROM");++i){
 
+				colNames.add(tab[i]);
 			}
 			for(i=i+1;i<tab.length;++i){
 				tableName.add(tab[i]);
@@ -176,6 +209,12 @@ public class Instruction {
 				for(int nbTable=0;nbTable<starCommand.getBaseTravail().size();nbTable++){
 					if(tableName.get(j).equals(starCommand.getBaseTravail().get(nbTable).getTableName())){
 						temp.setUsedTable(starCommand.getBaseTravail().getTable(tableName.get(j)));
+						if(colNames.get(0).equals("*")){
+							for(int n=0;n<temp.getUsedTable().getArrCol().size();n++){
+								colNames.add(temp.getUsedTable().getArrCol().get(n).getLabel());
+							}
+							colNames.remove(0);		
+						}
 						for(int iter=0;iter<colNames.size();iter++){
 							for(int n=0;n<temp.getUsedTable().getArrCol().size();n++){
 								if(colNames.get(iter).equals(temp.getUsedTable().getArrCol().get(n).getLabel())){
@@ -187,6 +226,7 @@ public class Instruction {
 					}
 				}
 			}
+
 			int nbLigne=0;
 			clu.fullCreate("resultat", colNames, colType,lines);
 
@@ -224,8 +264,9 @@ public class Instruction {
 						}
 					}
 				}
-				lines.add(line);
-			}
+				if(!line.isEmpty()){
+					lines.add(line);	
+				}			}
 			clu.ajouterLignes(lines);
 			clu.displayTable();
 			base.ajouterTable(clu.getUsedTable());
@@ -233,7 +274,12 @@ public class Instruction {
 		return base.getBaseTravail();
 	}
 
-
+	/**
+	 * Cette méthode permet de lancer la requete SQL <i> ALTER TABLE </i> avec le choix d'utiliser soit : 
+	 * <ul><li>-ADD <li>-CHANGE <li>-DROP <li>-MODIFY</ul>   
+	 * @param requete: la requete entré dans la console 
+	 * @return une base 
+	 */
 	public Base alterTable(String requete){
 		String[] tab= null;
 		Column col = null;
@@ -294,7 +340,12 @@ public class Instruction {
 		base.ajouterTable(temp.getUsedTable());
 		return base.getBaseTravail();
 	}
-
+	
+	/**
+	 * Cette méthode permet de lancer la requete SQL <i> INSERT INTO </i> 
+	 * @param requete
+	 * @return une base
+	 */
 	public Base insertInto(String requete){
 		String[] tab=null;
 		ArrayList<String> tableName = new ArrayList<String>();
@@ -374,7 +425,11 @@ public class Instruction {
 		}
 		return starCommand.getBaseTravail();
 	}
-
+	/**
+	 * Cette méthode permet de lancer la requete SQL <i> UPDATE </i> avec ou sans clause Where
+	 * @param requete
+	 * @return une base 
+	 */
 	public Base update(String requete){
 		String[] tab=null;
 		String[] subtab=null;
@@ -387,7 +442,7 @@ public class Instruction {
 		TestComparateur signe=new TestComparateur();
 
 		requete=requete.replace("UPDATE ","");
-		tab=requete.split("[^a-zA-Z0-9<>!=.]");
+		tab=requete.split("[^a-zA-Z0-9<>!=.\"]");
 		String tableName = tab[0];
 
 		if(requete.contains("WHERE")){
@@ -424,7 +479,11 @@ public class Instruction {
 														Types val=tron.getUsedTable().get(ligne).get(searchCol);
 														try{
 															if(signe.compare(val, subtab[2],mode)){
-																temp.getUsedTable().get(ligne).set(nbColTable,value);
+																try{
+																	temp.getUsedTable().get(ligne).set(nbColTable,value);
+																}catch(IndexOutOfBoundsException e){
+																	temp.getUsedTable().get(ligne).add(nbColTable,value);
+																}
 															}
 														}catch(ArrayIndexOutOfBoundsException e){}	
 													}
@@ -478,7 +537,11 @@ public class Instruction {
 		}
 		return starCommand.getBaseTravail();
 	}
-
+	/**
+	 * Cette méthode permet de lancer la requete SQL <i> DELETE </i> avec ou sans clause Where
+	 * @param requete
+	 * @return une base 
+	 */
 	public Base deleteFrom(String requete){
 		requete=requete.replace("DELETE FROM ", "");
 		String[] tab = requete.split("[^a-zA-Z0-9<>!=.]");
@@ -542,9 +605,18 @@ public class Instruction {
 		}
 		return starCommand.getBaseTravail();
 	}
+	/**
+	 * Cette méthode permet de sauvegarder la base actuel sur le disque
+	 */
 	public void sauvBase(){
 		starCommand.saveBaseCSV();
+		System.out.println("La base est sauvegardée");
 	}
+	/**
+	 * Cette méthode permet de recharger la base préalablement sauvegardée
+	 * @param requete
+	 * @return une base 
+	 */
 	public Base chargeBase(String requete){
 		String filename;
 		requete=requete.replace("LOAD DATABASE ", "");
@@ -553,16 +625,16 @@ public class Instruction {
 		temp.importFromCSV(filename);
 		starCommand.ajouterTable(temp.getUsedTable());
 		return starCommand.getBaseTravail();
-		
+
 	}
-	
+
 	/**
-	 * Méthode permettant l'initialisation d'un type passé en String.
+	 * Méthode permettant de convertir le nom du type passé dans la commande en String pour
+	 * initialiser ce dernier
 	 *  
 	 * @param requete
-	 * @return type
+	 * @return le type demandé 
 	 * @throws TypeException
-	 * @author tonycoriolle
 	 * 
 	 */
 	public Types toType(String requete)throws TypeException{
@@ -588,15 +660,58 @@ public class Instruction {
 		return type;
 	}
 	/**
-	 * Méthode permettant de récuperer une valeur donnée en String puis de la convertir selon son vrai type:
-	 * -Integer
-	 * -Float
-	 * -Date
-	 * -Char
-	 * -Text
+	 * <b> importCommand</b> ouvre et lit un fichier txt de commandes  
+	 * @param filename : nom du fichier 
+	 * @return la string contenant toutes les commandes séparés de ";"
+	 */
+	public String importCommand(String filename){
+		String output = new String("");
+		String buffer = new String("");;
+
+		try {
+			FileReader fis = new FileReader(filename);
+			BufferedReader das = new BufferedReader(fis);
+			while((buffer = das.readLine())!= null){
+				output+= buffer + "\n";
+			}
+		}catch(FileNotFoundException e){
+			e.printStackTrace();}
+		catch(IOException e){}
+		return output;
+	}
+	/**
+	 * Parse les commandes recu et les execute séquentiellement
+	 * @param filename : nom du fichier
+	 * @see importCommand 
+	 * @return une base
+	 */
+	public Base LancementSeqCommand(String filename){
+		filename=filename.replace("LOAD ", "");
+		filename=filename.replace(";", "");
+		String requetes= importCommand(filename);
+		String[] requete=requetes.split(";");
+		TestPattern t=new TestPattern();
+		Base base = null;
+
+		for(int i=0;i<requete.length;i++){			
+			try {
+				if(!requete[i].contains("\n")){
+					base=t.test(requete[i]+";");
+				}
+			} catch (TestPatternException e) {
+				e.printStackTrace();
+			}
+		}
+		return base;
+	}
+	/**
+	 * Méthode permettant de récuperer une valeur donnée en String de trouver son type 
+	 * puis de la convertir selon son vrai type:
+	 * <ul><li>-Integer<li>-Float<li>-Date<li>-Char<li>-Text</ul>
+	 * pour l'inserer dans une ligne
 	 * 
-	 * @param val
-	 * @return type 
+	 * @param val : valeur du type 
+	 * @return type : la valeur à inserer dans la ligne
 	 * @throws TypeException
 	 */
 	public Types initLine(String val) throws TypeException{

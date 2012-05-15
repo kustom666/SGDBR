@@ -3,7 +3,11 @@ package controller;
 import java.util.Date;
 import java.util.regex.Pattern;
 import types.Types;
-
+/**
+ * <b> TestComparateur </b> permet la comparaison de valeur 
+ * @author tony
+ *
+ */
 public class TestComparateur {
 	private int comparaison;
 	private String[] tab;
@@ -11,7 +15,13 @@ public class TestComparateur {
 	public TestComparateur(){
 
 	}
-	
+	/**
+	 * <p> RechercheComparateur </p> permet de trouver quel(s) comparateur(s) est(sont) utilisé(s)
+	 * 
+	 * @param condition :condition à parser et a tester
+	 * @return tab : tableau de String contenant la colonne ainsi que la table dans laquelle elle se trouve
+	 * et la valeur sur laquelle on test
+	 */
 	public String[] rechercheComparateur(StringBuffer condition){
 		Pattern inferieur =Pattern.compile("[a-zA-Z0-9]*.[a-zA-Z0-9]*<[a-zA-Z0-9]*");
 		Pattern superieur= Pattern.compile("[a-zA-Z0-9]*.[a-zA-Z0-9]*>[a-zA-Z0-9]*");
@@ -107,20 +117,21 @@ public class TestComparateur {
 
 	}
 	/**
-	 * Renvoie la type de comparaison à effectuer 
-	 * @return comparaison
+	 * Renvoie la type de comparaison à effectuer <ul>
+	 * <li> < <li> > <li> <= <li> >= <li> == <li> != 
+	 * @return comparaison : la valeur attribuée à chaque cas
 	 */
 	public int getMode(){
 		return this.comparaison;
 	}
 	/**
 	 * 
-	 * Si la valeur val est <,>,>=,<=,==,!= de valRequete alors la fonction renvoie vraie sinon elle renvoie faux
+	 * Si la valeur val est <,>,>=,<=,==,!= de valRequete alors la fonction <br/> renvoie vraie sinon elle renvoie faux
 	 * 
 	 * @param val :valeur de la colonne a comparer 
-	 * @param valRequete :valeur entrée dans la requete
+	 * @param valRequete :valeur entrée dans la requete à laquelle est comparée val
 	 * @param mode :type de comparaison demandé
-	 * @return bool: vrai ou faux
+	 * @return bool: si la val est <,>,>=,<=,==,!= à valRequete 
 	 */
 	public boolean compare(Types val, String valRequete,int mode){
 		String p=val.toString();
