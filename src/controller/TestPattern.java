@@ -3,12 +3,21 @@ package controller;
 import java.util.regex.Pattern;
 
 import model.Base;
-
+/**
+ * La classe <b> TestPattern </b> est la classe qui gèrent toutes les instructions en mémoires
+ * @author tonycoriolle
+ *
+ */
 public class TestPattern {
 	private Base temp;
 	private Instruction instruction=new Instruction();
-	//private EditBase edit =new EditBase();
-	
+	/**
+	 * La méthode <b> test </b> permet de tester tous les pattern referencé et de lancer la méthode adéquate si le pattern existe
+	 * sinon renvoi d'une exception
+	 * @param i : la requete envoyé à la console 
+	 * @return la base compilée 
+	 * @throws TestPatternException
+	 */
 	public Base test(String i) throws TestPatternException{
 		Pattern create=Pattern.compile("^CREATE TABLE [a-zA-Z0-9]*\\s*\\([[_a-zA-Z0-9]* [A-Za-z]*\\s*,]*\\)\\s*;$",Pattern.MULTILINE);
 		Pattern alterAdd=Pattern.compile("^ALTER TABLE [a-zA-Z0-9]* ADD [a-zA-Z0-9]* [a-zA-Z]*\\s*;$",Pattern.MULTILINE);
@@ -18,17 +27,17 @@ public class TestPattern {
 		Pattern insertInto=Pattern.compile("^INSERT INTO [[a-zA-Z0-9]*,]* \\([[a-zA-Z0-9]*\\s*,]*\\) VALUES\\s\\([[a-zA-Z0-9./\"]*\\s*,]*\\)\\s*;$",Pattern.MULTILINE);
 		
 		Pattern selectFrom=Pattern.compile("^SELECT [[a-zA-Z0-9_]*\\s*,]* FROM [[a-zA-Z0-9],*]+\\s*;$",Pattern.MULTILINE);
-		Pattern selectFromWhere=Pattern.compile("^SELECT [[a-zA-Z0-9_]*\\s*,]* FROM [a-zA-Z0-9]* WHERE [a-zA-Z0-9.=<>!\\s*]*\\s*;$",Pattern.MULTILINE);
+		Pattern selectFromWhere=Pattern.compile("^SELECT [[a-zA-Z0-9_*]*\\s*,]* FROM [a-zA-Z0-9]* WHERE [a-zA-Z0-9.=<>!\"\\s*]*\\s*;$",Pattern.MULTILINE);
 		
 		Pattern deleteFrom=Pattern.compile("^DELETE FROM [a-zA-Z0-9]*\\s*;$", Pattern.MULTILINE);
-		Pattern deleteFromWhere=Pattern.compile("^DELETE FROM [a-zA-Z0-9]* WHERE [a-zA-Z0-9!=<>.\\s*]*\\s*;$", Pattern.MULTILINE);
+		Pattern deleteFromWhere=Pattern.compile("^DELETE FROM [a-zA-Z0-9]* WHERE [a-zA-Z0-9!=<>.\"\\s*]*\\s*;$", Pattern.MULTILINE);
 		
 		Pattern update=Pattern.compile("^UPDATE [a-zA-Z0-9]* SET [a-zA-Z0-9]* = [a-zA-Z0-9.\"/]*\\s*;$", Pattern.MULTILINE);
 		Pattern updateWhere=Pattern.compile("^UPDATE [a-zA-Z0-9]* SET [a-zA-Z0-9]* = [a-zA-Z0-9.\"/]* WHERE [a-zA-Z0-9.=<>!\\s*]*\\s*;$", Pattern.MULTILINE);
 
-		Pattern sauvBase=Pattern.compile("^BACKUP DATABASE\\s*;$");
-		Pattern chargeBase=Pattern.compile("^LOAD DATABASE [a-zA-Z]*\\s*;$");
-		Pattern chargeCommande=Pattern.compile("^LOAD [a-zA-Z./]*\\s*;$");
+		Pattern sauvBase=Pattern.compile("^BACKUP DATABASE\\s*;$",Pattern.MULTILINE);
+		Pattern chargeBase=Pattern.compile("^LOAD DATABASE [a-zA-Z]*\\s*;$",Pattern.MULTILINE);
+		Pattern chargeCommande=Pattern.compile("^LOAD [a-zA-Z./]*\\s*;$",Pattern.MULTILINE);
 		
 		boolean reponseCreate =create.matcher(i).matches();
 		boolean reponseAlterAdd =alterAdd.matcher(i).matches();
@@ -76,7 +85,7 @@ public class TestPattern {
 			temp=instruction.chargeBase(i);
 		}
 		else if(reponseCommande){
-			//temp=edit.LancementSeqCommand(i);
+			temp=instruction.LancementSeqCommand(i);
 		}
 		else if(reponseCharge){
 			temp=instruction.chargeBase(i);
