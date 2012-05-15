@@ -28,7 +28,7 @@ public class SDate extends Types{
 	}
 
 	public String typeToString(){
-		return "date";
+		return "SDate";
 	}
 
 	public int getYear() {

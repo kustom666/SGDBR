@@ -20,7 +20,7 @@ public class SFloat extends Types{
 	}
 
 	public String typeToString(){
-		return "float";
+		return "SFloat";
 	}
 
 	public float getVal() {

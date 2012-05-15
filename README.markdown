@@ -5,6 +5,7 @@ Le projet est actuellement dans sa phase de conception
 
 ##Changelog
 
+* 0.8.0 : Le programme est en phase de débogage et d'optimisation des performances 
 * 0.7.0 : Le programme marche parfaitement. Il manque les fonctions de très haut niveau (jonctions, intersections, etc)
 * 0.6.0 : Presque toutes les fonctionnalités d'un vrai SGBDR sont implémentées
 * 0.5.0 : Language SQL totalement terminé

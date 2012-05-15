@@ -18,7 +18,7 @@ public class SChar extends Types{
 	}
 
 	public String typeToString(){
-		return "char";
+		return "SChar";
 	}
 
 	public char[] getVal() {

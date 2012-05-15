@@ -22,7 +22,7 @@ public class Text extends Types{
 		this.val = val;
 	}
 	public String typeToString(){
-		return "text";
+		return "Text";
 	}
 	public String toString(){
 		return this.val;
