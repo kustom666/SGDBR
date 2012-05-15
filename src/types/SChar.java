@@ -9,7 +9,7 @@ public class SChar extends Types{
 	private int maxLength;
 
 	public SChar(){
-
+		
 	}
 
 	public SChar(char valI[], int length){

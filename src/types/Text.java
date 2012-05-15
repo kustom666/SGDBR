@@ -8,7 +8,7 @@ public class Text extends Types{
 	String val = new String();
 	
 	public Text(){
-		
+
 	}
 	public Text(String s){
 		this.val = s;

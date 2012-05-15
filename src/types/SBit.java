@@ -9,7 +9,6 @@ public class SBit extends Types{
 	private byte[] val;
 
 	public SBit(){
-
 	}
 	
 	public SBit(byte[] in){
