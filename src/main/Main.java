@@ -19,7 +19,9 @@ import types.Sinteger;
 import model.Base;
 import model.Line;
 import model.Table;
-
+/**
+ * La classe Main permet de lancer et gérer le CLI du programme. Pourraît être assimilé à la vue dans notre pattern MVC
+ * */
 public class Main {
 
 	public static void main(String[] args) {

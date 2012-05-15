@@ -606,7 +606,7 @@ public class Instruction {
 		return starCommand.getBaseTravail();
 	}
 	/**
-	 * Cette méthode permet de sauvegarder la base actuel sur le disque
+	 * Cette méthode permet de sauvegarder la base actuelle sur le disque
 	 */
 	public void sauvBase(){
 		starCommand.saveBaseCSV();
