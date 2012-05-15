@@ -57,68 +57,34 @@ public class Column{
 		String buff = new String();
 		if(this.isMandatory())
 		{
-			buff+=":True";
+			buff+=":Mandatory";
 		}
-		
-		if(!this.isMandatory())
-		{
-			buff+=":False";
-		}
-		
-		
 		if(this.isCandidate())
 		{
-			buff+=":True";
+			buff+=":Candidate";
 		}
-		
-		if(!this.isCandidate())
-		{
-			buff+=":False";
-		}
-		
-		
 		if(this.isForeign())
 		{
-			buff+=":True";
+			buff+=":Foreign";
 		}
-		
-		if(!this.isForeign())
-		{
-			buff+=":False";
-		}
-		
-		
+
 		if(!this.isNotNull())
 		{
-			buff+=":True";
-		}
-		
-		if(this.isNotNull())
-		{
-			buff+=":False";
+			buff+=":NotNull";
 		}
 		
 		
 		if(this.isUnique())
 		{
-			buff+=":True";
-		}
-		
-		if(!this.isUnique())
-		{
-			buff+=":False";
+			buff+=":Unique";
 		}
 		
 		
 		if(this.isPrimaryKey())
 		{
-			buff+=":True";
+			buff+=":Primary";
 		}
 		
-		if(!this.isPrimaryKey())
-		{
-			buff+=":False";
-		}
 		
 		return buff;
 	}
