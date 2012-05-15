@@ -68,7 +68,7 @@ public class Column{
 			buff+=":Foreign";
 		}
 
-		if(!this.isNotNull())
+		if(this.isNotNull())
 		{
 			buff+=":NotNull";
 		}
