@@ -31,6 +31,10 @@ public class SDate extends Types{
 		return "SDate";
 	}
 
+	public String typeToExport(){
+		return "date";
+	}
+	
 	public int getYear() {
 		return year;
 	}

@@ -24,6 +24,9 @@ public class Text extends Types{
 	public String typeToString(){
 		return "Text";
 	}
+	public String typeToExport(){
+		return "text";
+	}
 	public String toString(){
 		return this.val;
 	}

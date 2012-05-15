@@ -9,6 +9,9 @@ public abstract class Types {
 	public String typeToString(){
 		return "Type";
 	}
+	public String typeToExport(){
+		return "Type";
+	}
 	public String toString(){
 		return null;
 	}

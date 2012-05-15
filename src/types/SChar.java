@@ -21,6 +21,9 @@ public class SChar extends Types{
 		return "SChar";
 	}
 
+	public String typeToExport(){
+		return "char";
+	}
 	public char[] getVal() {
 		return val;
 	}

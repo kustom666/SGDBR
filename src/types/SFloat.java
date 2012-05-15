@@ -22,6 +22,9 @@ public class SFloat extends Types{
 	public String typeToString(){
 		return "SFloat";
 	}
+	public String typeToExport(){
+		return "float";
+	}
 
 	public float getVal() {
 		return val;

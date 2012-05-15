@@ -130,7 +130,7 @@ public class Table extends ArrayList<Line> {
 			output.write(this.tableName+"\n");
 			
 			for(int i = 0; i< this.arrCol.size(); i++){
-				output.write(this.arrCol.get(i).getLabel()+":"+this.arrCol.get(i).getType().typeToString()+this.arrCol.get(i).colProp()+";");
+				output.write(this.arrCol.get(i).getLabel()+":"+this.arrCol.get(i).getType().typeToExport()+this.arrCol.get(i).colProp()+";");
 			}
 			
 			output.write("\n");

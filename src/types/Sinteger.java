@@ -29,5 +29,8 @@ public class Sinteger extends Types {
 	public String typeToString(){
 		return "SInteger";
 	}
+	public String typeToExport(){
+		return "int";
+	}
 	
 }

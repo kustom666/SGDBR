@@ -179,24 +179,24 @@ public class Crud {
 	
 			for(int f = 0; f<items.length; f++){
 				Column buffarcol = buffT.getArrCol().get(f);
-				if(buffarcol.getType().typeToString() == "int"){
+				if(buffarcol.getType().typeToExport() == "int"){
 					buffl.add(f, new Sinteger(Integer.parseInt(items[f])));
 				}
-				if(buffarcol.getType().typeToString()=="float"){
+				if(buffarcol.getType().typeToExport()=="float"){
 					buffl.add(f, new SFloat(Float.parseFloat(items[f])));
 				}
-				if(buffarcol.getType().typeToString()=="date"){
+				if(buffarcol.getType().typeToExport()=="date"){
 					String date[] = items[f].split("/");
 					buffl.add(f, new SDate(Integer.parseInt(date[0]),Integer.parseInt(date[1]),Integer.parseInt(date[2])));
 				}
-				if(buffarcol.getType().typeToString()=="char"){
+				if(buffarcol.getType().typeToExport()=="char"){
 					char buffchar[] = items[f].toCharArray();
 					buffl.add(f, new SChar(buffchar, items[f].length()));
 				}
-				if(buffarcol.getType().typeToString()=="text"){
+				if(buffarcol.getType().typeToExport()=="text"){
 					buffl.add(f, new Text(items[f]));
 				}
-				if(buffarcol.getType().typeToString()=="byte"){
+				if(buffarcol.getType().typeToExport()=="byte"){
 					buffl.add(f, new SBit(items[f].getBytes()));
 				}
 				/*buffl.add(new Sinteger(Integer.parseInt(items[f])));*/
