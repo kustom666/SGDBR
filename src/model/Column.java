@@ -9,25 +9,25 @@ import types.Types;
  * @author Paul Forti
  * */
 public class Column{
-
+	
 	private static final long serialVersionUID = 1437340961489074002L;
 	private String label;
 	private Types type;
-
-	//Propri�t�s
+	
+		//Propri�t�s
 	private boolean isMandatory;
 	private boolean isCandidate;
 	private boolean isForeign;
-
-	//Contraintes
+	
+		//Contraintes
 	private boolean notNull;
 	private boolean check;
 	private boolean unique;
-
+	
 	private Types foreignKey = null;
 	private boolean isPrimaryKey;
-
-
+	
+	
 	/**
 	 * Ce constructeur de colonne est surchargé à partir du constructeur de base. Il permet de créer la colonne tout en lui allouant un type
 	 * @param label le label de la colonne
@@ -67,7 +67,7 @@ public class Column{
 		{
 			buff+=":Foreign";
 		}
-
+		
 		if(this.isNotNull())
 		{
 			buff+=":NotNull";
@@ -88,7 +88,7 @@ public class Column{
 		
 		return buff;
 	}
-	//Accesseurs
+		//Accesseurs
 	public boolean isMandatory() {
 		return isMandatory;
 	}

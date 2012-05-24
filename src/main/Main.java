@@ -1,31 +1,18 @@
 package main;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
-import javax.swing.undo.UndoManager;
 
 import controller.Crud;
-import controller.Instruction;
+
 import controller.TestPattern;
 import controller.TestPatternException;
-import controller.baseController;
-
-import types.SFloat;
-import types.Sinteger;
-import types.Text;
-import types.Types;
-import types.Sinteger;
 import model.Base;
-import model.Line;
-import model.Table;
-/**
- * La classe Main permet de lancer et gérer le CLI du programme. Pourraît être assimilé à la vue dans notre pattern MVC
- * */
+
 public class Main {
-
+	
 	public static void main(String[] args) {
-
+		
 		Crud controlleur = new Crud();
 		TestPattern t=new TestPattern();
 		String test = "";
@@ -34,6 +21,7 @@ public class Main {
 		Scanner scan =new Scanner(System.in);
 		String baseName=scan.nextLine();
 		Base base=new Base(baseName);
+		
 		System.out.println("Base "+baseName+" initialisée, en attente de commandes");
 		do
 		{	
@@ -47,19 +35,15 @@ public class Main {
 				} catch (TestPatternException e) {
 					
 				}
-
-
+				
 				for(int i=0;i<base.size();i++){
 					controlleur.setUsedTable(base.get(i));
-					controlleur.displayTable();
 					if(controlleur.getUsedTable().getTableName().equals("resultat")){
 						base.remove(controlleur.getUsedTable().getTableName());
 					}
+					
 				}
 			}
-			
-			
 		}while(!test.endsWith("quit;") || !test.endsWith(";"));
-
 	}
 }

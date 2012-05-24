@@ -21,7 +21,7 @@ import types.*;
  * 
  * */
 public class Crud {
-
+	
 	private Table usedTable;
 	private Column usedColumn;
 	/**
@@ -32,7 +32,7 @@ public class Crud {
 	{
 		
 	}
-
+	
 	/**
 	 * Le constructeur de crud le plus utilisé. Il permet de créer le contrôleur tout en lui alouant une table
 	 * @param t la table à allouer
@@ -42,7 +42,7 @@ public class Crud {
 	{
 		this.usedTable = t;
 	}
-
+	
 	/**
 	 * La méthode createCol permet de créer une colonne et de la récupérer via le retour
 	 * @param n le label de la colonne
@@ -52,8 +52,8 @@ public class Crud {
 	 * 
 	 * */
 	public Column createCol(String n, Types t){
-		 Column c = new Column(n, t);
-		 return c;
+		Column c = new Column(n, t);
+		return c;
 	}
 	/**
 	 * La méthode ajouterLignes permet d'ajouter une séquence de lignes à la table actuellement contrôlée 
@@ -96,7 +96,7 @@ public class Crud {
 	 * @author Paul Forti
 	 * */
 	public void importFromCSV(String Filename){
-
+		
 		String contenucsv = importFile(Filename);
 		
 		String splitted[];
@@ -176,28 +176,53 @@ public class Crud {
 		for(int j=2; j<splitted.length; j++){
 			String items[] = splitted[j].split(";");
 			Line buffl = new Line();
-	
+			
 			for(int f = 0; f<items.length; f++){
 				Column buffarcol = buffT.getArrCol().get(f);
-				if(buffarcol.getType().typeToExport() == "int"){
-					buffl.add(f, new Sinteger(Integer.parseInt(items[f])));
+				if(buffarcol.getType().typeToString() == "int"){
+					if(items[f].equalsIgnoreCase("NULL")){
+						buffl.add(f, new Text(items[f]));
+					}
+					else{
+						buffl.add(f, new Sinteger(Integer.parseInt(items[f])));
+					}
 				}
-				if(buffarcol.getType().typeToExport()=="float"){
-					buffl.add(f, new SFloat(Float.parseFloat(items[f])));
+				if(buffarcol.getType().typeToString()=="float"){
+					if(items[f].equalsIgnoreCase("NULL")){
+						buffl.add(f, new Text(items[f]));
+					}
+					else{
+						buffl.add(f, new SFloat(Float.parseFloat(items[f])));
+					}
 				}
-				if(buffarcol.getType().typeToExport()=="date"){
-					String date[] = items[f].split("/");
-					buffl.add(f, new SDate(Integer.parseInt(date[0]),Integer.parseInt(date[1]),Integer.parseInt(date[2])));
+				if(buffarcol.getType().typeToString()=="date"){
+					if(items[f].equalsIgnoreCase("NULL")){
+						buffl.add(f, new Text(items[f]));
+					}
+					else{
+						String date[] = items[f].split("/");
+						buffl.add(f, new SDate(Integer.parseInt(date[0]),Integer.parseInt(date[1]),Integer.parseInt(date[2])));
+					}
 				}
-				if(buffarcol.getType().typeToExport()=="char"){
-					char buffchar[] = items[f].toCharArray();
-					buffl.add(f, new SChar(buffchar, items[f].length()));
+				if(buffarcol.getType().typeToString()=="char"){
+					if(items[f].equalsIgnoreCase("NULL")){
+						buffl.add(f, new Text(items[f]));
+					}
+					else{
+						char buffchar[] = items[f].toCharArray();
+						buffl.add(f, new SChar(buffchar, items[f].length()));
+					}
 				}
-				if(buffarcol.getType().typeToExport()=="text"){
+				if(buffarcol.getType().typeToString()=="text"){
 					buffl.add(f, new Text(items[f]));
 				}
-				if(buffarcol.getType().typeToExport()=="byte"){
-					buffl.add(f, new SBit(items[f].getBytes()));
+				if(buffarcol.getType().typeToString()=="byte"){
+					if(items[f].equalsIgnoreCase("NULL")){
+						buffl.add(f, new Text(items[f]));
+					}
+					else{
+						buffl.add(f, new SBit(items[f].getBytes()));
+					}
 				}
 				/*buffl.add(new Sinteger(Integer.parseInt(items[f])));*/
 			}
@@ -215,7 +240,7 @@ public class Crud {
 	{
 		String buffMax = new String();
 		
-		//BuffMax contiens tous les caractères de la ligne contenant les descriptifs de colonne
+			//BuffMax contiens tous les caractères de la ligne contenant les descriptifs de colonne
 		for(int i = 0; i< usedTable.getArrCol().size(); i++){
 			buffMax+= "| "+usedTable.getArrCol().get(i).getLabel() + ":" +usedTable.getArrCol().get(i).getType().typeToString()+"";
 			
@@ -249,22 +274,22 @@ public class Crud {
 				buffMax+=":Unique";
 			}
 		}
-		//Impression de la première ligne
+			//Impression de la première ligne
 		for(int i=0; i< buffMax.length()+1; i++){
 			System.out.print("-");
 		}
 		System.out.println();
 		
-		//Impression des espaces avant le nom de table pour le centrer dans la table
+			//Impression des espaces avant le nom de table pour le centrer dans la table
 		System.out.print("|");
 		for(int i=0; i< (buffMax.length()-(usedTable.getTableName().length()+2))/2; i++){
 			System.out.print(" ");
 		}
 		
-		//Impression du nom de table
+			//Impression du nom de table
 		System.out.print(usedTable.getTableName());
 		
-		//Impression des espaces après le nom de table pour le centrer dans la table
+			//Impression des espaces après le nom de table pour le centrer dans la table
 		for(int i=0; i< (buffMax.length()-(usedTable.getTableName().length()+2))/2+2; i++){
 			System.out.print(" ");
 		}
@@ -275,7 +300,7 @@ public class Crud {
 		}
 		System.out.println();
 		
-		//Impression de la ligne de descriptif colonne
+			//Impression de la ligne de descriptif colonne
 		System.out.println(buffMax+"|");
 		
 		for(int i=0; i< buffMax.length()+1; i++){
@@ -287,9 +312,9 @@ public class Crud {
 			usedTable.get(i).outputLine(usedTable.getArrCol());		
 		}
 		System.out.println();
-
+		
 	}
-
+	
 	
 	/**
 	 * La méthode setUpTable permet de mettre en place la table à créer grâce à un couple de nom et de type de colonne
@@ -327,7 +352,7 @@ public class Crud {
 			return alc;
 		}
 	}
-
+	
 	/**
 	 * La méthode initialise permet de créer une table et de l'allouer au contrôleur à l'aide de son seul nom
 	 * @param tName le nom de la table
@@ -337,7 +362,7 @@ public class Crud {
 		Table initTable = new Table(tName);
 		this.usedTable = initTable;
 	}
-
+	
 	/**
 	 * La méthode fullCreate permet de mettre en place une table de façon correcte et de l'allouer au contrôleur 
 	 * @param tName le nom de la table
@@ -350,7 +375,7 @@ public class Crud {
 		ArrayList<Couple> buffHM = construireALSetUp(colNames, types);
 		setUpTable(buffHM);
 	}
-
+	
 	/**
 	 * Méthode surchargée de fullCreate, ajoutant des lignes à insérer dans la table
 	 * @param tName le nom de la table
@@ -365,7 +390,7 @@ public class Crud {
 		ArrayList<Couple> buffHM = construireALSetUp(colNames, types);
 		setUpTable(buffHM);
 		ajouterLignes(l);
-
+		
 	}
 	
 	/**
@@ -390,7 +415,7 @@ public class Crud {
 	public void setUsedColumn(Column c){
 		this.usedColumn=c;
 	}
-
+	
 	public void setUsedTable(Table t)
 	{
 		this.usedTable = t;
@@ -398,5 +423,5 @@ public class Crud {
 	public Table getUsedTable(){
 		return this.usedTable;
 	}
-
+	
 }

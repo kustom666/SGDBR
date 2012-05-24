@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * @author Paul Forti
  * */
 public class Base extends ArrayList<Table> {
-
+	
 	private static final long serialVersionUID = 690495388715860154L;
 	private String nom;	
 	
@@ -41,11 +41,11 @@ public class Base extends ArrayList<Table> {
 		}
 		return table;
 	}
-
+	
 	public String getNom() {
 		return nom;
 	}
-
+	
 	public void setNom(String nom) {
 		this.nom = nom;
 	}

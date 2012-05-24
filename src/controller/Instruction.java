@@ -1,9 +1,12 @@
 package controller;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Timer;
 import java.util.regex.Pattern;
 
 
@@ -28,30 +31,30 @@ import types.Types;
 public class Instruction {
 	private Crud temp=new Crud();
 	private baseController starCommand=new baseController();
-
-
+	
+	
 	public Instruction() {
-
+		
 	}
 	
 	/**
-	 * Cette méthode permet de lancer la requete SQL <i> CREATE TABLE </i>
+	 * Cette m√©thode permet de lancer la requete SQL <i> CREATE TABLE </i>
 	 *   
-	 * @param requete: est la requete envoyée dans la console
+	 * @param requete: est la requete envoy√©e dans la console
 	 * @return une nouvelle base 
 	 */
-	public Base createTable(String requete){
+	public Base createTable(String requete,int c){
 		String[] tab= null;
 		String nomTable = new String();
 		ArrayList<Types> colTypes=new ArrayList<Types>();
 		ArrayList<String> colNames=new ArrayList<String>();
-
-
+		
+		
 		requete=requete.replace("CREATE TABLE ", "");
 		requete=requete.replace("(","");
 		requete=requete.replace(" ,"," ");
 		requete=requete.replace(", "," ");
-
+		
 		tab=requete.split("[^a-zA-Z0-9]");
 		nomTable = tab[0];
 		for (int i=1;i<tab.length;i++){
@@ -65,19 +68,32 @@ public class Instruction {
 				colNames.add(tab[i]);
 			}
 		}
-		temp.fullCreate(nomTable,colNames,colTypes);
-		starCommand.ajouterTable(temp.getUsedTable());
-
+		ArrayList<Boolean> test=new ArrayList<Boolean>();
+		for(int i=0;i<starCommand.getBaseTravail().size();i++){
+			if(!nomTable.equals(starCommand.getBaseTravail().get(i).getTableName())){
+				test.add(false);
+			}
+			else{test.add(true);}
+		}
+		if(test.contains(true)){
+			System.out.println("desolÈ la table existe deja");
+		}
+		else{
+			temp.fullCreate(nomTable,colNames,colTypes);
+			starCommand.ajouterTable(temp.getUsedTable());
+		}
+		
+		this.sauvTempBase(c);
 		return starCommand.getBaseTravail();
 	}
 	
 	/**
-	 * Cette méthode permet de lancer la requete SQL <i> SELECT FROM </i> avec ou sans clause where
+	 * Cette m√©thode permet de lancer la requete SQL <i> SELECT FROM </i> avec ou sans clause where
 	 * 
 	 * @param requete
 	 * @return la base avec l'ajout d'une table <i> resultat </i>
 	 */
-	public Base selectFrom(String requete){
+	public Base selectFrom(String requete,int c){
 		Crud clu=new Crud();
 		baseController base=new baseController();
 		String[] tab=null;
@@ -91,15 +107,15 @@ public class Instruction {
 		int mode = 0;
 		Types val;
 		TestComparateur signe=new TestComparateur();
-
+		
 		requete=requete.replace("SELECT ","");
 		tab=requete.split("[^a-zA-Z0-9<>!=.*]");
-
+		
 		if(requete.contains("WHERE")){
-
+			
 			for(i=0;!tab[i].equals("FROM");++i){
 				colNames.add(tab[i]);
-
+				
 			}
 			for(i=i+1;!tab[i].equals("WHERE");++i){
 				tableName.add(tab[i]);
@@ -109,7 +125,7 @@ public class Instruction {
 			}
 			subtab=signe.rechercheComparateur(condition);
 			mode=signe.getMode();
-
+			
 			for(int j=0;j<tableName.size();j++){
 				for(int nbTable=0;nbTable<starCommand.getBaseTravail().size();nbTable++){
 					if(tableName.get(j).equals(starCommand.getBaseTravail().get(nbTable).getTableName())){
@@ -127,14 +143,14 @@ public class Instruction {
 									break;
 								}
 							}
-
+							
 						}
 					}
 				}
 			}
 			int nbLigne=0;
 			clu.fullCreate("resultat", colNames, colType,lines);
-
+			
 			for(int j=0;j<tableName.size();j++){
 				if(j>0 && starCommand.getBaseTravail().getTable(tableName.get(j)).size()>starCommand.getBaseTravail().getTable(tableName.get(j-1)).size()){
 					nbLigne=starCommand.getBaseTravail().getTable(tableName.get(j)).size();
@@ -152,10 +168,10 @@ public class Instruction {
 					for(int nbTable=0;nbTable<starCommand.getBaseTravail().size();nbTable++){
 						if(tableName.get(j).equals(starCommand.getBaseTravail().get(nbTable).getTableName())){
 							temp.setUsedTable(starCommand.getBaseTravail().getTable(tableName.get(j)));
-
+							
 							for(int nbColrequete=0;nbColrequete<colNames.size();nbColrequete++){
 								for(int nbColTable=0;nbColTable<temp.getUsedTable().getArrCol().size();nbColTable++){
-
+									
 									if(colNames.get(nbColrequete).equals(temp.getUsedTable().getArrCol().get(nbColTable).getLabel())){
 										for(int searchTable=0;searchTable<starCommand.getBaseTravail().size();searchTable++){
 											if(subtab[0].equals(starCommand.getBaseTravail().get(searchTable).getTableName())){
@@ -166,7 +182,7 @@ public class Instruction {
 														if(ligne<tron.getUsedTable().size()){
 															val=tron.getUsedTable().get(ligne).get(searchCol);
 															try{
-																if(signe.compare(val, subtab[2],mode)){
+																if(signe.compare(val, subtab[2],mode)==true){
 																	line.add(temp.getUsedTable().get(ligne).get(nbColTable));
 																}
 															}catch(ArrayIndexOutOfBoundsException e){}
@@ -178,9 +194,9 @@ public class Instruction {
 											}
 										}
 										break;
-
+										
 									}
-
+									
 								}
 							}
 							break;
@@ -190,16 +206,16 @@ public class Instruction {
 				if(!line.isEmpty()){
 					lines.add(line);	
 				}
-
+				
 			}
 			clu.ajouterLignes(lines);
 			base.ajouterTable(clu.getUsedTable());
 		}
-
+		
 		else{
-
+			
 			for(i=0;!tab[i].equals("FROM");++i){
-
+				
 				colNames.add(tab[i]);
 			}
 			for(i=i+1;i<tab.length;++i){
@@ -226,10 +242,10 @@ public class Instruction {
 					}
 				}
 			}
-
+			
 			int nbLigne=0;
 			clu.fullCreate("resultat", colNames, colType,lines);
-
+			
 			for(int j=0;j<tableName.size();j++){
 				if(j>0 && starCommand.getBaseTravail().getTable(tableName.get(j)).size()>starCommand.getBaseTravail().getTable(tableName.get(j-1)).size()){
 					nbLigne=starCommand.getBaseTravail().getTable(tableName.get(j)).size();
@@ -247,10 +263,10 @@ public class Instruction {
 					for(int nbTable=0;nbTable<starCommand.getBaseTravail().size();nbTable++){
 						if(tableName.get(j).equals(starCommand.getBaseTravail().get(nbTable).getTableName())){
 							temp.setUsedTable(starCommand.getBaseTravail().getTable(tableName.get(j)));
-
+							
 							for(int nbColrequete=0;nbColrequete<colNames.size();nbColrequete++){
 								for(int nbColTable=0;nbColTable<temp.getUsedTable().getArrCol().size();nbColTable++){
-
+									
 									if(colNames.get(nbColrequete).equals(temp.getUsedTable().getArrCol().get(nbColTable).getLabel())){
 										try{
 											line.add(temp.getUsedTable().get(ligne).get(nbColTable));
@@ -266,38 +282,41 @@ public class Instruction {
 				}
 				if(!line.isEmpty()){
 					lines.add(line);	
-				}			}
+				}
+			}
 			clu.ajouterLignes(lines);
-			clu.displayTable();
 			base.ajouterTable(clu.getUsedTable());
+			
 		}
+		clu.displayTable();
+		this.sauvTempBase(c);
 		return base.getBaseTravail();
 	}
-
+	
 	/**
-	 * Cette méthode permet de lancer la requete SQL <i> ALTER TABLE </i> avec le choix d'utiliser soit : 
+	 * Cette m√©thode permet de lancer la requete SQL <i> ALTER TABLE </i> avec le choix d'utiliser soit : 
 	 * <ul><li>-ADD <li>-CHANGE <li>-DROP <li>-MODIFY</ul>   
-	 * @param requete: la requete entré dans la console 
+	 * @param requete: la requete entr√© dans la console 
 	 * @return une base 
 	 */
-	public Base alterTable(String requete){
+	public Base alterTable(String requete,int c){
 		String[] tab= null;
 		Column col = null;
 		String tableName=new String();
 		baseController base= new baseController();
 		int positionColonne = 0;
-
+		
 		requete=requete.replace("ALTER TABLE ","");
 		tab=requete.split("[^a-zA-Z0-9]");
 		tableName=tab[0];
-
+		
 		for(int i=0;i<tab.length;i++){
 			tab[i].trim();
 		}
 		for(int i=0;i<starCommand.getBaseTravail().size();i++){
 			if(tableName.equals(starCommand.getBaseTravail().get(i).getTableName())){
 				temp.setUsedTable(starCommand.getBaseTravail().get(i));
-
+				
 				if(tab[1].equals("ADD")){
 					try {
 						col=new Column(tab[2],toType(tab[3]));
@@ -306,7 +325,7 @@ public class Instruction {
 					temp.getUsedTable().addCol(col);
 				}
 				else if(tab[1].equalsIgnoreCase("DROP")){
-
+					
 					for(int j=0;j<temp.getUsedTable().getArrCol().size();j++){
 						if(temp.getUsedTable().getArrCol().get(j).getLabel().equals(tab[2])){
 							positionColonne=j;
@@ -338,45 +357,46 @@ public class Instruction {
 			}
 		}
 		base.ajouterTable(temp.getUsedTable());
+		this.sauvTempBase(c);
 		return base.getBaseTravail();
 	}
 	
 	/**
-	 * Cette méthode permet de lancer la requete SQL <i> INSERT INTO </i> 
+	 * Cette m√©thode permet de lancer la requete SQL <i> INSERT INTO </i> 
 	 * @param requete
 	 * @return une base
 	 */
-	public Base insertInto(String requete){
+	public Base insertInto(String requete,int c){
 		String[] tab=null;
 		ArrayList<String> tableName = new ArrayList<String>();
 		ArrayList<String> colName = new ArrayList<String>();
 		ArrayList<String> values = new ArrayList<String>();
 		int i=0;
-
+		
 		requete=requete.replace("INSERT INTO ","");
 		requete=requete.replace(")","");
 		tab=requete.split(" ");
-
+		
 		int positionColonne=0;
 		Line l=new Line();
-
+		
 		for(i=0;!tab[i].startsWith("(");++i){
 			tableName.add(tab[i]);
 		}
-
+		
 		for(int j=0;j<tab.length;j++){
 			requete.concat(tab[i]);
 		}
 		requete=requete.replace("(", "");
 		tab=requete.split("[^a-zA-Z0-9.\"\'/]");
-
-
-
+		
+		
+		
 		for(int j=0;j<tableName.size();j++){
 			for(int nbTable=0;nbTable<starCommand.getBaseTravail().size();nbTable++){
 				if(tableName.get(j).equals(starCommand.getBaseTravail().get(nbTable).getTableName())){
 					temp.setUsedTable(starCommand.getBaseTravail().getTable(tableName.get(j)));
-
+					
 					for(i=i;!tab[i].equals("VALUES"); ++i){
 						colName.add(tab[i]);
 					}
@@ -387,9 +407,9 @@ public class Instruction {
 						for(int nbColTable=0;nbColTable<temp.getUsedTable().getArrCol().size();nbColTable++){	
 							if(colName.get(nbCol).equals(temp.getUsedTable().getArrCol().get(nbColTable).getLabel())){
 								positionColonne=nbColTable;
-
+								
 								while(positionColonne>l.size()){
-
+									
 									l.add(new Text("NULL"));
 								}
 								try{
@@ -414,23 +434,24 @@ public class Instruction {
 						
 						if(temp.getUsedTable().getArrCol().get(l.size()).isNotNull())
 						{
-							System.out.println("Erreur, la colonne labelée "+temp.getUsedTable().getArrCol().get(l.size()).getLabel()+" est déclarée comme NON NULLE. Impossible de garantir la ");
+							System.out.println("Erreur, la colonne label√©e "+temp.getUsedTable().getArrCol().get(l.size()).getLabel()+" est d√©clar√©e comme NON NULLE. Impossible de garantir la ");
 						}
 						l.add(l.size(), new Text("NULL"));
-
+						
 					}
 					temp.getUsedTable().insert(l);
 				}
 			}
 		}
+		this.sauvTempBase(c);
 		return starCommand.getBaseTravail();
 	}
 	/**
-	 * Cette méthode permet de lancer la requete SQL <i> UPDATE </i> avec ou sans clause Where
+	 * Cette m√©thode permet de lancer la requete SQL <i> UPDATE </i> avec ou sans clause Where
 	 * @param requete
 	 * @return une base 
 	 */
-	public Base update(String requete){
+	public Base update(String requete,int c){
 		String[] tab=null;
 		String[] subtab=null;
 		int i = 0;
@@ -440,11 +461,11 @@ public class Instruction {
 		ArrayList<String> colNames=new ArrayList<String>();
 		StringBuffer condition=new StringBuffer();
 		TestComparateur signe=new TestComparateur();
-
+		
 		requete=requete.replace("UPDATE ","");
 		tab=requete.split("[^a-zA-Z0-9<>!=.\"]");
 		String tableName = tab[0];
-
+		
 		if(requete.contains("WHERE")){
 			for(i=2;!tab[i].equals("=");++i){
 				colNames.add(tab[i]);
@@ -460,14 +481,14 @@ public class Instruction {
 			}
 			subtab=signe.rechercheComparateur(condition);
 			mode=signe.getMode();
-
+			
 			for(int nbTable=0;nbTable<starCommand.getBaseTravail().size();nbTable++){
 				if(tableName.equals(starCommand.getBaseTravail().get(nbTable).getTableName())){
 					temp.setUsedTable(starCommand.getBaseTravail().getTable(tableName));
 					for(int ligne=0;ligne<temp.getUsedTable().size();ligne++){
 						for(int nbColrequete=0;nbColrequete<colNames.size();nbColrequete++){
 							for(int nbColTable=0;nbColTable<temp.getUsedTable().getArrCol().size();nbColTable++){
-
+								
 								if(colNames.get(nbColrequete).equals(temp.getUsedTable().getArrCol().get(nbColTable).getLabel())){
 									for(int searchTable=0;searchTable<starCommand.getBaseTravail().size();searchTable++){
 										if(subtab[0].equals(starCommand.getBaseTravail().get(searchTable).getTableName())){
@@ -507,7 +528,7 @@ public class Instruction {
 				if(tableName.equals(starCommand.getBaseTravail().get(nbTable).getTableName())){
 					temp.setUsedTable(starCommand.getBaseTravail().get(nbTable));
 					positionTable=nbTable;
-
+					
 					for(i=2;!tab[i].equals("=");++i){
 						colNames.add(tab[i]);
 					}
@@ -516,14 +537,14 @@ public class Instruction {
 							value=initLine(tab[i]);
 						} catch (TypeException e) {
 						}
-
+						
 					}
-
+					
 					int positionColonne=0;
 					for(int nbColTable=0;nbColTable<temp.getUsedTable().getArrCol().size();nbColTable++){
 						if(temp.getUsedTable().getArrCol().get(nbColTable).getLabel().equals(colNames)){
 							positionColonne=nbColTable;
-
+							
 							for(int positionLigne=0;positionLigne<temp.getUsedTable().size();positionLigne++){
 								temp.getUsedTable().get(positionLigne).set(positionColonne,value);
 							}
@@ -535,14 +556,15 @@ public class Instruction {
 				}
 			}
 		}
+		this.sauvTempBase(c);
 		return starCommand.getBaseTravail();
 	}
 	/**
-	 * Cette méthode permet de lancer la requete SQL <i> DELETE </i> avec ou sans clause Where
+	 * Cette m√©thode permet de lancer la requete SQL <i> DELETE </i> avec ou sans clause Where
 	 * @param requete
 	 * @return une base 
 	 */
-	public Base deleteFrom(String requete){
+	public Base deleteFrom(String requete,int c){
 		requete=requete.replace("DELETE FROM ", "");
 		String[] tab = requete.split("[^a-zA-Z0-9<>!=.]");
 		String[] subtab;
@@ -550,15 +572,15 @@ public class Instruction {
 		TestComparateur signe=new TestComparateur();
 		int mode=0;
 		StringBuffer condition=new StringBuffer();
-
-
+		
+		
 		if(requete.contains("WHERE")){
 			for(int i=2;i<tab.length;++i){
 				condition.append(tab[i]);
 			}
 			subtab=signe.rechercheComparateur(condition);
 			mode=signe.getMode();
-
+			
 			for(int nbTable=0;nbTable<starCommand.getBaseTravail().size();nbTable++){
 				if(tableName.equals(starCommand.getBaseTravail().get(nbTable).getTableName())){
 					temp.setUsedTable(starCommand.getBaseTravail().getTable(tableName));
@@ -593,8 +615,8 @@ public class Instruction {
 				}
 			}		
 		}
-
-
+		
+		
 		else{
 			for(int i=0;i<starCommand.getBaseTravail().size();i++){
 				if(tableName.equals(starCommand.getBaseTravail().get(i).getTableName())){
@@ -603,17 +625,18 @@ public class Instruction {
 				}
 			}
 		}
+		this.sauvTempBase(c);
 		return starCommand.getBaseTravail();
 	}
 	/**
-	 * Cette méthode permet de sauvegarder la base actuelle sur le disque
+	 * Cette m√©thode permet de sauvegarder la base actuel sur le disque
 	 */
 	public void sauvBase(){
 		starCommand.saveBaseCSV();
-		System.out.println("La base est sauvegardée");
+		System.out.println("La base est sauvegard√©e");
 	}
 	/**
-	 * Cette méthode permet de recharger la base préalablement sauvegardée
+	 * Cette m√©thode permet de recharger la base pr√©alablement sauvegard√©e
 	 * @param requete
 	 * @return une base 
 	 */
@@ -625,15 +648,46 @@ public class Instruction {
 		temp.importFromCSV(filename);
 		starCommand.ajouterTable(temp.getUsedTable());
 		return starCommand.getBaseTravail();
-
+		
 	}
-
+	public void sauvTempBase(int c){
+		for(int i=0;i<starCommand.getBaseTravail().size();i++){
+			starCommand.getBaseTravail().get(i).saveTable("./temp/"+i+"_"+c);
+		}
+	}
+	public Base undo(int c){
+		for(int i=0;i<starCommand.getBaseTravail().size();i++){
+			starCommand.getBaseTravail().remove(i);
+			File f =new File("./temp/"+i+"_"+c);
+			if(f.exists()){
+				
+				temp.importFromCSV("./temp/"+i+"_"+c);
+				starCommand.ajouterTable(temp.getUsedTable());
+			}
+			
+		}
+		return starCommand.getBaseTravail();
+	}
+	public Base redo(int c){
+		for(int i=0;i<starCommand.getBaseTravail().size();i++){
+			starCommand.getBaseTravail().remove(i);
+			File f =new File("./temp/"+i+"_"+c);
+			if(f.exists()){
+				temp.importFromCSV("./temp/"+i+"_"+c);
+				starCommand.ajouterTable(temp.getUsedTable());
+			}
+			
+		}
+		return starCommand.getBaseTravail();
+	}
+	
+	
 	/**
-	 * Méthode permettant de convertir le nom du type passé dans la commande en String pour
+	 * M√©thode permettant de convertir le nom du type pass√© dans la commande en String pour
 	 * initialiser ce dernier
 	 *  
 	 * @param requete
-	 * @return le type demandé 
+	 * @return le type demand√© 
 	 * @throws TypeException
 	 * 
 	 */
@@ -662,12 +716,12 @@ public class Instruction {
 	/**
 	 * <b> importCommand</b> ouvre et lit un fichier txt de commandes  
 	 * @param filename : nom du fichier 
-	 * @return la string contenant toutes les commandes séparés de ";"
+	 * @return la string contenant toutes les commandes s√©par√©s de ";"
 	 */
 	public String importCommand(String filename){
 		String output = new String("");
 		String buffer = new String("");;
-
+		
 		try {
 			FileReader fis = new FileReader(filename);
 			BufferedReader das = new BufferedReader(fis);
@@ -680,56 +734,62 @@ public class Instruction {
 		return output;
 	}
 	/**
-	 * Parse les commandes recu et les execute séquentiellement
+	 * Parse les commandes recu et les execute s√©quentiellement
 	 * @param filename : nom du fichier
 	 * @see importCommand 
 	 * @return une base
 	 */
-	public Base LancementSeqCommand(String filename){
+	public Base LancementSeqCommand(String filename,int c){
 		filename=filename.replace("LOAD ", "");
 		filename=filename.replace(";", "");
 		String requetes= importCommand(filename);
 		String[] requete=requetes.split(";");
 		TestPattern t=new TestPattern();
-		Base base = null;
-
+		
+		System.out.println("nb requete:"+requete.length);
+		Date  dStart =   new   Date();
 		for(int i=0;i<requete.length;i++){			
 			try {
 				if(!requete[i].contains("\n")){
-					base=t.test(requete[i]+";");
+					starCommand.setBaseTravail(t.test(requete[i]+";"));
 				}
 			} catch (TestPatternException e) {
 				e.printStackTrace();
 			}
+			
+			this.sauvTempBase(c);
 		}
-		return base;
+		Date  dStop =   new   Date();
+		System.out.println("Le Chargement est terminé.");
+		System.out.println("Temps : " + (dStop.getSeconds() - dStart.getSeconds() + " "));
+		return starCommand.getBaseTravail();
 	}
 	/**
-	 * Méthode permettant de récuperer une valeur donnée en String de trouver son type 
+	 * M√©thode permettant de r√©cuperer une valeur donn√©e en String de trouver son type 
 	 * puis de la convertir selon son vrai type:
 	 * <ul><li>-Integer<li>-Float<li>-Date<li>-Char<li>-Text</ul>
 	 * pour l'inserer dans une ligne
 	 * 
 	 * @param val : valeur du type 
-	 * @return type : la valeur à inserer dans la ligne
+	 * @return type : la valeur √† inserer dans la ligne
 	 * @throws TypeException
 	 */
 	public Types initLine(String val) throws TypeException{
 		Types type = null;
-
+		
 		Pattern Char=Pattern.compile("^[A-Za-z]$");
 		Pattern Date=Pattern.compile("^[0-9]{4}\\/[0-9]{2}\\/[0-9]{2}$");
 		Pattern Float=Pattern.compile("^[0-9]*\\.[0-9]*$");
 		Pattern Sinteger=Pattern.compile("^[0-9]*$");
 		Pattern Text=Pattern.compile("^\"[a-zA-Z]*\"$");
-
-
+		
+		
 		boolean reponseChar =Char.matcher(val).matches();
 		boolean reponseDate =Date.matcher(val).matches();
 		boolean reponseFloat =Float.matcher(val).matches();
 		boolean reponseSinteger =Sinteger.matcher(val).matches();
 		boolean reponseText= Text.matcher(val).matches();
-
+		
 		if(reponseSinteger){
 			type=new Sinteger(Integer.parseInt(val));
 		}
