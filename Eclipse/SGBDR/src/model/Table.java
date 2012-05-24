@@ -1,16 +1,10 @@
 package model;
 
-import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import types.Types;
 
 /**
  * La classe table représente une table en mémoire. Ensemble d'une collection de lignes pour le stockage de données, et de colonnes pour l'intégrité
